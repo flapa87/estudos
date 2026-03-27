@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSS - Matérias de Estudo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .materias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .materia-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .materia-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .materia-icon {
+            font-size: 2.5em;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+        }
+
+        .materia-info h3 {
+            font-size: 1.3em;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .materia-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Cores específicas para cada matéria */
+        .portugues .materia-icon { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .previdenciario .materia-icon { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .administrativo .materia-icon { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .constitucional .materia-icon { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .etica .materia-icon { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .logico .materia-icon { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .informatica .materia-icon { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">← Voltar para o Portal</a>
+
+        <header>
+            <h1>📋 INSS</h1>
+            <p>Selecione a matéria que deseja estudar</p>
+        </header>
+
+        <div class="materias-grid">
+            <a href="portugues.html" class="materia-card portugues">
+                <div class="materia-icon">📖</div>
+                <div class="materia-info">
+                    <h3>Português</h3>
+                    <p>Gramática, interpretação e redação</p>
+                </div>
+            </a>
+
+            <a href="direito_previdenciario.html" class="materia-card previdenciario">
+                <div class="materia-icon">⚖️</div>
+                <div class="materia-info">
+                    <h3>Direito Previdenciário</h3>
+                    <p>Leis e normas previdenciárias</p>
+                </div>
+            </a>
+
+            <a href="direito_administrativo.html" class="materia-card administrativo">
+                <div class="materia-icon">🏛️</div>
+                <div class="materia-info">
+                    <h3>Direito Administrativo</h3>
+                    <p>Administração pública e atos administrativos</p>
+                </div>
+            </a>
+
+            <a href="direito_constitucional.html" class="materia-card constitucional">
+                <div class="materia-icon">📜</div>
+                <div class="materia-info">
+                    <h3>Direito Constitucional</h3>
+                    <p>Constituição Federal e direitos fundamentais</p>
+                </div>
+            </a>
+
+            <a href="etica.html" class="materia-card etica">
+                <div class="materia-icon">🤝</div>
+                <div class="materia-info">
+                    <h3>Ética</h3>
+                    <p>Ética profissional e cidadania</p>
+                </div>
+            </a>
+
+            <a href="raciocinio_logico.html" class="materia-card logico">
+                <div class="materia-icon">🧩</div>
+                <div class="materia-info">
+                    <h3>Raciocínio Lógico</h3>
+                    <p>Lógica, matemática e problemas</p>
+                </div>
+            </a>
+
+            <a href="informatica.html" class="materia-card informatica">
+                <div class="materia-icon">💻</div>
+                <div class="materia-info">
+                    <h3>Informática</h3>
+                    <p>Computação e tecnologia da informação</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
