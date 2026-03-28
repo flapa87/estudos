@@ -63,9 +63,143 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             min-height: 300px;
         }
+
+        /* Animações de Transição Profissionais */
+        .page-transition {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Efeito de saída suave */
+        body.fade-out {
+            animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-30px);
+                filter: blur(10px);
+            }
+        }
+        
+        /* Container com animação */
+        .container {
+            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Transições suaves em todos elementos */
+        * {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* Header com animação especial */
+        header {
+            animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
+        }
+        
+        /* Ícone com bounce */
+        .icone {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-180deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            70% {
+                transform: scale(0.9) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        /* Link do tema */
+        .tema-link {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            animation: slideInRight 0.6s ease-out;
+        }
+        
+        .tema-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .tema-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .tema-icone {
+            font-size: 2.5em;
+        }
+        
+        .tema-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+        
+        .tema-info p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        
+        .tema-arrow {
+            margin-left: auto;
+            font-size: 1.5em;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
     </style>
 </head>
-<body>
+<body class="page-transition">
     <div class="container">
         <a href="inss.html" class="back-btn">← Voltar para INSS</a>
 
@@ -75,8 +209,43 @@
         </header>
 
         <div class="conteudo">
-            <!-- Adicione seu conteúdo aqui -->
+            <!-- Link para Compreensão e Interpretação de Texto -->
+            <a href="portugues1.html" class="tema-link">
+                <div class="tema-content">
+                    <span class="tema-icone">📄</span>
+                    <div class="tema-info">
+                        <h3>Compreensão e Interpretação de Texto</h3>
+                        <p>Clique para acessar exercícios sobre interpretação textual</p>
+                    </div>
+                    <span class="tema-arrow">→</span>
+                </div>
+            </a>
         </div>
     </div>
+
+    <script>
+        // Transição suave ao navegar
+        document.querySelectorAll('a[href^="index"], a[href^="inss"], a[href^="portugues"], a[href^="direito"], a[href^="etica"], a[href^="raciocinio"], a[href^="informatica"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                
+                // Adiciona classe de saída
+                document.body.style.opacity = '0';
+                document.body.style.transform = 'translateY(-20px)';
+                document.body.style.filter = 'blur(10px)';
+                document.body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 400);
+            });
+        });
+        
+        // Animação de entrada ao carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('page-transition');
+        });
+    </script>
 </body>
 </html>
