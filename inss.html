@@ -53,6 +53,26 @@
             transform: translateX(-5px);
         }
 
+        .cronograma-btn {
+            display: block;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            text-decoration: none;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(250, 112, 154, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .cronograma-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(250, 112, 154, 0.5);
+        }
+
         .materias-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -117,6 +137,9 @@
             <h1>📋 INSS</h1>
             <p>Selecione a matéria que deseja estudar</p>
         </header>
+
+        <!-- Botão Cronograma -->
+        <a href="cronograma.html" class="cronograma-btn">📅 Cronograma</a>
 
         <div class="materias-grid">
             <a href="portugues.html" class="materia-card portugues">
