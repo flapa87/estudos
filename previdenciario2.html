@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Legislação Previdenciária - Prova 2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Simulado INSS 2025 - Prova 2</h1>
+            <p>Legislação Previdenciária - 20 Questões Inéditas (Lei 8.213/91, Lei 8.212/91, EC 103/2019)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="C" data-question="Segurados Obrigatórios - Empregado">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre os segurados obrigatórios do Regime Geral de Previdência Social (RGPS), analise: Maria trabalha como empregada doméstica, sem registro em carteira, na casa de uma família há 5 anos. Após a EC 72/2013 (PEC das Domésticas), assinale a alternativa correta sobre a condição previdenciária de Maria:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Maria não é segurada obrigatória por não ter registro em carteira de trabalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Maria é segurada facultativa, podendo contribuir apenas se desejar</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Maria é segurada obrigatória empregada doméstica, independentemente de registro em carteira</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Maria só se torna segurada após 2 anos de trabalho ininterrupto</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Maria é segurada especial, enquadrada na categoria de trabalhador rural</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Empregado Doméstico - Art. 11, §2º da Lei 8.213/91 (alterado pela EC 72/2013):</strong><br><br>
+                        
+                        A Emenda Constitucional 72/2013 (PEC das Domésticas) equiparou os empregados domésticos aos demais empregados, tornando-os segurados obrigatórios do RGPS.<br><br>
+                        
+                        <strong>Requisitos para caracterização:</strong><br>
+                        • Prestação de serviço de natureza não eventual<br>
+                        • Subordinação, pessoalidade, onerosidade e não eventualidade<br>
+                        • <strong>Não depende de registro em carteira</strong> para ser segurado<br>
+                        • O não registro é infração trabalhista, mas não impede a condição de segurado<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • Segurado obrigatório (não facultativo)<br>
+                        • Contribuição de 8% do empregador + alíquota progressiva do empregado<br>
+                        • Direito a todos os benefícios do RGPS<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Por que as outras estão erradas:</div>
+                            <strong>A)</strong> O registro em carteira não é requisito para a condição de segurado, mas sim para a regularidade trabalhista.<br>
+                            <strong>B)</strong> Não é facultativa; é obrigatória quando presta serviço não eventual.<br>
+                            <strong>D)</strong> Não há prazo de carência para a condição de segurado, apenas para benefícios.<br>
+                            <strong>E)</strong> Empregado doméstico é categoria urbana, não rural.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="B" data-question="Carência - Conceito e Prazos">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (CEBRASPE) Sobre o período de carência na Previdência Social, julgue o item: O período de carência é o número mínimo de contribuições mensais indispensáveis para a manutenção da qualidade de segurado.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> O conceito apresentado confunde <strong>carência</strong> com <strong>qualidade de segurado</strong>.<br><br>
+                        
+                        <strong>Carência - Art. 24 da Lei 8.213/91:</strong> É o <strong>número mínimo de contribuições mensais indispensáveis para que o segurado faça jus ao benefício</strong>, exceto nos casos de isenção previstos em lei.<br><br>
+                        
+                        <strong>Qualidade de segurado:</strong> É a condição de estar filiado e em dia com as contribuições (ou no período de graça). Não exige número mínimo de contribuições.<br><br>
+                        
+                        <strong>Prazos de carência principais:</strong><br>
+                        • Aposentadoria por idade: <strong>180 meses</strong><br>
+                        • Aposentadoria por tempo de contribuição: <strong>180 meses</strong><br>
+                        • Auxílio por incapacidade temporária: <strong>12 meses</strong><br>
+                        • Salário-maternidade (não empregada): <strong>10 meses</strong><br>
+                        • Auxílio-reclusão: <strong>24 meses</strong><br><br>
+                        
+                        <strong>Isenção de carência:</strong><br>
+                        • Pensão por morte<br>
+                        • Auxílio-acidente<br>
+                        • Salário-família<br>
+                        • Incapacidade decorrente de acidente de trabalho ou doença profissional<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        A carência é exigida para <strong>concessão do benefício</strong>, não para manutenção da qualidade de segurado. A qualidade de segurado depende apenas da filiação e regularidade contributiva (ou período de graça).
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="D" data-question="Aposentadoria por Idade - EC 103/2019">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (EC 103/2019 - Reforma da Previdência) Sobre a aposentadoria por idade após a EC 103/2019, analise as assertivas:<br><br>
+                    I. A idade mínima para aposentadoria por idade é de 62 anos para mulheres e 65 anos para homens<br>
+                    II. O tempo mínimo de contribuição é de 15 anos para ambos os sexos<br>
+                    III. O valor da aposentadoria será de 60% da média dos salários-de-contribuição<br>
+                    IV. Acrescenta-se 2% por ano de contribuição que exceder 15 anos para mulher ou 20 anos para homem<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II, III e IV</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas estão incorretas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Aposentadoria por Idade - Art. 25 e 26 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 25 - Idade mínima de <strong>62 anos para mulher</strong> e <strong>65 anos para homem</strong>.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 25 - Tempo mínimo de contribuição de <strong>15 anos</strong> para ambos os sexos.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 26, §2º, I - Renda mensal inicial de <strong>60% da média aritmética</strong> de todos os salários-de-contribuição desde julho/1994.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Art. 26, §2º, I - Acrescentam-se <strong>2% por ano</strong> de contribuição que exceder:<br>
+                        • <strong>15 anos</strong> para mulher<br>
+                        • <strong>20 anos</strong> para homem<br><br>
+                        
+                        <strong>Cálculo prático:</strong><br>
+                        Mulher - 62 anos, 20 anos de contribuição, média de R$ 3.000,00:<br>
+                        60% + (5 anos extras × 2%) = 70% de R$ 3.000,00 = <strong>R$ 2.100,00</strong><br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Regras da Aposentadoria por Idade (EC 103/2019):</div>
+                            <strong>Idade:</strong> 62 anos (mulher) / 65 anos (homem)<br>
+                            <strong>Tempo mínimo:</strong> 15 anos<br>
+                            <strong>Cálculo:</strong> 60% + 2% por ano excedente<br>
+                            <strong>Base:</strong> Média de 100% dos salários desde julho/1994<br>
+                            <strong>Teto:</strong> R$ 7.786,02 (2024)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="A" data-question="Auxílio por Incapacidade Temporária">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (Lei 8.213/1991) Sobre o auxílio por incapacidade temporária (antigo auxílio-doença), julgue o item: O auxílio por incapacidade temporária independe de carência quando a incapacidade for decorrente de acidente de trabalho, doença profissional ou doença do trabalho.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Auxílio por Incapacidade Temporária - Art. 24, §3º da Lei 8.213/91:</strong><br><br>
+                        
+                        O benefício <strong>depende de carência</strong> de 12 meses, <strong>exceto</strong> quando a incapacidade for decorrente de:<br>
+                        • <strong>Acidente de trabalho</strong> (de qualquer natureza)<br>
+                        • <strong>Doença profissional</strong><br>
+                        • <strong>Doença do trabalho</strong><br><br>
+                        
+                        <strong>Requisitos para concessão:</strong><br>
+                        1. Qualidade de segurado (ou período de graça)<br>
+                        2. Carência de 12 meses (salvo exceções acima)<br>
+                        3. Incapacidade temporária para o trabalho<br>
+                        4. Perícia médica confirmando a incapacidade<br><br>
+                        
+                        <strong>Valor do benefício:</strong><br>
+                        • <strong>91% do salário-de-benefício</strong> (Art. 29 da Lei 8.213/91)<br>
+                        • Salário-de-benefício = média dos últimos 12 salários-de-contribuição (regra geral)<br><br>
+                        
+                        <strong>Duração:</strong> Enquanto durar a incapacidade, até 24 meses (prorrogáveis por mais 24 meses em casos especiais).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Isenção de Carência:</div>
+                            <strong>Regra geral:</strong> 12 meses de contribuição<br>
+                            <strong>Exceção:</strong> Acidente de trabalho, doença profissional/do trabalho<br>
+                            <strong>Valor:</strong> 91% do salário-de-benefício<br>
+                            <strong>Limite:</strong> 24 meses (prorrogáveis)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="E" data-question="Pensão por Morte - EC 103/2019">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (EC 103/2019) Sobre a pensão por morte após a Reforma da Previdência, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A pensão por morte é devida apenas ao cônjuge e filhos menores de 18 anos</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O valor da pensão é de 100% da aposentadoria do segurado falecido</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A pensão por morte exige carência mínima de 18 contribuições mensais</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O cônjuge companheiro perde o direito à pensão se contrair novas núpcias após 90 dias do falecimento</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A pensão por morte é composta de cota familiar de 50% mais 10% por dependente, até o máximo de 100%</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Pensão por Morte - Art. 23 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> Dependentes podem ser:<br>
+                        • Classe I: Cônjuge, companheiro, filho menor de 21 anos ou inválido, enteado<br>
+                        • Classe II: Pais (se dependentes econômicos)<br>
+                        • Classe III: Irmãos menores de 21 anos ou inválidos (se dependentes)<br><br>
+                        
+                        <strong>B) Errado:</strong> O valor não é 100% fixo. É calculado por cotas:<br>
+                        • <strong>50%</strong> (cota familiar) + <strong>10%</strong> por dependente<br>
+                        • Máximo: <strong>100%</strong> da aposentadoria ou do salário-de-benefício que teria direito<br><br>
+                        
+                        <strong>C) Errado:</strong> Pensão por morte é <strong>isenção de carência</strong> (Art. 24, §4º, I).<br><br>
+                        
+                        <strong>D) Errado:</strong> O cônjuge/companheiro <strong>não perde</strong> a pensão por nova união. A EC 103/2019 revogou essa causa de extinção.<br><br>
+                        
+                        <strong>E) CORRETO:</strong> É a regra das cotas do Art. 23 da EC 103/2019.<br><br>
+                        
+                        <strong>Exemplo:</strong> Segurado falecido deixou cônjuge e 3 filhos:<br>
+                        50% + (4 dependentes × 10%) = 90% da aposentadoria<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Pensão por Morte (EC 103/2019):</div>
+                            <strong>Cálculo:</strong> 50% + 10% por dependente (máx. 100%)<br>
+                            <strong>Carência:</strong> Isenta<br>
+                            <strong>Idade limite:</strong> 21 anos (filhos/enteados/irmãos)<br>
+                            <strong>Extinção:</strong> Não perde por nova união<br>
+                            <strong>Valor mínimo:</strong> 1 salário mínimo (Art. 235, §7º IN 128/2022)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="C" data-question="Salário-de-Contribuição - Teto e Piso">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (Lei 8.212/1991 e Lei 8.213/1991) Sobre o salário-de-contribuição, analise as assertivas:<br><br>
+                    I. O salário-de-contribuição é o valor sobre o qual incidem as contribuições previdenciárias<br>
+                    II. O salário-de-contribuição não pode ser inferior ao salário-mínimo nem superior ao teto previdenciário<br>
+                    III. Para o contribuinte individual, o salário-de-contribuição é o valor declarado pelo próprio segurado<br>
+                    IV. O teto do salário-de-contribuição é o mesmo para todos os segurados do RGPS<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I, II, III e IV</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas estão incorretas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Salário-de-Contribuição - Art. 201, §9º CF e Art. 7º da Lei 8.212/91:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> É a base de cálculo das contribuições previdenciárias, definido no Art. 7º da Lei 8.212/91.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 7º, §1º da Lei 8.212/91: não pode ser <strong>inferior ao salário-mínimo</strong> nem <strong>superior ao limite máximo</strong> (teto).<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Para contribuinte individual (autônomo, empresário), o salário-de-contribuição é o valor <strong>declarado</strong>, respeitado o piso e o teto.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> O teto é <strong>único</strong> para todos os segurados do RGPS (atualmente R$ 7.786,02 - 2024), conforme Art. 201, §9º CF.<br><br>
+                        
+                        <strong>Valores atualizados (2024):</strong><br>
+                        • <strong>Piso:</strong> R$ 1.412,00 (salário-mínimo)<br>
+                        • <strong>Teto:</strong> R$ 7.786,02<br><br>
+                        
+                        <strong>Exceção:</strong> Empregado doméstico com salário inferior ao mínimo: contribui sobre o valor real, mas recolhimento proporcional.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Salário-de-Contribuição:</div>
+                            <strong>Piso:</strong> 1 salário-mínimo (R$ 1.412,00)<br>
+                            <strong>Teto:</strong> R$ 7.786,02 (2024)<br>
+                            <strong>Empregado:</strong> Remuneração efetiva<br>
+                            <strong>Contribuinte individual:</strong> Valor declarado<br>
+                            <strong>Segurado especial:</strong> Valor da comercialização
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="B" data-question="Período de Graça">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (Lei 8.213/1991) Sobre o período de graça na Previdência Social, julgue o item: O período de graça é prorrogado automaticamente para 36 meses quando o segurado estiver desempregado registrado no Ministério do Trabalho.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva confunde os prazos do período de graça.<br><br>
+                        
+                        <strong>Período de Graça - Art. 13 da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Regra geral:</strong> <strong>12 meses</strong> após a cessação das contribuições.<br><br>
+                        
+                        <strong>Prorrogação para 24 meses:</strong> Se o segurado tiver <strong>mais de 120 contribuições</strong> sem interrupção ou pelo menos <strong>120 contribuições</strong> na relação de trabalho que cessou.<br><br>
+                        
+                        <strong>Prorrogação para 36 meses:</strong> Se o segurado estiver <strong>desempregado registrado no Ministério do Trabalho</strong> <strong>E</strong> tiver <strong>mais de 120 contribuições</strong>.<br><br>
+                        
+                        <strong>Portanto, a assertiva está errada porque:</strong><br>
+                        • Não é automático<br>
+                        • Exige o requisito acumulativo de ter mais de 120 contribuições<br>
+                        • O desemprego registrado sozinho não garante 36 meses<br><br>
+                        
+                        <strong>Importância:</strong> Durante o período de graça, o segurado mantém direito a benefícios como pensão por morte e auxílio-reclusão.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        O período de graça de 36 meses exige <strong>cumulativamente</strong>: desemprego registrado no Ministério do Trabalho <strong>E</strong> mais de 120 contribuições. Não é automático apenas pelo desemprego.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="D" data-question="Aposentadoria por Incapacidade Permanente">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (EC 103/2019) Sobre a aposentadoria por incapacidade permanente (antiga aposentadoria por invalidez), analise as assertivas:<br><br>
+                    I. A aposentadoria por incapacidade permanente exige carência de 12 meses<br>
+                    II. O valor será de 100% do salário-de-benefício quando decorrente de acidente de trabalho<br>
+                    III. Na forma não acidentária, o cálculo é de 60% + 2% por ano acima de 20 anos de contribuição<br>
+                    IV. O segurado pode exercer atividade remunerada que não comprometa a recuperação<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Aposentadoria por Incapacidade Permanente - Art. 26 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>I. ERRADO:</strong> A carência é de <strong>12 meses</strong> apenas na forma <strong>não acidentária</strong>. Na forma acidentária, há <strong>isenção de carência</strong>.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 26, §3º, II: quando decorrente de acidente de trabalho, doença profissional ou doença do trabalho, o valor é de <strong>100% do salário-de-benefício</strong>.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 26, §2º, I: na forma não acidentária, <strong>60% + 2% por ano</strong> de contribuição que exceder 20 anos (limite de 100%).<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Art. 42 da Lei 8.213/91: o aposentado por incapacidade pode exercer atividade que lhe seja compatível e não prejudique a recuperação, <strong>sem perda do benefício</strong>.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aposentadoria por Incapacidade:</div>
+                            <strong>Carência:</strong> 12 meses (isenção se acidente)<br>
+                            <strong>Não acidentária:</strong> 60% + 2% por ano > 20 anos<br>
+                            <strong>Acidentária:</strong> 100% do salário-de-benefício<br>
+                            <strong>Trabalho:</strong> Permitido se compatível<br>
+                            <strong>Revisão:</strong> A cada 2 anos (não acidentária)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="A" data-question="Salário-Maternidade">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (Lei 8.213/1991) Sobre o salário-maternidade, julgue o item: A segurada empregada tem direito ao salário-maternidade no valor integral da sua remuneração, mantida a contribuição ao INSS pelo empregador durante o período de afastamento.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Salário-Maternidade - Art. 39 da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Para empregada (e trabalhadora avulsa):</strong><br>
+                        • <strong>Valor integral</strong> da remuneração do mês do afastamento<br>
+                        • Mantida a remuneração habitual, inclusive adicionais<br>
+                        • <strong>Isenta de carência</strong> (Art. 24, §4º, II)<br>
+                        • Empregador continua recolhendo contribuição<br><br>
+                        
+                        <strong>Duração:</strong><br>
+                        • <strong>120 dias</strong> (licença-maternidade)<br>
+                        • <strong>180 dias</strong> se empresa doar programa Pronatec/Cidadania (lei 11.770/2008)<br>
+                        • <strong>14 dias</strong> para cônjuge companheiro (licença-paternidade)<br><br>
+                        
+                        <strong>Para contribuinte individual e segurada facultativa:</strong><br>
+                        • Valor = <strong>1/12 da soma dos últimos 12 salários-de-contribuição</strong><br>
+                        • Carência de <strong>10 meses</strong><br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Salário-Maternidade:</div>
+                            <strong>Empregada:</strong> Remuneração integral (isenta)<br>
+                            <strong>Avulsa:</strong> Remuneração integral (isenta)<br>
+                            <strong>Contribuinte individual:</strong> Média dos 12 últimos (10 meses carência)<br>
+                            <strong>Duração:</strong> 120 dias (180 dias se adesão ao Pronatec)<br>
+                            <strong>Paternidade:</strong> 14 dias
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="E" data-question="Contribuições - Alíquotas Progressivas">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (EC 103/2019 e Lei 8.212/1991) Sobre as alíquotas de contribuição do segurado empregado após a Reforma da Previdência, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A alíquota é fixa em 11% para todos os salários</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A alíquota é regressiva, diminuindo conforme aumenta a renda</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A alíquota máxima é de 14% aplicada apenas sobre o valor excedente ao teto</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A alíquota é de 7,5% para salários até 4 salários mínimos</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A alíquota varia de 7,5% a 14%, conforme faixa salarial, sendo progressiva</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Alíquotas Progressivas - Art. 28 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> Não é fixa. Antes da EC 103/2019 era 8% a 11%, agora é progressiva de 7,5% a 14%.<br><br>
+                        
+                        <strong>B) Errado:</strong> É <strong>progressiva</strong> (quem ganha mais paga mais percentualmente), não regressiva.<br><br>
+                        
+                        <strong>C) Errado:</strong> A alíquota de 14% incide sobre <strong>toda a remuneração</strong> naquela faixa, não apenas sobre o excedente (sistema de faixas).<br><br>
+                        
+                        <strong>D) Errado:</strong> 7,5% é apenas para <strong>até 1 salário mínimo</strong>. De 1 a 4 salários mínimos é 9%.<br><br>
+                        
+                        <strong>E) CORRETO:</strong> É progressiva, variando conforme as faixas:<br><br>
+                        
+                        <strong>Alíquotas atualizadas (2024):</strong><br>
+                        • <strong>Até R$ 1.412,00:</strong> 7,5%<br>
+                                                • <strong>R$ 1.412,01 a R$ 2.666,68:</strong> 9%<br>
+                        • <strong>R$ 2.666,69 a R$ 4.000,03:</strong> 12%<br>
+                        • <strong>R$ 4.000,04 a R$ 7.786,02:</strong> 14%<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Alíquotas Progressivas (EC 103/2019):</div>
+                            <strong>Até 1 SM:</strong> 7,5%<br>
+                            <strong>1 a 4 SM:</strong> 9%<br>
+                            <strong>4 a 7 SM:</strong> 12%<br>
+                            <strong>Acima de 7 SM:</strong> 14%<br>
+                            <strong>Teto:</strong> R$ 7.786,02<br>
+                            <strong>Progressividade:</strong> Quem ganha mais, contribui mais percentualmente
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="B" data-question="Crimes Previdenciários - Lei 8.212/1991">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (Lei 8.212/1991) Sobre os crimes previdenciários, julgue o item: A sonegação de contribuição previdenciária, quando o valor sonegado exceder R$ 50.000,00, configura crime com pena de reclusão de 2 a 5 anos e multa.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva confunde os valores e penas dos crimes previdenciários.<br><br>
+                        
+                        <strong>Crimes Previdenciários - Art. 37 a 44 da Lei 8.212/91:</strong><br><br>
+                        
+                        <strong>Sonegação de contribuição (Art. 37):</strong><br>
+                        • <strong>Valor sonegado > R$ 50.000,00:</strong> Reclusão de <strong>4 a 8 anos</strong> e multa (não 2 a 5 anos)<br>
+                        • <strong>Valor sonegado ≤ R$ 50.000,00:</strong> Detenção de 6 meses a 2 anos e multa<br><br>
+                        
+                        <strong>Outros crimes previdenciários:</strong><br>
+                        • <strong>Fraude para recebimento de benefício (Art. 38):</strong> Reclusão de 2 a 6 anos e multa<br>
+                        • <strong>Falsa identidade (Art. 39):</strong> Reclusão de 2 a 6 anos e multa<br>
+                        • <strong>Corrupção de perito (Art. 40):</strong> Reclusão de 2 a 6 anos e multa<br>
+                        • <strong>Fraude de agência (Art. 41):</strong> Reclusão de 2 a 6 anos e multa<br><br>
+                        
+                        <strong>Observação:</strong> A Lei 13.964/2019 (Pacote Anti-Crime) alterou algumas penas, mas manteve a estrutura.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        Sonegação > R$ 50.000,00: <strong>Reclusão de 4 a 8 anos</strong> (não 2 a 5 anos). A pena de 2 a 5 anos não existe nos crimes previdenciários da Lei 8.212/91.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="C" data-question="Aposentadoria por Tempo de Contribuição - Regras de Transição">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (EC 103/2019) Sobre as regras de transição para aposentadoria por tempo de contribuição, analise as assertivas:<br><br>
+                    I. O pedágio de 50% sobre o tempo faltante aplica-se a quem estava a 2 anos ou menos de cumprir os requisitos anteriores à EC 103/2019<br>
+                    II. A regra dos pontos (idade + tempo) exige mínimo de 30 anos de contribuição para mulher<br>
+                    III. O sistema de capitalização é obrigatório para todos os segurados a partir de 2022<br>
+                    IV. A regra 100% permite aposentadoria integral sem redutor<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Regras de Transição - Art. 17 a 21 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Pedágio de 50% (Art. 19): para quem faltavam <strong>até 2 anos</strong> para cumprir os requisitos anteriores (30/35 anos) até 13/11/2019.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Regra dos pontos (Art. 17): mínimo de <strong>30 anos</strong> para mulher e <strong>35 anos</strong> para homem, além da soma idade + tempo = pontos (mínimo 86/96).<br><br>
+                        
+                        <strong>III. ERRADO:</strong> O sistema de <strong>capitalização foi revogado</strong> antes de entrar em vigor. A EC 103/2019 previa, mas a Lei 14.331/2022 revogou.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Regra 100% (Art. 20): permite aposentadoria <strong>integral</strong> (100% da média) sem redutor de 60%, mas exige tempo mínimo maior (30/35 anos + pedágio).<br><br>
+                        
+                        <strong>Regras de transição vigentes:</strong><br>
+                        • <strong>Pedágio 50%:</strong> Para quem estava próximo de se aposentar<br>
+                        • <strong>Pontos:</strong> Sistema gradual de aumento da pontuação<br>
+                        • <strong>100%:</strong> Aposentadoria integral com pedágio de 100% do tempo faltante<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Regras de Transição:</div>
+                            <strong>Pedágio 50%:</strong> Faltavam até 2 anos em 13/11/2019<br>
+                            <strong>Pontos:</strong> 30/35 anos + soma idade+tempo<br>
+                            <strong>100%:</strong> Aposentadoria integral (sem redutor)<br>
+                            <strong>Capitalização:</strong> Revogada, nunca entrou em vigor
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="A" data-question="Auxílio-Reclusão">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (Lei 8.213/1991) Sobre o auxílio-reclusão, julgue o item: O auxílio-reclusão é devido aos dependentes do segurado recolhido à prisão em regime fechado, desde que não tenha deixado de exercer atividade remunerada em virtude de crime doloso.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Auxílio-Reclusão - Art. 43 da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Requisitos:</strong><br>
+                        1. <strong>Qualidade de segurado</strong> (ou período de graça)<br>
+                        2. <strong>Carência</strong> de 24 meses (Art. 24, caput)<br>
+                        3. <strong>Recolhimento</strong> a estabelecimento prisional em <strong>regime fechado</strong><br>
+                        4. <strong>Não ter deixado de exercer atividade</strong> em virtude de <strong>crime doloso</strong> (intencional)<br>
+                        5. Renda mensal familiar per capita <strong>inferior a 1/2 salário-mínimo</strong><br><br>
+                        
+                        <strong>Valor:</strong> 1 salário-mínimo dividido entre os dependentes, em cotas iguais.<br><br>
+                        
+                        <strong>Dependentes habilitados:</strong><br>
+                        • Cônjuge/companheiro<br>
+                        • Filhos menores de 21 anos ou inválidos<br>
+                        • Enteados e tutelados (sob as mesmas condições)<br><br>
+                        
+                        <strong>Extinção:</strong><br>
+                        • Soltura ou progressão de regime<br>
+                        • Inexistência de dependentes<br>
+                        • Óbito do segurado<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Auxílio-Reclusão:</div>
+                            <strong>Carência:</strong> 24 meses<br>
+                            <strong>Regime:</strong> Fechado obrigatoriamente<br>
+                            <strong>Restrição:</strong> Não ter cometido crime doloso<br>
+                            <strong>Renda familiar:</strong> Até 1/2 salário-mínimo per capita<br>
+                            <strong>Valor:</strong> 1 salário-mínimo (dividido entre dependentes)<br>
+                            <strong>Isenção:</strong> Não há isenção de carência
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="D" data-question="Segurado Especial - Trabalhador Rural">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (Lei 8.213/1991 e EC 103/2019) Sobre o segurado especial (trabalhador rural), assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O segurado especial contribui mensalmente com 20% sobre o valor da comercialização</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A aposentadoria por idade do segurado especial exige 55 anos para mulher e 60 anos para homem</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O tempo de serviço rural pode ser contado como tempo de contribuição apenas se houver recolhimento efetivo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O segurado especial é aquele que exerce atividade rural em regime de economia familiar, sem empregados permanentes</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O segurado especial não tem direito a auxílio por incapacidade temporária</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Segurado Especial - Art. 11, §2º da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Definição:</strong> É o trabalhador rural que exerce atividade em regime de <strong>economia familiar</strong>, <strong>sem empregados permanentes</strong>, podendo contar com <strong>auxílio dos membros da família</strong>.<br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> O segurado especial <strong>não recolhe contribuição mensal</strong>. A contribuição é feita mediante <strong>comercialização</strong> (2,1% sobre o valor da produção vendida).<br><br>
+                        
+                        <strong>B) Errado:</strong> Após a EC 103/2019, a idade para aposentadoria por idade do segurado especial é <strong>60 anos para mulher</strong> e <strong>65 anos para homem</strong> (igual ao urbano). Antes era 55/60.<br><br>
+                        
+                        <strong>C) Errado:</strong> O tempo de serviço rural <strong>antes de julho/1991</strong> pode ser contado como tempo de contribuição <strong>sem recolhimento</strong> (trabalho comprovado). Após 1991, exige recolhimento.<br><br>
+                        
+                        <strong>D) CORRETO:</strong> É a definição exata do segurado especial: economia familiar, sem empregados permanentes.<br><br>
+                        
+                        <strong>E) Errado:</strong> O segurado especial tem direito a <strong>todos os benefícios</strong> do RGPS, incluindo auxílio por incapacidade temporária.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Segurado Especial:</div>
+                            <strong>Definição:</strong> Economia familiar, sem empregados<br>
+                            <strong>Contribuição:</strong> 2,1% na comercialização (não mensal)<br>
+                            <strong>Idade:</strong> 60 anos (mulher) / 65 anos (homem) - pós EC 103/2019<br>
+                            <strong>Tempo:</strong> 15 anos de atividade rural<br>
+                            <strong>Benefícios:</strong> Todos os do RGPS
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="B" data-question="Cálculo do Salário-de-Benefício">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (Lei 8.213/1991 e EC 103/2019) Sobre o cálculo do salário-de-benefício, julgue o item: Para o auxílio por incapacidade temporária, o salário-de-benefício é calculado com base na média aritmética simples dos últimos 12 salários-de-contribuição.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva confunde as regras de cálculo.<br><br>
+                        
+                        <strong>Salário-de-Benefício - Art. 29 da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Regra geral (Art. 29, caput):</strong><br>
+                        Média aritmética simples dos <strong>últimos 36 salários-de-contribuição</strong> (não 12), observado o limite máximo.<br><br>
+                        
+                        <strong>Exceção - Auxílio por incapacidade temporária (Art. 29, §1º):</strong><br>
+                        Média dos <strong>últimos 12 salários-de-contribuição</strong> imediatamente anteriores ao início da incapacidade.<br><br>
+                        
+                        <strong>Portanto, a assertiva está ERRADA porque:</strong><br>
+                        • Ela diz que é a "regra geral" para o cálculo do salário-de-benefício<br>
+                        • Mas na verdade, a média de 12 meses é <strong>exceção</strong> apenas para o auxílio por incapacidade temporária<br>
+                        • A regra geral é de 36 meses<br><br>
+                        
+                        <strong>EC 103/2019 - Alteração para aposentadorias:</strong><br>
+                        • Aposentadorias: média de <strong>todos os salários desde julho/1994</strong> (descartando os 20% menores)<br>
+                        • Auxílio por incapacidade: manteve a média de 12 meses<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        A média de 12 meses é <strong>exceção</strong> apenas para o auxílio por incapacidade temporária. A regra geral do salário-de-benefício é média de 36 meses (ou todas as remunerações desde julho/1994 para aposentadorias pós-EC 103/2019).
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="C" data-question="Contribuinte Individual">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (Lei 8.212/1991) Sobre o contribuinte individual, analise as assertivas:<br><br>
+                    I. O contribuinte individual pode recolher contribuição sobre salário-de-contribuição entre 1 e 20 salários mínimos<br>
+                    II. A alíquota do contribuinte individual é de 20% sobre o valor declarado<br>
+                    III. O contribuinte individual pode optar por alíquota de 11% sem direito a contagem de tempo para aposentadoria por tempo de contribuição<br>
+                    IV. O segurado especial é uma modalidade de contribuinte individual<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Contribuinte Individual - Art. 11, §1º da Lei 8.213/91 e Art. 21 da Lei 8.212/91:</strong><br><br>
+                        
+                        <strong>I. ERRADO:</strong> O contribuinte individual pode declarar salário-de-contribuição entre <strong>1 salário-mínimo e o teto previdenciário</strong> (R$ 7.786,02), não 20 salários mínimos. O limite é o teto.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> A alíquota é de <strong>20%</strong> sobre o valor declarado (Art. 21, I da Lei 8.212/91).<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 21, §2º da Lei 8.212/91: permite alíquota de <strong>11%</strong> (ou 5% para baixa renda), mas <strong>sem contagem de tempo</strong> para aposentadoria por tempo de contribuição (apenas por idade).<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> O segurado especial é <strong>categoria à parte</strong> (Art. 11, §2º), não é modalidade de contribuinte individual. Tem regras próprias de contribuição (2,1% na comercialização).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Contribuinte Individual:</div>
+                            <strong>Alíquota padrão:</strong> 20%<br>
+                            <strong>Alíquota reduzida:</strong> 11% (sem tempo de contribuição)<br>
+                            <strong>Alíquota baixa renda:</strong> 5% (Lei 12.470/2011)<br>
+                            <strong>Base:</strong> Valor declarado entre piso e teto<br>
+                            <strong>Diferença do segurado especial:</strong> Não é contribuinte individual
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="A" data-question="Revisão da Vida Toda - Tema 1.234 STF">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (STF - Tema 1.234) Sobre a Revisão da Vida Toda, julgue o item: O Supremo Tribunal Federal, no Tema 1.234, decidiu ser constitucional a utilização de todos os salários de contribuição desde a primeira contribuição para o cálculo do benefício de aposentadoria.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Revisão da Vida Toda - STF, Tema 1.234 (ARE 1.424.411/SC):</strong><br><br>
+                        
+                        <strong>Decisão:</strong> Em 03/10/2023, o STF decidiu, por maioria (6x5), que é <strong>constitucional</strong> a revisão da vida toda, permitindo a utilização de <strong>todas as remunerações</strong> desde a primeira contribuição para o cálculo do benefício.<br><br>
+                        
+                        <strong>Impacto:</strong><br>
+                        • Beneficia segurados que tiveram salários mais altos no início da carreira<br>
+                        • Pode aumentar significativamente o valor da aposentadoria<br>
+                        • Aplica-se a aposentadorias concedidas com base na regra anterior à EC 103/2019<br><br>
+                        
+                        <strong>Como funciona:</strong><br>
+                        • Cálculo com <strong>todas as remunerações</strong> desde julho/1994 (ou desde o início das contribuições)<br>
+                        • Substitui a média dos 36 últimos meses (regra antiga) ou média desde julho/1994 com descarte dos 20% menores (EC 103/2019)<br>
+                        • Aplica-se a benefícios já concedidos (efeito retroativo)<br><br>
+                        
+                        <strong>Requisitos para pedido:</strong><br>
+                        • Aposentadoria concedida antes da EC 103/2019<br>
+                        • Comprovação de salários anteriores aos 36 meses anteriores à aposentadoria<br>
+                        • Entrada com ação judicial ou pedido administrativo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Revisão da Vida Toda:</div>
+                            <strong>Decisão:</strong> STF, 03/10/2023, Tema 1.234<br>
+                            <strong>Efeito:</strong> Constitucional<br>
+                            <strong>Cálculo:</strong> Todas as remunerações desde o início<br>
+                            <strong>Beneficiados:</strong> Quem teve salários altos no início da carreira<br>
+                            <strong>Aplicação:</strong> Retroativa para benefícios já concedidos
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="D" data-question="Decreto 3.048/1999 - Regulamento da Previdência">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (Decreto 3.048/1999) Sobre o Decreto 3.048/99 (Regulamento da Previdência Social), assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O Decreto 3.048/99 regulamenta apenas a Previdência Social, não abrangendo a saúde e assistência social</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O Decreto 3.048/99 foi revogado pela EC 103/2019</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O Decreto 3.048/99 trata exclusivamente de benefícios previdenciários, não regulamentando custeio</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O Decreto 3.048/99 aprova o Regulamento da Previdência Social, da Saúde e da Assistência Social, unificando as normas da Seguridade Social</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O Decreto 3.048/99 foi substituído pela IN INSS 128/2022</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Decreto 3.048/1999:</strong><br><br>
+                        
+                        <strong>Objeto:</strong> Aprova o <strong>Regulamento da Previdência Social, da Saúde e da Assistência Social</strong>, unificando em um único diploma as normas da Seguridade Social.<br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> O Decreto 3.048/99 regulamenta as <strong>três áreas</strong> da Seguridade Social: Previdência, Saúde e Assistência.<br><br>
+                        
+                        <strong>B) Errado:</strong> A EC 103/2019 <strong>não revogou</strong> o Decreto 3.048/99. Alterou dispositivos constitucionais, mas o decreto continua vigente (com adaptações).<br><br>
+                        
+                        <strong>C) Errado:</strong> O Decreto 3.048/99 regulamenta <strong>benefícios e custeio</strong>, incluindo contribuições (Título II - Organização e Custeio).<br><br>
+                        
+                        <strong>D) CORRETO:</strong> É a definição exata do Decreto 3.048/99: unificação das normas da Seguridade Social (Previdência, Saúde e Assistência).<br><br>
+                        
+                        <strong>E) Errado:</strong> A IN INSS 128/2022 <strong>regulamenta benefícios</strong> do Regime Geral de Previdência Social, mas <strong>não substitui</strong> o Decreto 3.048/99, que tem natureza de decreto presidencial e abrange áreas além da Previdência.<br><br>
+                        
+                        <strong>Estrutura do Decreto 3.048/99:</strong><br>
+                        • Título I: Disposições Preliminares<br>
+                        • Título II: Organização e Custeio<br>
+                        • Título III: Benefícios da Previdência Social<br>
+                        • Título IV: Assistência Social<br>
+                        • Título V: Saúde<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Decreto 3.048/99:</div>
+                            <strong>Natureza:</strong> Regulamento da Seguridade Social<br>
+                            <strong>Abrangência:</strong> Previdência, Saúde e Assistência<br>
+                            <strong>Status:</strong> Vigente (com adaptações)<br>
+                            <strong>Relação com IN 128/2022:</strong> A IN detalha benefícios, mas não revoga o Decreto
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Salário-Família">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (Lei 8.213/1991) Sobre o salário-família, julgue o item: O salário-família é devido ao segurado empregado ou trabalhador avulso, por cada filho ou equivalente de até 14 anos de idade ou inválido de qualquer idade.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva está incorreta quanto à idade limite.<br><br>
+                        
+                        <strong>Salário-Família - Art. 40 da Lei 8.213/91:</strong><br><br>
+                        
+                        <strong>Requisitos:</strong><br>
+                        • Segurado <strong>empregado</strong> ou <strong>trabalhador avulso</strong><br>
+                        • <strong>Carência isenta</strong> (Art. 24, §4º, III)<br>
+                        • Filho ou equivalente até <strong>14 anos incompletos</strong> ou <strong>inválido de qualquer idade</strong><br><br>
+                        
+                        <strong>O erro na assertiva:</strong><br>
+                        • A assertiva diz "até 14 anos" (inclusive)<br>
+                        • A lei diz "até 14 anos <strong>incompletos</strong>" (ou seja, até completar 14 anos, com 13 anos e 11 meses)<br><br>
+                        
+                        <strong>Valor (2024):</strong><br>
+                        • <strong>R$ 62,04</strong> por filho (até 5 filhos)<br>
+                        • Pago mensalmente junto com a remuneração<br><br>
+                        
+                        <strong>Condições para o filho:</strong><br>
+                        • Ser dependente econômico do segurado<br>
+                        • Não estar emancipado<br>
+                        • Estar matriculado na escola (se maior de 7 anos)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        O salário-família é devido por filho até <strong>14 anos incompletos</strong> (não "até 14 anos"). A diferença é crucial: o benefício cessa no mês em que o filho completa 14 anos, não se estendendo durante todo o ano dos 14 anos.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="E" data-question="Aposentadoria por Tempo de Contribuição - Regra Permanente">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (EC 103/2019) Sobre a aposentadoria por tempo de contribuição na regra permanente, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A aposentadoria por tempo de contribuição foi extinta pela EC 103/2019</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O tempo mínimo de contribuição é de 25 anos para mulher e 30 anos para homem</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O valor da aposentadoria será de 100% da média dos salários-de-contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Não há idade mínima exigida para a aposentadoria por tempo de contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O tempo mínimo é de 30 anos para mulher e 35 anos para homem, com cálculo de 60% + 2% por ano excedente a 15 anos</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Aposentadoria por Tempo de Contribuição - Art. 26 da EC 103/2019:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> A aposentadoria por tempo de contribuição <strong>não foi extinta</strong>. Continua existindo, mas com novas regras de cálculo e idade mínima.<br><br>
+                        
+                        <strong>B) Errado:</strong> O tempo mínimo é de <strong>30 anos para mulher</strong> e <strong>35 anos para homem</strong> (não 25/30).<br><br>
+                        
+                        <strong>C) Errado:</strong> O valor <strong>não é 100%</strong> automático. É <strong>60% + 2% por ano</strong> que exceder 15 anos de contribuição (limite de 100%).<br><br>
+                        
+                        <strong>D) Errado:</strong> Há <strong>idade mínima</strong> progressiva: <strong>62 anos para mulher</strong> e <strong>65 anos para homem</strong> (Art. 25, §1º da EC 103/2019).<br><br>
+                        
+                        <strong>E) CORRETO:</strong> É a regra permanente da aposentadoria por tempo de contribuição:<br>
+                        • <strong>Tempo:</strong> 30 anos (mulher) / 35 anos (homem)<br>
+                        • <strong>Idade:</strong> 62 anos (mulher) / 65 anos (homem)<br>
+                        • <strong>Cálculo:</strong> 60% + 2% por ano > 15 anos<br>
+                        • <strong>Base:</strong> Média de todas as remunerações desde julho/1994, descartando os 20% menores<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aposentadoria por Tempo (Regra Permanente):</div>
+                            <strong>Tempo mínimo:</strong> 30 anos (M) / 35 anos (H)<br>
+                            <strong>Idade mínima:</strong> 62 anos (M) / 65 anos (H)<br>
+                            <strong>Cálculo:</strong> 60% + 2% por ano > 15 anos<br>
+                            <strong>Máximo:</strong> 100% da média<br>
+                            <strong>Base:</strong> Todas as remunerações desde julho/1994 (descarte 20% menores)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • Questões sobre segurados: Dominar Art. 11 da Lei 8.213/91<br>
+                • Questões sobre benefícios: Focar no Art. 25 a 45 da Lei 8.213/91<br>
+                • Questões sobre Reforma (EC 103/2019): Memorizar idades, tempos e cálculos<br>
+                • Questões sobre carência: Isenções são cobradas com frequência<br>
+                • Questões sobre contribuições: Alíquotas progressivas e salário-de-contribuição<br>
+                • Questões sobre crimes: Valores e penas da Lei 8.212/91<br>
+                • Questões sobre cálculos: Salário-de-benefício e regras de transição
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Legislação Previdenciária. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê um exemplo prático do cotidiano para eu entender melhor
+4. Alguma dica de memorização se aplicável
+5. Qual artigo da Lei 8.213/91, Lei 8.212/91, EC 103/2019 ou outra norma se aplica
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina a Legislação Previdenciária e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise as regras da EC 103/2019 e os benefícios da Lei 8.213/91.';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nos conceitos básicos de segurados, carência e benefícios.';
+            } else {
+                message = '⚠️ É preciso estudar mais. A Legislação Previdenciária é fundamental para o concurso do INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
