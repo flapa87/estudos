@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Empregado Doméstico - Prova 2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Simulado INSS 2025 - Prova 2</h1>
+            <p>Empregado Doméstico - 20 Questões Inéditas (Lei Complementar 150/2015 e Previdência Social)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="B" data-question="Conceito de Empregado Doméstico">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o conceito legal de empregado doméstico, analise: Maria trabalha como diarista, realizando serviços de limpeza em três residências diferentes, sem vínculo de exclusividade com nenhuma delas. Segundo a Lei Complementar 150/2015, Maria é considerada empregada doméstica?
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Sim, pois realiza trabalho doméstico em residências</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Não, pois falta o requisito da exclusividade e continuidade do trabalho para o mesmo empregador</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Sim, desde que receba pelo menos um salário mínimo mensal somando todas as diárias</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Não, apenas se trabalhar menos de 3 dias por semana em cada residência</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Sim, independentemente da exclusividade, desde que preste serviços de natureza doméstica</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 1º:</strong> Considera-se empregado doméstico aquele que presta serviços de natureza <strong>contínua</strong> e de <strong>finalidade não lucrativa</strong> à pessoa ou à família, no âmbito residencial destas, <strong>sob a dependência e subordinação de um empregador</strong>.<br><br>
+                        
+                        <strong>Requisitos essenciais:</strong><br>
+                        • <strong>Exclusividade/Continuidade:</strong> Vínculo permanente com um único empregador<br>
+                        • <strong>Subordinação:</strong> Dependência direta do empregador<br>
+                        • <strong>Natureza doméstica:</strong> Serviços no âmbito residencial<br>
+                        • <strong>Não lucratividade:</strong> Finalidade residencial, não comercial<br><br>
+                        
+                        <strong>Diaristas não são empregadas domésticas:</strong> Trabalham para vários empregadores sem vínculo de exclusividade, configurando autônomos ou trabalhadores avulsos.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Diferença crucial:</div>
+                            <strong>Empregado doméstico:</strong> Vínculo exclusivo e contínuo com um empregador<br>
+                            <strong>Diarista:</strong> Presta serviços esporádicos para vários empregadores<br>
+                            <strong>Base legal:</strong> Art. 1º da LC 150/2015
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="C" data-question="Jornada de Trabalho do Empregado Doméstico">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre a jornada de trabalho do empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A jornada máxima é de 8 horas diárias e 44 horas semanais, sem possibilidade de compensação</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O empregado doméstico não tem direito a intervalo para refeição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A jornada máxima é de 8 horas diárias e 44 horas semanais, podendo haver regime de compensação de jornada mediante acordo escrito</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A jornada é de 6 horas diárias e 36 horas semanais, diferente dos demais trabalhadores</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Não há limite máximo de jornada para empregados domésticos que residem no local de trabalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 6º:</strong> A jornada de trabalho do empregado doméstico não excederá de <strong>8 horas diárias</strong> e <strong>44 horas semanais</strong>.<br><br>
+                        
+                        <strong>Compensação de Jornada (Art. 6º, §1º):</strong> É permitida a compensação de horários, mediante <strong>acordo escrito</strong> entre empregado e empregador, observado o limite máximo de 10 horas diárias.<br><br>
+                        
+                        <strong>Intervalo para Refeição (Art. 6º, §2º):</strong> O empregado tem direito a intervalo de <strong>1 a 2 horas</strong> para refeição, quando o trabalho exceder 6 horas diárias.<br><br>
+                        
+                        <strong>Empregado residente:</strong> Mesmo residindo no local, há limite de jornada. O período de descanso não conta como jornada.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Jornada do Empregado Doméstico:</div>
+                            <strong>Limite normal:</strong> 8h diárias / 44h semanais<br>
+                            <strong>Compensação:</strong> Até 10h diárias (com acordo)<br>
+                            <strong>Intervalo:</strong> 1-2h para refeição (jornada > 6h)<br>
+                            <strong>Base legal:</strong> Art. 6º LC 150/2015
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="A" data-question="Contribuição Previdenciária do Empregador Doméstico">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (Lei 8.212/1991 e LC 150/2015) Sobre a contribuição previdenciária do empregador doméstico, julgue o item: O empregador doméstico recolhe contribuição previdenciária de 8% sobre a remuneração paga ao empregado, sendo que esse percentual foi reduzido de 12% para 8% pela Lei Complementar 150/2015.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Histórico da Alíquota:</strong><br><br>
+                        
+                        <strong>Antes da LC 150/2015:</strong> A alíquota era de 12% sobre a remuneração (Art. 22, §5º da Lei 8.212/91, redação anterior).<br><br>
+                        
+                        <strong>Após a LC 150/2015:</strong> A alíquota foi <strong>reduzida para 8%</strong> (Art. 28 da LC 150/2015, que alterou o Art. 22, §5º da Lei 8.212/91).<br><br>
+                        
+                        <strong>Atualmente:</strong><br>
+                        • <strong>Empregador doméstico:</strong> 8% sobre a remuneração<br>
+                        • <strong>Empregado doméstico:</strong> 8% sobre a remuneração (alíquota do trabalhador)<br>
+                        • <strong>GPS (Guia da Previdência Social):</strong> Recolhimento mensal unificado<br><br>
+                        
+                        <strong>Observação:</strong> A redução para 8% foi uma das principais conquistas da LC 150/2015, visando reduzir a informalidade no setor.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Evolução da Alíquota:</div>
+                            <strong>Antes de 2015:</strong> 12% para o empregador<br>
+                            <strong>Após LC 150/2015:</strong> 8% para o empregador<br>
+                            <strong>Empregado:</strong> 8% (sempre foi, progressiva atualmente)<br>
+                            <strong>Objetivo:</strong> Incentivar a formalização
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="D" data-question="Adicional Noturno e Horas Extras">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre o adicional noturno e horas extras do empregado doméstico, analise as assertivas:<br><br>
+                    I. O empregado doméstico tem direito a adicional noturno de 20% sobre a hora normal<br>
+                    II. As horas extras devem ser pagas com acréscimo de 50% sobre a hora normal<br>
+                    III. O adicional noturno e as horas extras são devidos apenas se houver previsão no contrato de trabalho<br>
+                    IV. O empregado doméstico residente tem direito a folga compensatória pelas horas extras trabalhadas<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Arts. 7º e 8º:</strong><br><br>
+                        
+                        <strong>I. CORRETO (Art. 8º):</strong> O trabalho noturno (entre 22h e 5h) tem acréscimo de <strong>20%</strong> sobre a hora normal.<br><br>
+                        
+                        <strong>II. CORRETO (Art. 7º):</strong> As horas excedentes à jornada normal têm acréscimo de <strong>50%</strong> sobre a hora normal.<br><br>
+                        
+                        <strong>III. ERRADO:</strong> Adicional noturno e horas extras são <strong>direitos legais</strong>, independentemente de previsão contratual. Não podem ser suprimidos por acordo.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> O empregado doméstico residente tem direito a <strong>folga compensatória</strong> ou pagamento das horas extras (Art. 7º, §2º).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Adicionais do Empregado Doméstico:</div>
+                            <strong>Adicional noturno:</strong> 20% (22h às 5h)<br>
+                            <strong>Horas extras:</strong> +50% sobre a hora normal<br>
+                            <strong>Natureza:</strong> Direitos irrenunciáveis<br>
+                            <strong>Compensação:</strong> Possível mediante acordo
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="B" data-question="13º Salário do Empregado Doméstico">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre o 13º salário do empregado doméstico, julgue o item: O empregado doméstico tem direito ao 13º salário, sendo que a gratificação natalina deve ser paga integralmente até o dia 20 de dezembro de cada ano.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na data!</strong> O 13º salário do empregado doméstico segue regra diferente dos demais trabalhadores.<br><br>
+                        
+                        <strong>Lei Complementar 150/2015 - Art. 16:</strong> O empregado doméstico tem direito à <strong>gratificação natalina</strong> (13º salário), calculada com base na remuneração integral de dezembro.<br><br>
+                        
+                        <strong>Prazo de pagamento (Art. 16, §1º):</strong><br>
+                        • <strong>Primeira parcela:</strong> Até o dia <strong>30 de novembro</strong><br>
+                        • <strong>Segunda parcela:</strong> Até o dia <strong>20 de dezembro</strong><br><br>
+                        
+                        <strong>Diferença para CLT:</strong> Para empregados urbanos (CLT), a primeira parcela é até 30 de novembro e a segunda até 20 de dezembro. Para domésticos, a LC 150/2015 manteve o mesmo prazo, mas o enunciado da questão diz "integralmente até 20 de dezembro", o que está <strong>errado</strong> porque pode ser parcelado.<br><br>
+                        
+                        <strong>Correção:</strong> O 13º pode ser pago em <strong>duas parcelas</strong>, não necessariamente integral até 20/12.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>13º salário doméstico:</strong> Pode ser parcelado<br>
+                            <strong>1ª parcela:</strong> Até 30/11<br>
+                            <strong>2ª parcela:</strong> Até 20/12<br>
+                            <strong>Integral:</strong> Não é obrigatório pagar de uma vez
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="C" data-question="Férias do Empregado Doméstico">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre as férias do empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado doméstico tem direito a 30 dias de férias após cada 6 meses de trabalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        < <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O empregado doméstico não tem direito a férias, pois a LC 150/2015 não previu esse benefício</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregado doméstico tem direito a 30 dias de férias após cada 12 meses de trabalho, com acréscimo de 1/3 constitucional</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">As férias do empregado doméstico são de 20 dias úteis, sem direito ao terço constitucional</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O empregado doméstico residente não tem direito a férias remuneradas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 17:</strong> O empregado doméstico tem direito a <strong>30 dias</strong> de férias remuneradas após cada período de <strong>12 meses</strong> de trabalho (acesso), com direito ao <strong>acréscimo de 1/3</strong> sobre o valor da remuneração.<br><br>
+                        
+                        <strong>Requisitos:</strong><br>
+                        • <strong>Aquisitivo:</strong> 12 meses de trabalho (período aquisitivo)<br>
+                        • <strong>Concessivo:</strong> 12 meses subsequentes para gozo (período concessivo)<br>
+                        • <strong>Remuneração:</strong> Valor integral + 1/3 constitucional<br><br>
+                        
+                        <strong>Fraciomamento:</strong> As férias podem ser divididas em <strong>até 3 períodos</strong>, sendo que um deles não pode ser inferior a 14 dias corridos e os demais não podem ser inferiores a 5 dias corridos cada (Art. 17, §1º).<br><br>
+                        
+                        <strong>Empregado residente:</strong> Também tem direito a férias, devendo gozá-las fora do local de trabalho (ou receber em dobro se não sair).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Férias do Empregado Doméstico:</div>
+                            <strong>Duração:</strong> 30 dias corridos<br>
+                            <strong>Aquisitivo:</strong> 12 meses de trabalho<br>
+                            <strong>1/3 constitucional:</strong> Direito garantido<br>
+                            <strong>Fraciomamento:</strong> Até 3 períodos<br>
+                            <strong>Residente:</strong> Deve sair do local ou receber em dobro
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="A" data-question="FGTS para Empregado Doméstico">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (LC 150/2015 e Lei 8.036/1990) Sobre o FGTS para empregado doméstico, julgue o item: O empregador doméstico é obrigado a depositar o FGTS para o empregado doméstico, com alíquota de 8% sobre a remuneração mensal.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 24:</strong> O empregado doméstico tem direito ao <strong>FGTS</strong> (Fundo de Garantia do Tempo de Serviço).<br><br>
+                        
+                        <strong>Alíquota:</strong> <strong>8%</strong> sobre a remuneração mensal do empregado.<br><br>
+                        
+                        <strong>Histórico:</strong> Antes da LC 150/2015, o empregado doméstico <strong>não tinha</strong> direito ao FGTS. A LC 150/2015 estendeu esse benefício, equiparando os domésticos aos demais trabalhadores.<br><br>
+                        
+                        <strong>Depósitos:</strong><br>
+                        • <strong>Prazo:</strong> Até o dia 7 de cada mês (referente ao mês anterior)<br>
+                        • <strong>Conta vinculada:</strong> Aberta automaticamente pela Caixa Econômica Federal<br>
+                        • <strong>Rescisão:</strong> Liberação em caso de dispensa sem justa causa, falecimento, aposentadoria, entre outros<br><br>
+                        
+                        <strong>Multa rescisória:</strong> Em caso de dispensa sem justa causa, o empregador paga multa de <strong>40%</strong> sobre o saldo do FGTS.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 FGTS do Empregado Doméstico:</div>
+                            <strong>Alíquota:</strong> 8% sobre remuneração<br>
+                            <strong>Depósito:</strong> Até dia 7 do mês seguinte<br>
+                            <strong>Conquista:</strong> LC 150/2015<br>
+                            <strong>Multa rescisória:</strong> 40% (dispensa sem justa causa)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="E" data-question="Seguro-Desemprego do Empregado Doméstico">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (LC 150/2015 e Lei 7.998/1990) Sobre o seguro-desemprego do empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado doméstico não tem direito ao seguro-desemprego</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O seguro-desemprego para domésticos foi extinto pela Reforma Trabalhade 2017</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregado doméstico tem direito ao seguro-desemprego desde que tenha 24 meses de vínculo com o mesmo empregador</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O seguro-desemprego do empregado doméstico é pago pelo empregador, não pelo FAT</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O empregado doméstico tem direito ao seguro-desemprego desde que tenha 15 meses de trabalho nos últimos 24 meses, com recolhimento das contribuições</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 25:</strong> O empregado doméstico tem direito ao <strong>seguro-desemprego</strong> nas mesmas condições dos demais trabalhadores.<br><br>
+                        
+                        <strong>Requisitos para o seguro-desemprego:</strong><br>
+                        • <strong>Tempo de trabalho:</strong> Mínimo de <strong>15 meses</strong> nos últimos <strong>24 meses</strong><br>
+                        • <strong>Recolhimento:</strong> Contribuições previdenciárias devidamente recolhidas<br>
+                        • <strong>Desemprego:</strong> Dispensa sem justa causa, término de contrato ou rescisão indireta<br>
+                        • <strong>Inscrição:</strong> Cadastro no Programa de Geração de Emprego e Renda<br><br>
+                        
+                        <strong>Parcelas:</strong><br>
+                        • <strong>15 a 24 meses de trabalho:</strong> 3 parcelas<br>
+                        • <strong>24 meses ou mais:</strong> 5 parcelas<br><br>
+                        
+                        <strong>Fonte pagadora:</strong> <strong>FAT</strong> (Fundo de Amparo ao Trabalhador), não o empregador.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Seguro-Desemprego do Empregado Doméstico:</div>
+                            <strong>Requisito temporal:</strong> 15 meses nos últimos 24<br>
+                            <strong>Parcelas:</strong> 3 ou 5 conforme tempo<br>
+                            <strong>Fonte:</strong> FAT (Fundo de Amparo ao Trabalhador)<br>
+                            <strong>Conquista:</strong> LC 150/2015<br>
+                            <strong>Reforma 2017:</strong> Não extinguiu, manteve o direito
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="B" data-question="Rescisão do Contrato de Trabalho Doméstico">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre a rescisão do contrato de trabalho do empregado doméstico, julgue o item: Na rescisão do contrato de trabalho do empregado doméstico, o aviso prévio deve ser trabalhado ou indenizado, com duração de 30 dias, independentemente do tempo de serviço.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro!</strong> O aviso prévio do empregado doméstico tem regras diferenciadas.<br><br>
+                        
+                        <strong>Lei Complementar 150/2015 - Art. 19:</strong> O aviso prévio do empregado doméstico é de:<br>
+                        • <strong>30 dias</strong> para empregado com até <strong>1 ano</strong> de serviço<br>
+                        • <strong>+3 dias por ano</strong> de serviço, até o máximo de <strong>90 dias</strong><br><br>
+                        
+                        <strong>Exemplo:</strong><br>
+                        • 1 ano de serviço: 30 dias<br>
+                        • 2 anos de serviço: 33 dias<br>
+                        • 20 anos de serviço: 90 dias (teto)<br><br>
+                        
+                        <strong>Diferença para CLT:</strong> Para empregados urbanos (CLT), o aviso prévio é de 30 dias + 3 dias/ano até 90 dias. Para domésticos, a LC 150/2015 estabeleceu a mesma regra, mas o enunciado diz "independentemente do tempo de serviço", o que está <strong>errado</strong>.<br><br>
+                        
+                        <strong>Modalidades:</strong> Trabalhado (empregado trabalha e recebe normalmente) ou indenizado (recebe sem trabalhar).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Aviso prévio doméstico:</strong> Variável conforme tempo de serviço<br>
+                            <strong>Base:</strong> 30 dias<br>
+                            <strong>Acréscimo:</strong> +3 dias/ano<br>
+                            <strong>Teto:</strong> 90 dias<br>
+                            <strong>Não é fixo em 30 dias!</strong>
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Licença-Maternidade do Empregado Doméstico">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (LC 150/2015 e Previdência Social) Sobre a licença-maternidade do empregado doméstico, analise as assertivas:<br><br>
+                    I. A empregada doméstica tem direito a licença-maternidade de 120 dias<br>
+                    II. O salário-maternidade é pago pelo INSS durante a licença<br>
+                    III. O empregador deve contratar substituto durante a licença-maternidade<br>
+                    IV. A licença-maternidade pode ser estendida por mais 60 dias mediante programa do empregador<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 20:</strong> A empregada doméstica tem direito à <strong>licença-maternidade</strong> de <strong>120 dias</strong>.<br><br>
+                        
+                        <strong>I. CORRETO:</strong> A duração é de 120 dias (4 meses), igual às demais trabalhadoras.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Durante a licença, a empregada recebe <strong>salário-maternidade</strong> pago pelo <strong>INSS</strong> (seguridade social), não pelo empregador.<br><br>
+                        
+                        <strong>III. ERRADO:</strong> O empregador <strong>não é obrigado</strong> a contratar substituto. A decisão de contratar ou não é facultativa.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> A MP 1.172/2023 (convertida na Lei 14.611/2023) criou o <strong>Programa Empresa Cidadã</strong>, que permite à empregadora doméstica estender a licença em mais <strong>60 dias</strong> (total 180 dias), com isenção de contribuição previdenciária sobre o valor pago nesse período adicional.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Licença-Maternidade Doméstica:</div>
+                            <strong>Duração normal:</strong> 120 dias<br>
+                            <strong>Pagamento:</strong> Salário-maternidade pelo INSS<br>
+                            <strong>Substituto:</strong> Facultativo para o empregador<br>
+                            <strong>Extensão:</strong> +60 dias via Programa Empresa Cidadã<br>
+                            <strong>Total máximo:</strong> 180 dias
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="C" data-question="eSocial para Empregado Doméstico">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (LC 150/2015 e eSocial) Sobre o eSocial para empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                                                <span class="alternative-text">O empregador doméstico está dispensado de usar o eSocial, podendo fazer a contratação apenas via GPS tradicional</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O eSocial para domésticos é obrigatório apenas para empregadores com mais de 5 empregados</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregador doméstico deve utilizar o eSocial Doméstico para registro, folha de pagamento e encerramento do vínculo, com recolhimento unificado mensal</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O eSocial não se aplica ao empregado doméstico, que continua com obrigações apenas na Previdência Social</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O eSocial doméstico exige contratação de contador obrigatoriamente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>eSocial Doméstico:</strong> Sistema de Escrituração Digital das Obrigações Fiscais, Previdenciárias e Trabalhistas aplicável ao empregado doméstico.<br><br>
+                        
+                        <strong>LC 150/2015 - Art. 35:</strong> O empregador doméstico deve utilizar o <strong>eSocial Doméstico</strong> para:<br>
+                        • Registro do empregado (admissão)<br>
+                        • Folha de pagamento mensal<br>
+                        • Encerramento do vínculo (demissão)<br>
+                        • Recolhimento unificado de tributos<br><br>
+                        
+                        <strong>Recolhimento unificado:</strong> A GPS (Guia da Previdência Social) unifica:<br>
+                        • Contribuição previdenciária do empregado (8%)<br>
+                        • Contribuição do empregador (8%)<br>
+                        • FGTS (8%)<br>
+                        • Imposto de Renda (se houver)<br><br>
+                        
+                        <strong>Obrigatoriedade:</strong> <strong>Todos</strong> os empregadores domésticos devem usar o sistema, independentemente do número de empregados.<br><br>
+                        
+                        <strong>Contador:</strong> Não é obrigatório, o empregador pode fazer diretamente pelo site ou aplicativo.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 eSocial Doméstico:</div>
+                            <strong>Obrigatoriedade:</strong> Todos os empregadores domésticos<br>
+                            <strong>Funções:</strong> Admissão, folha, rescisão<br>
+                            <strong>Recolhimento:</strong> GPS unificada mensal<br>
+                            <strong>Alíquotas:</strong> 8% + 8% + 8% (INSS empregado, INSS empregador, FGTS)<br>
+                            <strong>Contador:</strong> Facultativo
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="A" data-question="Salário-Família do Empregado Doméstico">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (Lei 8.213/1991 e LC 150/2015) Sobre o salário-família do empregado doméstico, julgue o item: O empregado doméstico tem direito ao salário-família para filhos ou equiparados de até 14 anos de idade, desde que comprove a condição de dependente.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Lei 8.213/1991 - Art. 65:</strong> O salário-família é devido ao segurado empregado, inclusive <strong>doméstico</strong>, para filhos ou equiparados de até <strong>14 anos</strong> de idade.<br><br>
+                        
+                        <strong>Requisitos:</strong><br>
+                        • <strong>Qualidade de segurado:</strong> Empregado doméstico registrado<br>
+                        • <strong>Condição de dependente:</strong> Filho ou equiparado (enteado, tutelado, etc.)<br>
+                        • <strong>Idade:</strong> Até 14 anos (ou inválido de qualquer idade)<br>
+                        • <strong>Renda:</strong> O dependente não deve ter renda própria superior ao limite legal<br><br>
+                        
+                        <strong>Valor:</strong> Variável conforme a remuneração do segurado (tabela progressiva).<br><br>
+                        
+                        <strong>LC 150/2015:</strong> Equiparou o empregado doméstico aos demais trabalhadores quanto ao salário-família.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Salário-Família Doméstico:</div>
+                            <strong>Beneficiário:</strong> Empregado doméstico registrado<br>
+                            <strong>Dependentes:</strong> Filhos/equiparados até 14 anos<br>
+                            <strong>Exceção:</strong> Inválidos de qualquer idade<br>
+                            <strong>Condição:</strong> Dependência econômica comprovada<br>
+                            <strong>Base legal:</strong> Art. 65 da Lei 8.213/91
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="E" data-question="Auxílio-Doença do Empregado Doméstico">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (Lei 8.213/1991 e Previdência Social) Sobre o auxílio-doença do empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado doméstico não tem direito ao auxílio-doença, pois não acumula carência contributiva</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O auxílio-doença do empregado doméstico exige 36 meses de contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregado doméstico só tem direito ao auxílio-doença se a incapacidade for permanente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O auxílio-doença é pago pelo empregador durante os primeiros 15 dias de afastamento</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O empregado doméstico tem direito ao auxílio-doença após 12 meses de carência, sendo o benefício pago pelo INSS a partir do 16º dia de afastamento</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Lei 8.213/1991 - Art. 59:</strong> O auxílio-doença é devido ao segurado empregado, inclusive <strong>doméstico</strong>, que estiver <strong>incapacitado para o trabalho</strong> por mais de 15 dias consecutivos.<br><br>
+                        
+                        <strong>Carência (Art. 25):</strong> <strong>12 meses</strong> de contribuição para o empregado doméstico (mesma regra dos demais empregados urbanos).<br><br>
+                        
+                        <strong>Pagamento:</strong><br>
+                        • <strong>Dias 1-15:</strong> <strong>Empregador</strong> paga o salário (auxílio-doença empresarial)<br>
+                        • <strong>A partir do 16º dia:</strong> <strong>INSS</strong> assume o pagamento do auxílio-doença<br><br>
+                        
+                        <strong>Perícia médica:</strong> Obrigatória, realizada pelo INSS ou perito credenciado.<br><br>
+                        
+                        <strong>Valor:</strong> Valor médio dos últimos 12 salários de contribuição, limitado ao teto do RGPS.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Auxílio-Doença Doméstico:</div>
+                            <strong>Carência:</strong> 12 meses de contribuição<br>
+                            <strong>Incapacidade:</strong> Temporária ou permanente<br>
+                            <strong>Pagamento 1-15 dias:</strong> Empregador<br>
+                            <strong>Pagamento 16º dia em diante:</strong> INSS<br>
+                            <strong>Perícia:</strong> Obrigatória pelo INSS
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="B" data-question="Aposentadoria por Tempo de Contribuição do Empregado Doméstico">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (EC 103/2019 e Previdência Social) Sobre a aposentadoria do empregado doméstico após a Reforma da Previdência, julgue o item: O empregado doméstico pode se aposentar por tempo de contribuição com 30 anos de trabalho, independentemente da idade, desde que tenha iniciado a contribuição antes da EC 103/2019.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro!</strong> A <strong>EC 103/2019 (Reforma da Previdência)</strong> extinguiu a aposentadoria por tempo de contribuição <strong>sem idade mínima</strong> para todos os segurados, inclusive domésticos.<br><br>
+                        
+                        <strong>Regras atuais (EC 103/2019):</strong><br><br>
+                        
+                        <strong>Regra geral (art. 26):</strong><br>
+                        • <strong>Homens:</strong> 65 anos de idade + 20 anos de tempo de contribuição<br>
+                        • <strong>Mulheres:</strong> 62 anos de idade + 15 anos de tempo de contribuição<br><br>
+                        
+                        <strong>Regra de transição:</strong> Para quem já estava contribuindo antes da reforma, há regras progressivas de idade e tempo.<br><br>
+                        
+                        <strong>Não existe mais:</strong> Aposentadoria pura por tempo (30 anos mulher / 35 anos homem) <strong>sem idade mínima</strong>.<br><br>
+                        
+                        <strong>Empregado doméstico:</strong> Segue as mesmas regras dos demais segurados empregados, sem distinção.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Antes da Reforma:</strong> Possível aposentadoria por tempo sem idade mínima<br>
+                            <strong>Depois da EC 103/2019:</strong> Idade mínima obrigatória (65h/62m)<br>
+                            <strong>Transição:</strong> Regras progressivas para quem já contribuía<br>
+                            <strong>Domésticos:</strong> Mesmas regras dos demais empregados
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Pensão por Morte do Empregado Doméstico">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (Lei 8.213/1991 e EC 103/2019) Sobre a pensão por morte do empregado doméstico, analise as assertivas:<br><br>
+                    I. A pensão por morte é devida aos dependentes do empregado doméstico falecido, desde que comprovada a qualidade de segurado<br>
+                    II. O cônjuge ou companheiro tem direito a pensão vitalícia, independentemente da idade<br>
+                    III. O filho menor de 21 anos é considerado dependente para fins de pensão por morte<br>
+                    IV. A pensão por morte pode ser concedida na forma de cota familiar ou benefício único<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, III e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Lei 8.213/1991 - Arts. 74 e 77:</strong> Regras da pensão por morte aplicáveis ao empregado doméstico.<br><br>
+                        
+                        <strong>I. CORRETO:</strong> A pensão por morte exige a <strong>qualidade de segurado</strong> do falecido na data do óbito (ou manutenção da qualidade por até 4 anos após cessação das contribuições).<br><br>
+                        
+                        <strong>II. ERRADO:</strong> Após a <strong>EC 103/2019</strong>, o cônjuge/companheiro tem direito a pensão <strong>temporária</strong> se não tiver idade mínima (60 anos mulher / 65 anos homem) ou filho menor/inválido. Se tiver idade mínima ou filho, é vitalícia.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> O filho é dependente até <strong>21 anos</strong> (ou 24 se cursando ensino superior), ou inválido.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> A pensão pode ser:<br>
+                        • <strong>Cota familiar:</strong> Dividida entre todos os dependentes<br>
+                        • <strong>Benefício único:</strong> Pensão integral para um dependente (quando não há outros)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Pensão por Morte (EC 103/2019):</div>
+                            <strong>Cônjuge sem idade mínima:</strong> Pensão temporária (meses de casamento, limitado)<br>
+                            <strong>Cônjuge com idade mínima:</strong> Pensão vitalícia<br>
+                            <strong>Filhos:</strong> Até 21 anos (ou 24 se estudando)<br>
+                            <strong>Valor:</strong> 50% + 10% por dependente (até 100%)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="C" data-question="Descanso Semanal Remunerado">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre o descanso semanal remunerado (DSR) do empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado doméstico não tem direito ao DSR, devendo trabalhar todos os dias da semana</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O DSR do empregado doméstico é de 12 horas consecutivas sem trabalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregado doméstico tem direito a 1 dia de folga por semana, preferencialmente aos domingos, remunerado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O DSR só é devido se o empregado doméstico trabalhar mais de 6 dias na semana</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O empregado doméstico residente não tem direito a DSR, pois já reside no local de trabalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 9º:</strong> O empregado doméstico tem direito a <strong>descanso semanal remunerado</strong> de <strong>1 dia</strong> por semana, <strong>preferencialmente aos domingos</strong>.<br><br>
+                        
+                        <strong>Características do DSR doméstico:</strong><br>
+                        • <strong>Duração:</strong> 24 horas consecutivas (1 dia inteiro)<br>
+                        • <strong>Remuneração:</strong> Integral (não desconta do salário)<br>
+                        • <strong>Dia preferencial:</strong> Domingo<br>
+                        • <strong>Flexibilidade:</strong> Pode ser outro dia mediante acordo<br><br>
+                        
+                        <strong>Empregado residente:</strong> Também tem direito ao DSR, devendo ter 24 horas de folga sem trabalho.<br><br>
+                        
+                        <strong>Trabalho aos domingos:</strong> Se trabalhar no domingo (folga em outro dia), tem direito a <strong>adicional de 100%</strong> (dobro) sobre a remuneração do dia.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 DSR do Empregado Doméstico:</div>
+                            <strong>Duração:</strong> 24 horas (1 dia)<br>
+                            <strong>Dia preferencial:</strong> Domingo<br>
+                            <strong>Remuneração:</strong> Integral<br>
+                            <strong>Domingo trabalhado:</strong> Adicional de 100%<br>
+                            <strong>Residente:</strong> Também tem direito
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="A" data-question="Ferias Proporcionais e Indenizadas">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre férias proporcionais e indenizadas do empregado doméstico, julgue o item: Na rescisão do contrato de trabalho, o empregado doméstico tem direito a férias proporcionais acrescidas de 1/3, calculadas com base no tempo de serviço incompleto de 12 meses.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 17, §§ 3º e 4º:</strong> Na rescisão do contrato, o empregado doméstico tem direito a:<br><br>
+                        
+                        <strong>Férias vencidas:</strong> Período aquisitivo completo (12 meses) não gozado.<br><br>
+                        
+                        <strong>Férias proporcionais:</strong> Calculadas conforme o tempo de serviço do período aquisitivo incompleto.<br><br>
+                        
+                        <strong>Cálculo:</strong><br>
+                        • <strong>1/12 por mês trabalhado</strong> ou fração superior a 14 dias<br>
+                        • <strong>1/3 constitucional</strong> sobre o valor das férias proporcionais<br>
+                        • <strong>Exemplo:</strong> 6 meses de trabalho = 15 dias de férias + 1/3<br><br>
+                        
+                        <strong>Indenização:</strong> Quando o empregador impede o gozo das férias no período concessivo, deve pagar em dobro.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Férias na Rescisão:</div>
+                            <strong>Vencidas:</strong> Período aquisitivo completo não gozado<br>
+                            <strong>Proporcionais:</strong> 1/12 por mês do período incompleto<br>
+                            <strong>1/3:</strong> Sobre vencidas e proporcionais<br>
+                            <strong>Dobro:</strong> Se empregador impedir o gozo<br>
+                            <strong>Base:</strong> Última remuneração integral
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="E" data-question="Adicional de Insalubridade e Periculosidade">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (LC 150/2015 e CLT) Sobre adicionais de insalubridade e periculosidade para empregado doméstico, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado doméstico tem direito aos adicionais de insalubridade e periculosidade nos mesmos moldes da CLT</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O empregado doméstico que trabalha com produtos de limpeza tem direito obrigatório ao adicional de insalubridade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Os adicionais de insalubridade e periculosidade são incompatíveis com o trabalho doméstico</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O empregador doméstico deve contratar perito do Ministério do Trabalho para avaliar insalubridade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A LC 150/2015 não previu expressamente os adicionais de insalubridade e periculosidade, mas não os proibiu, podendo ser negociados ou reconhecidos judicialmente em casos excepcionais</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>LC 150/2015:</strong> A lei <strong>não previu expressamente</strong> os adicionais de insalubridade e periculosidade para empregados domésticos, mas também <strong>não os proibiu</strong>.<br><br>
+                        
+                        <strong>Entendimento atual:</strong><br>
+                        • <strong>Regra geral:</strong> Não há previsão legal específica<br>
+                        • <strong>Casos excepcionais:</strong> Pode haver reconhecimento judicial em situações extremas (ex: trabalho com produtos químicos tóxicos sem EPIs)<br>
+                        • <strong>Negociação:</strong> Empregador e empregado podem acordar o pagamento<br><br>
+                        
+                        <strong>Diferença para CLT:</strong> Empregados urbanos têm previsão legal clara (NR-15 e NR-16). Domésticos não têm regulamentação específica.<br><br>
+                        
+                        <strong>Produtos de limpeza:</strong> Uso comum não configura insalubridade. Seria necessário comprovar agente nocivo além do normal.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Adicionais no Trabalho Doméstico:</div>
+                            <strong>Previsão legal:</strong> Não há na LC 150/2015<br>
+                            <strong>Proibição:</strong> Também não há<br>
+                            <strong>Reconhecimento:</strong> Possível em casos excepcionais (judicial)<br>
+                            <strong>Acordo:</strong> Permitido entre as partes<br>
+                            <strong>Regra geral:</strong> Não são devidos automaticamente
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Rescisão Indireta do Contrato Doméstico">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (LC 150/2015) Sobre a rescisão indireta do contrato de trabalho doméstico, julgue o item: O empregado doméstico pode alegar rescisão indireta se o empregador descumprir obrigações legais ou contratuais, como atraso no pagamento de salários ou falta de recolhimento das contribuições previdenciárias.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Lei Complementar 150/2015 - Art. 22:</strong> Aplica-se ao empregado doméstico o instituto da <strong>rescisão indireta</strong> do contrato de trabalho.<br><br>
+                        
+                        <strong>Rescisão indireta:</strong> É a dispensa do empregado por <strong>justa causa</strong> do empregador, ou seja, o empregado sai como se tivesse sido demitido sem justa causa (com todas as verbas rescisórias).<br><br>
+                        
+                        <strong>Hipóteses (Art. 483 CLT - aplicável por analogia):</br>
+                        • <strong>Atraso habitual</strong> no pagamento do salário<br>
+                        • <strong>Descumprimento</strong> de obrigações legais ou contratuais<br>
+                        • <strong>Trato degradante</strong> ou ofensas físicas/morais<br>
+                        • <strong>Perigo de malfeito</strong> evidente<br><br>
+                        
+                        <strong>Efeitos:</strong> O empregado doméstico recebe:<br>
+                        • Aviso prévio indenizado (ou trabalhado)<br>
+                        • 13º salário proporcional<br>
+                        • Férias proporcionais + 1/3<br>
+                        • FGTS + 40% multa<br>
+                        • Seguro-desemprego (se houver qualidade)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Rescisão Indireta Doméstica:</div>
+                            <strong>Natureza:</strong> Justa causa do empregador<br>
+                            <strong>Efeito:</strong> Empregado sai como demitido sem justa causa<br>
+                            <strong>Verbas:</strong> Todas as rescisórias<br>
+                            <strong>Exemplos:</strong> Atraso salarial, falta de recolhimento previdenciário<br>
+                            <strong>Comprovação:</strong> Pode ser feita extrajudicialmente ou judicialmente
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="D" data-question="Cadastro eFormalização do Empregado Doméstico">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (LC 150/2015 e Previdência Social) Sobre a formalização e cadastro do empregado doméstico, analise as assertivas:<br><br>
+                    I. O empregador doméstico deve registrar o empregado no eSocial Doméstico antes do início das atividades<br>
+                    II. A CTPS (Carteira de Trabalho) do empregado doméstico pode ser digital ou física, com anotação obrigatória<br>
+                    III. O empregado doméstico informal pode regularizar a situação retroativamente, recolhendo as contribuições em atraso<br>
+                    IV. O não recolhimento das contribuições previdenciárias pelo empregador doméstico configura crime contra a Previdência Social<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>LC 150/2015 e formalização:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> O registro deve ser feito no <strong>eSocial Doméstico</strong> antes ou no ato da admissão (pré-cadastro ou cadastro inicial).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> A CTPS pode ser <strong>física</strong> (anotação manual) ou <strong>digital</strong> (via eSocial). Ambas têm validade.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> É possível <strong>regularização retroativa</strong> através do programa de regularização do INSS, recolhendo contribuições em atraso (com multa e juros) para fins de tempo de contribuição.<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> O não recolhimento configura <strong>infração administrativa</strong> (multa), não crime. Crime previdenciário exige dolo específico e fraude, não mera inadimplência.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Formalização do Empregado Doméstico:</div>
+                            <strong>Registro:</strong> eSocial Doméstico (obrigatório)<br>
+                            <strong>CTPS:</strong> Física ou digital<br>
+                            <strong>Regularização:</strong> Possível retroativamente<br>
+                            <strong>Inadimplência:</strong> Multa administrativa (não crime)<br>
+                            <strong>Objetivo:</strong> Garantir direitos previdenciários
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • Questões sobre LC 150/2015: Dominar os arts. 1º a 35 (direitos e obrigações)<br>
+                • Questões sobre previdência: Art. 25 da Lei 8.213/91 (carências)<br>
+                • Questões sobre rescisão: Arts. 17 a 24 da LC 150/2015 (verbas rescisórias)<br>
+                • Questões sobre eSocial: Procedimentos de admissão e rescisão<br>
+                • Questões sobre Reforma da Previdência: EC 103/2019 e idade mínima<br>
+                • Questões sobre FGTS e seguro-desemprego: Conquistas da LC 150/2015
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Empregado Doméstico. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê um exemplo prático do cotidiano para eu entender melhor
+4. Alguma dica de memorização se aplicar
+5. Qual artigo da Lei Complementar 150/2015 ou outra lei se aplica
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina o Direito do Empregado Doméstico e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise a LC 150/2015 e as regras previdenciárias específicas.';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nos arts. 1º a 35 da LC 150/2015 e no eSocial Doméstico.';
+            } else {
+                message = '⚠️ É preciso estudar mais. O Empregado Doméstico é tema frequente no INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
