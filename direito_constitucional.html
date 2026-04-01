@@ -63,6 +63,49 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             min-height: 300px;
         }
+
+        /* Estilo do botão de link */
+        .tema-link {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tema-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .tema-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .tema-icone {
+            font-size: 2.5em;
+        }
+
+        .tema-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .tema-info p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .tema-arrow {
+            margin-left: auto;
+            font-size: 1.5em;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +118,17 @@
         </header>
 
         <div class="conteudo">
-            <!-- Adicione seu conteúdo aqui -->
+            <!-- NOVO BOTÃO: Direitos e Garantias Individuais e Coletivos -->
+            <a href="constitucional1.html" class="tema-link">
+                <div class="tema-content">
+                    <span class="tema-icone">⚖️</span>
+                    <div class="tema-info">
+                        <h3>Direitos e Garantias Individuais e Coletivos</h3>
+                        <p>Clique para acessar o conteúdo sobre Direitos e Garantias Fundamentais</p>
+                    </div>
+                    <span class="tema-arrow">→</span>
+                </div>
+            </a>
         </div>
     </div>
 </body>
