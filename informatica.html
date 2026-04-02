@@ -1,4 +1,4 @@
-Faça um novo botão: Conceitos de Internet e intranet, nessa pagina linkando para o arquivo informatica1.html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -63,6 +63,48 @@ Faça um novo botão: Conceitos de Internet e intranet, nessa pagina linkando pa
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             min-height: 300px;
         }
+
+        .botoes-navegacao {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-topico {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            text-align: center;
+            min-height: 80px;
+        }
+
+        .btn-topico:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-topico::before {
+            content: "📡";
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .titulo-secao {
+            color: #1e3c72;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +117,11 @@ Faça um novo botão: Conceitos de Internet e intranet, nessa pagina linkando pa
         </header>
 
         <div class="conteudo">
-            <!-- Adicione seu conteúdo aqui -->
+            <h2 class="titulo-secao">Escolha um tópico de estudo</h2>
+            
+            <div class="botoes-navegacao">
+                <a href="informatica1.html" class="btn-topico">Conceitos de Internet e Intranet</a>
+            </div>
         </div>
     </div>
 </body>
