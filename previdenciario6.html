@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Direito Previdenciário - Salário-de-contribuição e Remuneração</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(30, 60, 114, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Simulado INSS 2025 - Direito Previdenciário</h1>
+            <p>Salário-de-contribuição e Remuneração - 20 Questões Inéditas (CEBRASPE/FGV/FCC)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="B" data-question="Conceito de Salário-de-contribuição">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o conceito de salário-de-contribuição, analise: O salário-de-contribuição é a base de cálculo das contribuições previdenciárias e dos benefícios do RGPS. Considerando sua definição legal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O salário-de-contribuição é sinônimo de salário mínimo nacional, servindo como piso para todas as contribuições previdenciárias</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O salário-de-contribuição é a totalidade das remunerações auferidas pelo segurado em uma ou mais empresas, obedecido o limite máximo estabelecido para os benefícios do RGPS</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O salário-de-contribuição compreende apenas a remuneração básica do segurado, excluindo horas extras, adicionais e gratificações</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O salário-de-contribuição é fixado unilateralmente pelo INSS, independentemente da remuneração efetivamente recebida pelo trabalhador</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O salário-de-contribuição não possui limite máximo, incidindo sobre toda a remuneração auferida pelo segurado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Conceito de Salário-de-contribuição (Art. 201, § 8º, CF + Art. 28, Lei 8.212/1991):</strong> É a totalidade das remunerações auferidas pelo segurado em uma ou mais empresas, obedecido o limite máximo (teto previdenciário).<br><br>
+                        
+                        <strong>Características fundamentais:</strong><br>
+                        • <strong>Totalidade das remunerações:</strong> Soma de todos os rendimentos sujeitos a contribuição<br>
+                        • <strong>Uma ou mais empresas:</strong> Acumulação de remunerações de múltiplas fontes pagadoras<br>
+                        • <strong>Limite máximo:</strong> Teto do RGPS (R$ 7.507,49 em 2025)<br>
+                        • <strong>Base de cálculo:</strong> Tanto para contribuições quanto para benefícios<br><br>
+                        
+                        <strong>Importante:</strong> O salário-de-contribuição não se confunde com salário-base ou salário-mínimo. É um conceito próprio da Previdência Social.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Diferença crucial:</div>
+                            <strong>Salário-de-contribuição:</strong> Base de cálculo previdenciária<br>
+                            <strong>Salário-base:</strong> Remuneração contratual<br>
+                            <strong>Salário-mínimo:</strong> Piso legal nacional<br>
+                            <strong>Limite:</strong> Teto do RGPS (atualizado anualmente)<br>
+                            <strong>Acumulação:</strong> Soma de todas as fontes pagadoras
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="C" data-question="Remuneração e Salário-de-contribuição">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre a distinção entre remuneração e salário-de-contribuição, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Remuneração e salário-de-contribuição são conceitos idênticos, podendo ser usados indistintamente na legislação previdenciária</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A remuneração é sempre maior que o salário-de-contribuição, pois esta última sofre descontos obrigatórios</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A remuneração é o valor bruto auferido pelo trabalhador, enquanto o salário-de-contribuição é o valor limitado ao teto do RGPS, que serve de base para cálculo das contribuições e benefícios</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O salário-de-contribuição é utilizado apenas para cálculo das contribuições do empregado, enquanto a remuneração é usada para cálculo dos benefícios</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A remuneração exclui os adicionais de insalubridade e periculosidade, que integram exclusivamente o salário-de-contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Distinção Conceitual:</strong><br><br>
+                        
+                        <strong>Remuneração (Art. 28, § 1º, Lei 8.212/1991):</strong> É o valor bruto auferido pelo trabalhador, incluindo todas as parcelas de natureza salarial (salário, adicionais, gratificações, prêmios, comissões, etc.).<br><br>
+                        
+                        <strong>Salário-de-contribuição:</strong> É a remuneração <strong>limitada ao teto do RGPS</strong>. Quando a remuneração ultrapassa o teto, o salário-de-contribuição será igual ao teto.<br><br>
+                        
+                        <strong>Exemplo prático:</strong><br>
+                        • Remuneração: R$ 10.000,00<br>
+                        • Teto RGPS 2025: R$ 7.507,49<br>
+                        • Salário-de-contribuição: R$ 7.507,49 (limitado ao teto)<br><br>
+                        
+                        <strong>Utilização:</strong> O salário-de-contribuição serve de base tanto para o cálculo das contribuições quanto para o valor dos benefícios previdenciários.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Remuneração vs Salário-de-contribuição:</div>
+                            <strong>Remuneração:</strong> Valor bruto total auferido<br>
+                            <strong>Salário-de-contribuição:</strong> Remuneração limitada ao teto<br>
+                            <strong>Teto 2025:</strong> R$ 7.507,49<br>
+                            <strong>Base para:</strong> Contribuições e benefícios<br>
+                            <strong>Adicionais:</strong> Integram ambos (insalubridade, periculosidade)<br>
+                            <strong>Limitação:</strong> Sempre pelo teto do RGPS
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="A" data-question="Componentes da Remuneração">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre os componentes da remuneração, julgue o item: Integram a remuneração do segurado empregado, para fins de salário-de-contribuição, o salário, o adicional de insalubridade, o adicional de periculosidade, as horas extras, as gratificações e os prêmios pagos pela empresa.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Componentes da Remuneração (Art. 28, § 1º, Lei 8.212/1991 + IN 128/2022):</strong> A remuneração compreende todas as parcelas de natureza salarial auferidas pelo segurado.<br><br>
+                        
+                        <strong>Integram a remuneração:</strong><br>
+                        • <strong>Salário-base:</strong> Remuneração contratual<br>
+                        • <strong>Adicionais:</strong> Insalubridade, periculosidade, noturno, transferência<br>
+                        • <strong>Horas extras:</strong> Inclusive o adicional de 50% ou percentual maior<br>
+                        • <strong>Gratificações:</strong> De função, de desempenho, de produtividade<br>
+                        • <strong>Prêmios:</strong> Pago pela empresa (não caracterizando doação)<br>
+                        • <strong>Comissões:</strong> Percentual sobre vendas<br>
+                        • <strong>13º salário:</strong> Parcela mensal e integral<br>
+                        • <strong>Férias:</strong> Remuneração correspondente + 1/3 constitucional<br><br>
+                        
+                        <strong>Conceito amplo:</strong> Qualquer contraprestação pelo trabalho, de natureza salarial, integra a remuneração.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Componentes da Remuneração:</div>
+                            <strong>Salário-base:</strong> Remuneração principal<br>
+                            <strong>Adicionais:</strong> Insalubridade, periculosidade, noturno<br>
+                            <strong>Horas extras:</strong> Com adicional<br>
+                            <strong>Gratificações:</strong> De função, produtividade<br>
+                            <strong>Outros:</strong> Comissões, prêmios, 13º, férias<br>
+                            <strong>Regra:</strong> Tudo que é contraprestação pelo trabalho
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="D" data-question="Parcelas Não Integrantes">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre as parcelas que não integram a remuneração e o salário-de-contribuição, analise as assertivas:<br><br>
+                    I. O auxílio-alimentação ou refeição, em espécie, não integra a remuneração quando de valor não superior ao limite fixado pelo INSS<br>
+                    II. O reembolso de despesas de viagem não integra a remuneração, desde que devidamente comprovado<br>
+                    III. O adiantamento de salário (vencido) não integra a remuneração do mês de competência do pagamento<br>
+                    IV. As diárias para viagens não superiores a 50% do salário-de-contribuição não integram a remuneração<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Parcelas Não Integrantes (Art. 28, § 9º, Lei 8.212/1991 + IN 128/2022):</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> O auxílio-alimentação ou refeição em espécie não integra quando não superar o limite estabelecido (atualmente R$ 1.500,00 mensal, conforme Lei 14.597/2023).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> O reembolso de despesas de viagem, quando devidamente comprovado (notas fiscais, recibos), não caracteriza remuneração, mas mera restituição de gastos.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> O adiantamento de salário <strong>vencido</strong> (13º salário, férias, etc.) não integra a remuneração do mês de pagamento, pois já integrou o mês de competência.<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> As diárias para viagens <strong>não integram</strong> a remuneração em qualquer valor, desde que sejam para despesas de viagem (alimentação, hospedagem, locomoção) e não caracterizem aumento patrimonial. Não há limite percentual de 50%.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Parcelas Não Integrantes:</div>
+                            <strong>Auxílio-alimentação:</strong> Até limite legal (R$ 1.500,00)<br>
+                            <strong>Reembolso de despesas:</strong> Comprovado<br>
+                            <strong>Adiantamento vencido:</strong> Já computado no mês competência<br>
+                            <strong>Diárias:</strong> Não integram (qualquer valor, se para despesas)<br>
+                            <strong>Doações:</strong> Não remuneratórias<br>
+                            <strong>Salário-família:</strong> Benefício, não remuneração
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="B" data-question="Teto Previdenciário">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o teto previdenciário, julgue o item: O teto do salário-de-contribuição é o limite máximo para o cálculo das contribuições e dos benefícios do RGPS, sendo fixado em valor igual ao teto dos servidores públicos federais e atualizado anualmente pela mesma regra.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro!</strong> O teto do RGPS <strong>não é igual</strong> ao teto dos servidores públicos federais. Após a EC 103/2019 (Reforma da Previdência), os tetos passaram a ser distintos.<br><br>
+                        
+                        <strong>Teto do RGPS (Art. 201, § 8º, CF + EC 103/2019):</strong><br>
+                        • <strong>Valor 2025:</strong> R$ 7.507,49<br>
+                        • <strong>Atualização:</strong> Índices de variação do IPCA, fixados pela Lei de Diretrizes Orçamentárias<br>
+                        • <strong>Regra geral:</strong> Não pode ser superior ao limite máximo do regime próprio dos servidores (RPPS)<br><br>
+                        
+                        <strong>Teto do RPPS (Servidores Federais):</strong><br>
+                        • <strong>Valor 2025:</strong> R$ 39.200,00 (Ministros do STF)<br>
+                        • <strong>Atualização:</strong> Regra própria, diferente do RGPS<br>
+                        • <strong>Limitação:</strong> Remuneração máxima dos Ministros do STF<br><br>
+                        
+                        <strong>Histórico:</strong> Até 2019, os tetos eram idênticos. A EC 103/2019 separou as regras de atualização.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Teto RGPS 2025:</strong> R$ 7.507,49<br>
+                            <strong>Teto RPPS 2025:</strong> R$ 39.200,00 (STF)<br>
+                            <strong>São distintos:</strong> Após EC 103/2019<br>
+                            <strong>Atualização RGPS:</strong> IPCA (LDO)<br>
+                            <strong>Atualização RPPS:</strong> Regra própria<br>
+                            <strong>Importante:</strong> Não confundir os tetos!
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="C" data-question="Salário-de-contribuição do Contribuinte Individual">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre o salário-de-contribuição do contribuinte individual, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O contribuinte individual deve recolher contribuição de 20% sobre o valor de remuneração que efetivamente receber de cada tomador de serviço</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O contribuinte individual pode optar por recolher contribuição sobre qualquer valor, desde que não inferior a 1 salário-mínimo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O contribuinte individual pode optar por recolher contribuição sobre o valor de remuneração auferida ou sobre o limite máximo do salário-de-contribuição, aplicando-se a alíquota de 20%</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O contribuinte individual está obrigado a recolher sobre o limite máximo do salário-de-contribuição, sem possibilidade de opção</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O contribuinte individual recolhe alíquota progressiva de 7,5% a 14%, conforme faixa de remuneração</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Salário-de-contribuição do Contribuinte Individual (Art. 21, Lei 8.212/1991):</strong><br><br>
+                        
+                        <strong>Opção pelo valor:</strong> O contribuinte individual pode optar por recolher sobre:<br>
+                        • <strong>Valor da remuneração auferida:</strong> O valor efetivamente recebido (comprovado)<br>
+                        • <strong>Limite máximo:</strong> O teto do RGPS (R$ 7.507,49 em 2025)<br>
+                        • <strong>Valor intermediário:</strong> Qualquer valor entre o mínimo e o máximo<br><br>
+                        
+                        <strong>Alíquota:</strong> 20% (fixa, não progressiva)<br><br>
+                        
+                        <strong>Dedução patronal:</strong> O contribuinte individual pode deduzir 45% da contribuição patronal (8% ou 20%) paga pelo tomador de serviço, limitado a 9% do salário-de-contribuição.<br><br>
+                        
+                        <strong>Alíquota progressiva:</strong> Aplica-se apenas ao <strong>empregado</strong>, não ao contribuinte individual.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Contribuinte Individual:</div>
+                            <strong>Opção:</strong> Valor da remuneração ou teto<br>
+                            <strong>Alíquota:</strong> 20% (fixa)<br>
+                            <strong>Dedução:</strong> 45% da patronal (limite 9%)<br>
+                            <strong>Mínimo:</strong> 1 salário-mínimo (se optar)<br>
+                            <strong>Máximo:</strong> Teto do RGPS<br>
+                            <strong>≠ Empregado:</strong> Não tem alíquota progressiva
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="A" data-question="Salário-de-contribuição do Segurado Especial">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o salário-de-contribuição do segurado especial, julgue o item: O segurado especial rural tem como salário-de-contribuição o valor resultante da aplicação da alíquota de 1,2% sobre o valor da comercialização da produção, sendo esse valor limitado a 1 salário-mínimo para fins de cálculo de benefícios.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Salário-de-contribuição do Segurado Especial (Art. 25, Lei 8.212/1991 + Art. 39, Lei 8.213/1991):</strong><br><br>
+                        
+                        <strong>Contribuição:</strong> Alíquota de <strong>1,2%</strong> sobre o valor da <strong>comercialização da produção</strong> (não sobre o lucro ou renda).<br><br>
+                        
+                        <strong>Base de cálculo:</strong> Valor bruto da comercialização, sem dedução de custos.<br><br>
+                        
+                        <strong>Limitação para benefícios:</strong> O salário-de-contribuição do segurado especial é <strong>limitado a 1 salário-mínimo</strong> (art. 39, Lei 8.213/1991). Isso significa que, mesmo que comercialize produção de valor superior, o salário-de-contribuição para fins de cálculo de benefícios será de 1 salário-mínimo.<br><br>
+                        
+                        <strong>Exceção:</strong> Se o segurado especial também tiver outra categoria (empregado, contribuinte individual), pode somar os salários-de-contribuição, respeitado o teto.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Segurado Especial:</div>
+                            <strong>Alíquota:</strong> 1,2% sobre comercialização<br>
+                            <strong>Base:</strong> Valor bruto da produção<br>
+                            <strong>Limitação:</strong> 1 salário-mínimo (benefícios)<br>
+                            <strong>Recolhimento:</strong> DAE ou carnê<br>
+                            <strong>Prova:</strong> Notas fiscais de produtor<br>
+                            <strong>Acumulação:</strong> Pode somar com outras categorias
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="E" data-question="Alíquotas de Contribuição do Empregado">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre as alíquotas de contribuição do segurado empregado, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O empregado recolhe alíquota fixa de 11% sobre seu salário-de-contribuição, sem progressividade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O empregado recolhe alíquota de 7,5% até o limite de 1 salário-mínimo e 14% sobre o valor excedente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O empregado recolhe alíquota progressiva de 7,5% a 14% conforme faixa de remuneração, calculada sobre o valor total do salário-de-contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O empregado recolhe alíquota de 8% sobre todo o salário-de-contribuição, sem distinção de faixas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O empregado recolhe alíquota progressiva de 7,5% a 14% conforme faixa de remuneração, calculada de forma escalonada (por faixas), não sobre o valor total</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Alíquotas Progressivas do Empregado (Art. 28, Lei 8.212/1991 - alterado pela Lei 13.982/2020):</strong><br><br>
+                        
+                        <strong>Tabela progressiva por faixas (cálculo escalonado):</strong><br>
+                        • <strong>7,5%</strong> - até 1 salário-mínimo (R$ 1.518,00 em 2025)<br>
+                        • <strong>9%</strong> - de 1 a 2 salários-mínimos (R$ 1.518,01 a R$ 3.036,00)<br>
+                        • <strong>12%</strong> - de 2 a 3 salários-mínimos (R$ 3.036,01 a R$ 4.554,00)<br>
+                        • <strong>14%</strong> - de 3 a 4 salários-mínimos (R$ 4.554,01 a R$ 6.072,00)<br>
+                        • <strong>14%</strong> - acima de 4 salários-mínimos (até o teto)<br><br>
+                        
+                        <strong>Cálculo escalonado (por faixas):</strong> Cada faixa aplica sua alíquota apenas sobre o valor que ultrapassa o limite anterior.<br><br>
+                        
+                        <strong>Exemplo (salário R$ 4.000,00):</strong><br>
+                        • 1ª faixa (R$ 1.518,00): 7,5% = R$ 113,85<br>
+                        • 2ª faixa (R$ 1.518,00): 9% = R$ 136,62<br>
+                        • 3ª faixa (R$ 964,00): 12% = R$ 115,68<br>
+                        • <strong>Total:</strong> R$ 366,15<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Alíquotas Progressivas (Escalonado):</div>
+                            <strong>Até 1 SM:</strong> 7,5%<br>
+                            <strong>1 a 2 SM:</strong> 9%<br>
+                            <strong>2 a 3 SM:</strong> 12%<br>
+                            <strong>3 a 4 SM:</strong> 14%<br>
+                            <strong>Acima de 4 SM:</strong> 14%<br>
+                            <strong>Cálculo:</strong> Por faixas (não sobre total)<br>
+                            <strong>Base:</strong> Lei 13.982/2020
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="A" data-question="13º Salário e Férias">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a incidência de contribuição sobre 13º salário e férias, julgue o item: O 13º salário e o valor correspondente às férias (incluído o terço constitucional) integram a remuneração e sujeitam-se à incidência da contribuição previdenciária, sendo o 13º salário contribuído proporcionalmente em cada mês de competência.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>13º Salário e Férias (Art. 7º, VIII e XVII, CF + IN 128/2022):</strong><br><br>
+                        
+                        <strong>13º Salário:</strong><br>
+                        • <strong>Parcela mensal:</strong> Integra a remuneração de cada mês (1/12 por mês trabalhado)<br>
+                        • <strong>Incidência:</strong> Contribuição mensal sobre a parcela acumulada<br>
+                        • <strong>2ª parcela:</strong> Também sujeita a contribuição (mês de pagamento)<br><br>
+                        
+                        <strong>Férias:</strong><br>
+                        • <strong>Remuneração:</strong> Valor correspondente ao período de férias<br>
+                        • <strong>1/3 constitucional:</strong> Integra a remuneração e sujeita-se a contribuição<br>
+                        • <strong>Incidência:</strong> Mês de competência (quando o trabalhador tem direito)<br><br>
+                        
+                        <strong>Importante:</strong> O adiantamento de férias ou 13º salário não integra a remuneração do mês de pagamento, pois já integrou o mês de competência.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 13º e Férias:</div>
+                            <strong>13º parcela:</strong> Integra mensalmente (1/12)<br>
+                            <strong>Férias:</strong> Competência do período de gozo<br>
+                            <strong>1/3 férias:</strong> Integra e contribui<br>
+                            <strong>Adiantamento:</strong> Não integra mês de pagamento<br>
+                            <strong>Base:</strong> Art. 7º, VIII e XVII, CF<br>
+                            <strong>Incidência:</strong> Normal (salário-de-contribuição)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Acumulação de Remunerações">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre a acumulação de remunerações de múltiplas fontes pagadoras, analise as assertivas:<br><br>
+                    I. O segurado que recebe remuneração de duas ou mais empresas deve somar os valores para fins de salário-de-contribuição, respeitado o limite máximo<br>
+                    II. O empregado que ultrapassa o teto em uma única empresa não está sujeito a contribuição em segunda empresa<br>
+                    III. A contribuição sobre a remuneração que exceder o teto é de responsabilidade exclusiva do empregado<br>
+                    IV. O salário-de-contribuição resultante da acumulação serve de base para cálculo de todos os benefícios previdenciários<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Acumulação de Remunerações (Art. 28, Lei 8.212/1991):</strong><br><br>                        <strong>I. CORRETO:</strong> O segurado deve somar as remunerações de todas as fontes pagadoras, respeitado o limite máximo do salário-de-contribuição (teto do RGPS).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Se o segurado já atingiu o teto em uma empresa, não há salário-de-contribuição em outra empresa para fins de contribuição do segurado.<br><br>
+                        
+                        <strong>III. ERRADO:</strong> A contribuição sobre o excedente é de responsabilidade do <strong>empregador</strong>, não do empregado. O empregador não pode descontar do trabalhador o valor que excede o teto.<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> O salário-de-contribuição resultante da acumulação serve de base para cálculo de benefícios, mas cada benefício tem suas próprias regras de cálculo.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Acumulação de Remunerações:</div>
+                            <strong>Soma:</strong> De todas as fontes pagadoras<br>
+                            <strong>Limite:</strong> Teto do RGPS<br>
+                            <strong>Ultrapassou teto:</strong> Não contribui na segunda empresa<br>
+                            <strong>Responsabilidade:</strong> Empregador (não empregado)<br>
+                            <strong>Base benefícios:</strong> Salário-de-contribuição limitado<br>
+                            <strong>Regra:</strong> Art. 28, Lei 8.212/1991
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="C" data-question="Salário-de-contribuição do Segurado Facultativo">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o salário-de-contribuição do segurado facultativo, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O segurado facultativo deve recolher contribuição de 20% sobre o valor de sua última remuneração como empregado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O segurado facultativo está obrigado a recolher sobre o limite máximo do salário-de-contribuição, sem possibilidade de escolha</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O segurado facultativo pode optar por recolher contribuição sobre qualquer valor entre o salário-mínimo e o limite máximo do salário-de-contribuição, aplicando-se a alíquota de 20%</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O segurado facultativo recolhe alíquota progressiva de 7,5% a 14%, conforme faixa de remuneração escolhida</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O segurado facultativo não pode recolher sobre valor inferior a 2 salários-mínimos</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Salário-de-contribuição do Segurado Facultativo (Art. 21, Lei 8.212/1991):</strong><br><br>
+                        
+                        <strong>Opção pelo valor:</strong> O facultativo pode optar por recolher sobre qualquer valor entre:<br>
+                        • <strong>Mínimo:</strong> 1 salário-mínimo (R$ 1.518,00 em 2025)<br>
+                        • <strong>Máximo:</strong> Teto do RGPS (R$ 7.507,49 em 2025)<br><br>
+                        
+                        <strong>Alíquota:</strong> 20% (fixa, não progressiva)<br><br>
+                        
+                        <strong>Importante:</strong> A alíquota progressiva (7,5% a 14%) aplica-se apenas ao <strong>empregado</strong>, não ao facultativo.<br><br>
+                        
+                        <strong>Alteração do valor:</strong> O facultativo pode alterar o valor de recolhimento a cada competência, informando na GPS/DARF.<br><br>
+                        
+                        <strong>Vantagem:</strong> Possibilidade de recolher sobre valor superior ao mínimo para obter benefício de maior valor.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Segurado Facultativo:</div>
+                            <strong>Opção:</strong> Valor entre 1 SM e teto<br>
+                            <strong>Alíquota:</strong> 20% (fixa)<br>
+                            <strong>Mínimo:</strong> 1 salário-mínimo<br>
+                            <strong>Máximo:</strong> Teto do RGPS<br>
+                            <strong>Alteração:</strong> Pode mudar mensalmente<br>
+                            <strong>≠ Empregado:</strong> Não tem alíquota progressiva
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="A" data-question="Remuneração do Trabalhador Avulso">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a remuneração do trabalhador avulso, julgue o item: A remuneração do trabalhador avulso é o valor bruto auferido nas operações portuárias ou em outros serviços, sujeitando-se à contribuição de 8% sobre esse valor, descontada pelo órgão gestor de mão de obra (OGMO) ou sindicato.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Remuneração do Trabalhador Avulso (Art. 25, § 1º, Lei 8.212/1991 + IN 128/2022):</strong><br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • <strong>Valor bruto:</strong> Auferido nas operações ou serviços<br>
+                        • <strong>Contribuição:</strong> 8% sobre a remuneração<br>
+                        • <strong>Responsável:</strong> OGMO, sindicato ou administrador de CTPS<br>
+                        • <strong>Desconto:</strong> Na fonte, antes do pagamento ao trabalhador<br><br>
+                        
+                        <strong>Base de cálculo:</strong> Valor total auferido, sem limitação ao teto (o teto se aplica apenas para fins de cálculo de benefícios).<br><br>
+                        
+                        <strong>Exemplos:</strong> Estivadores, capatazes, trabalhadores portuários, trabalhadores de eventos.<br><br>
+                        
+                        <strong>Intermediação obrigatória:</strong> O recolhimento é feito pelo intermediário, não pelo próprio trabalhador.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Trabalhador Avulso:</div>
+                            <strong>Remuneração:</strong> Valor bruto auferido<br>
+                            <strong>Contribuição:</strong> 8% (descontado na fonte)<br>
+                            <strong>Responsável:</strong> OGMO/sindicato<br>
+                            <strong>Base:</strong> Art. 25, § 1º, Lei 8.212/1991<br>
+                            <strong>Intermediação:</strong> Obrigatória<br>
+                            <strong>Teto:</strong> Aplica-se para benefícios
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="E" data-question="Remuneração do Segurado Especial Pescador">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre a remuneração do segurado especial pescador artesanal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O pescador artesanal recolhe contribuição de 20% sobre o valor de sua pesca comercializada</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O pescador artesanal é isento de contribuições previdenciárias, sendo considerado segurado de forma gratuita</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O pescador artesanal recolhe contribuição de 1,2% sobre o lucro líquido de sua atividade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O pescador artesanal recolhe contribuição fixa mensal de 1 salário-mínimo, independentemente da produção</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O pescador artesanal recolhe contribuição de 1,2% sobre o valor da produção comercializada, sendo o salário-de-contribuição limitado a 1 salário-mínimo para fins de benefícios</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Pescador Artesanal - Segurado Especial (Art. 25, Lei 8.212/1991 + Art. 39, Lei 8.213/1991):</strong><br><br>
+                        
+                        <strong>Contribuição:</strong> Alíquota de <strong>1,2%</strong> sobre o valor da <strong>produção comercializada</strong> (não sobre o lucro).<br><br>
+                        
+                        <strong>Base de cálculo:</strong> Valor bruto da pesca vendida, sem dedução de custos (combustível, iscas, equipamentos).<br><br>
+                        
+                        <strong>Limitação:</strong> O salário-de-contribuição é <strong>limitado a 1 salário-mínimo</strong> para fins de cálculo de benefícios.<br><br>
+                        
+                        <strong>Comprovação:</strong> Ato de venda, nota fiscal de produtor, ou declaração de entidade de classe.<br><br>
+                        
+                        <strong>Recolhimento:</strong> DAE (Documento de Arrecadação do e-Social) ou carnê do INSS.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Pescador Artesanal:</div>
+                            <strong>Categoria:</strong> Segurado especial<br>
+                            <strong>Alíquota:</strong> 1,2% sobre produção<br>
+                            <strong>Base:</strong> Valor bruto comercializado<br>
+                            <strong>Limitação:</strong> 1 SM (benefícios)<br>
+                            <strong>Comprovação:</strong> Ato de venda, NF de produtor<br>
+                            <strong>Recolhimento:</strong> DAE ou carnê
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="B" data-question="Remuneração em Espécie">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a remuneração em espécie (utilidades), julgue o item: A remuneração em espécie, como moradia, alimentação, vestuário e outros bens ou serviços fornecidos pelo empregador, não integra o salário-de-contribuição em nenhuma hipótese, sendo considerada benefício social.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro!</strong> A remuneração em espécie <strong>pode integrar</strong> o salário-de-contribuição, dependendo das condições.<br><br>
+                        
+                        <strong>Regras para Utilidades (Art. 28, § 9º, Lei 8.212/1991 + IN 128/2022):</strong><br><br>
+                        
+                        <strong>Não integram:</strong><br>
+                        • <strong>Auxílio-alimentação/refeição:</strong> Até R$ 1.500,00 mensal (Lei 14.597/2023)<br>
+                        • <strong>Auxílio-transporte:</strong> Uso de transporte coletivo ou reembolso de despesas<br>
+                        • <strong>Auxílio-creche:</strong> Dentro de limites legais<br>
+                        • <strong>Assistência médica:</strong> Plano de saúde empresarial<br><br>
+                        
+                        <strong>Integram:</strong><br>
+                        • <strong>Moradia:</strong> Quando não for condição essencial do trabalho (ex: fazenda)<br>
+                        • <strong>Alimentação:</strong> Quando exceder o limite legal ou for vantagem individual<br>
+                        • <strong>Vestuário:</strong> Quando não for uniforme ou EPI<br>
+                        • <strong>Outros bens:</strong> Quando caracterizarem aumento patrimonial<br><br>
+                        
+                        <strong>Regra geral:</strong> Se a utilidade for <strong>vantagem individual</strong> e não <strong>benefício coletivo</strong>, integra a remuneração.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Não integram:</strong> Auxílios até limites legais<br>
+                            <strong>Integram:</strong> Vantagens individuais<br>
+                            <strong>Moradia:</strong> Integra se não for condição do trabalho<br>
+                            <strong>Alimentação:</strong> Integra se exceder limite<br>
+                            <strong>Regra:</strong> Benefício coletivo vs. vantagem individual<br>
+                            <strong>Base:</strong> Art. 28, § 9º, Lei 8.212/1991
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Gratificações e Prêmios">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre gratificações e prêmios na composição da remuneração, analise as assertivas:<br><br>
+                    I. A gratificação de função, quando paga habitualmente, integra a remuneração para fins de salário-de-contribuição<br>
+                    II. O prêmio de produção, vinculado ao desempenho individual, não integra a remuneração se pago apenas esporadicamente<br>
+                    III. O abono de férias (1/3 constitucional) integra a remuneração e sujeita-se a contribuição<br>
+                    IV. O prêmio assiduidade, quando pago habitualmente, integra a remuneração<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, III e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Gratificações e Prêmios (Art. 28, § 1º, Lei 8.212/1991 + IN 128/2022):</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> A gratificação de função, quando <strong>habitual</strong> (não eventual), integra a remuneração. A habitualidade é elemento essencial.<br><br>
+                        
+                        <strong>II. ERRADO:</strong> O prêmio de produção, mesmo que vinculado ao desempenho, <strong>integra a remuneração</strong> se tiver caráter habitual. A esporadicidade pode afastar a habitualidade, mas o prêmio de produção habitual integra.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> O abono de férias (1/3 constitucional) integra a remuneração do mês de competência das férias e sujeita-se a contribuição.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> O prêmio assiduidade, quando <strong>habitual</strong>, integra a remuneração. Se eventual (ex: prêmio anual de assiduidade), pode não integrar.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Gratificações e Prêmios:</div>
+                            <strong>Integram:</strong> Se habituais e remuneratórios<br>
+                            <strong>Não integram:</strong> Se eventuais e não habituais<br>
+                            <strong>Gratificação de função:</strong> Integra se habitual<br>
+                            <strong>Prêmio de produção:</strong> Integra se habitual<br>
+                            <strong>Abono férias:</strong> Integra (1/3)<br>
+                            <strong>Prêmio assiduidade:</strong> Integra se habitual
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="C" data-question="Horas Extras e Adicionais">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre horas extras e adicionais na remuneração, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">As horas extras não integram a remuneração quando resultam de acordo individual de compensação de jornada</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O adicional noturno integra a remuneração apenas quando o trabalho noturno for permanente, não integrando se esporádico</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">As horas extras, com o adicional de 50% ou percentual superior, integram a remuneração para fins de salário-de-contribuição</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O adicional de transferência não integra a remuneração, sendo considerado indenização de despesas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O adicional de insalubridade só integra a remuneração se o trabalho insalubre for permanente, não integrando em trabalhos eventuais</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Horas Extras e Adicionais (Art. 28, § 1º, Lei 8.212/1991):</strong><br><br>
+                        
+                        <strong>Horas extras:</strong> Integram a remuneração, inclusive o adicional de 50% ou percentual superior (60%, 80%, 100%).<br><br>
+                        
+                        <strong>Adicionais que integram:</strong><br>
+                        • <strong>Adicional noturno:</strong> 20% ou 25% sobre a hora diurna<br>
+                        • <strong>Adicional de insalubridade:</strong> 10%, 20% ou 40% sobre o salário-base<br>
+                        • <strong>Adicional de periculosidade:</strong> 30% sobre o salário-base<br>
+                        • <strong>Adicional de transferência:</strong> 25% sobre o salário-base<br><br>
+                        
+                        <strong>Caráter habitual:</strong> Os adicionais integram a remuneração mesmo que esporádicos, desde que pagos.<br><br>
+                        
+                        <strong>Compensação de jornada:</strong> As horas extras compensadas não integram, mas as efetivamente pagas integram.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Horas Extras e Adicionais:</div>
+                            <strong>Horas extras:</strong> Integram (com adicional)<br>
+                            <strong>Adicional noturno:</strong> Integra<br>
+                            <strong>Insalubridade:</strong> Integra (10%, 20%, 40%)<br>
+                            <strong>Periculosidade:</strong> Integra (30%)<br>
+                            <strong>Transferência:</strong> Integra (25%)<br>
+                            <strong>Regra:</strong> Todos integram a remuneração
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="A" data-question="Remuneração do Dirigente Sindical">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a remuneração do dirigente sindical, julgue o item: O dirigente sindical que se afasta do trabalho para exercer mandato na entidade sindical tem garantido o salário-de-contribuição sobre o valor da remuneração recebida do sindicato, desde que igual ou superior àquela que percebia na empresa, para fins de manutenção da qualidade de segurado e cálculo de benefícios.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Dirigente Sindical (Art. 543, CLT + Lei 8.212/1991):</strong> O empregado que se afasta para exercer mandato sindical tem garantida a remuneração.<br><br>
+                        
+                        <strong>Garantia salarial:</strong><br>
+                        • <strong>Pelo sindicato:</strong> Remuneração igual ou superior à da empresa<br>
+                        • <strong>Pela empresa:</strong> Compensação financeira do sindicato<br><br>
+                        
+                        <strong>Salário-de-contribuição:</strong><br>
+                        • Base de cálculo: Remuneração efetivamente recebida do sindicato<br>
+                        • Limite: Teto do RGPS<br>
+                        • Responsável: Sindicato (empregador para fins previdenciários)<br><br>
+                        
+                        <strong>Manutenção da qualidade:</strong> O afastamento para mandato sindical não interrompe a qualidade de segurado, desde que haja remuneração.<br><br>
+                        
+                        <strong>Contribuições:</strong> O sindicato recolhe as contribuições patronal (20%) e do segurado (alíquota progressiva).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Dirigente Sindical:</div>
+                            <strong>Afastamento:</strong> Para mandato sindical<br>
+                            <strong>Garantia:</strong> Remuneração igual ou superior<br>
+                            <strong>Responsável:</strong> Sindicato (recolhimento)<br>
+                            <strong>Base:</strong> Remuneração do sindicato<br>
+                            <strong>Qualidade:</strong> Mantida<br>
+                            <strong>Contribuição:</strong> Patronal 20% + segurado (progressiva)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="E" data-question="Remuneração do Estagiário">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre a remuneração do estagiário, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O estagiário não é segurado do RGPS, sendo considerado estudante em atividade educativa não remunerada</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O estagiário é segurado facultativo, podendo recolher contribuição se desejar</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O estagiário é segurado especial, recolhendo 1,2% sobre sua bolsa de estágio</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O estagiário não possui remuneração, recebendo apenas ajuda de custo, que não integra o salário-de-contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O estagiário é segurado empregado, sujeito à contribuição sobre a bolsa de estágio, que integra o salário-de-contribuição, aplicando-se as alíquotas progressivas de 7,5% a 14%</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Estagiário (Lei 11.788/2008 + IN 128/2022):</strong> O estagiário é <strong>segurado empregado</strong> para fins previdenciários.<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • <strong>Categoria:</strong> Segurado empregado (não facultativo ou especial)<br>
+                        • <strong>Remuneração:</strong> Bolsa de estágio (integra salário-de-contribuição)<br>
+                        • <strong>Contribuição:</strong> Alíquotas progressivas 7,5% a 14%<br>
+                        • <strong>Responsável:</strong> Empresa concedente do estágio<br>
+                        • <strong>FGTS:</strong> Incide sobre a bolsa de estágio<br><br>
+                        
+                        <strong>Não é:</strong><br>
+                        • Facultativo (é obrigatório pela atividade)<br>
+                        • Especial (não é atividade rural)<br>
+                        • Não segurado (a bolsa é remuneração)<br><br>
+                        
+                        <strong>Importante:</strong> O estágio não gera vínculo empregatício para fins trabalhistas, mas <strong>gera filiação ao RGPS</strong>.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Estagiário:</div>
+                            <strong>Categoria:</strong> Segurado empregado<br>
+                            <strong>Remuneração:</strong> Bolsa de estágio<br>
+                            <strong>Contribuição:</strong> 7,5% a 14% (progressiva)<br>
+                            <strong>FGTS:</strong> Sim<br>
+                            <strong>Vínculo CLT:</strong> Não (mas é segurado)<br>
+                            <strong>Base:</strong> Lei 11.788/2008
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Remuneração em Atraso">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a remuneração em atraso (diferenças salariais), julgue o item: As diferenças de remuneração pagas em atraso, decorrentes de revisão salarial, promoção ou sentença judicial, integram o salário-de-contribuição do mês de pagamento, não sendo possível a recuperação de período contributivo anterior.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro!</strong> As diferenças de remuneração em atraso integram o salário-de-contribuição do <strong>mês de competência a que se referem</strong>, não do mês de pagamento, e é possível a <strong>recuperação de período contributivo</strong>.<br><br>
+                        
+                        <strong>Regras para Diferenças (IN 128/2022):</strong><br><br>
+                        
+                        <strong>Competência:</strong> As diferenças integram o salário-de-contribuição do mês a que se referem (mês trabalhado), não do mês de pagamento.<br><br>
+                        
+                        <strong>Recuperação de período:</strong> É possível a recuperação do período contributivo, mediante:<br>
+                        • <strong>Guia de recolhimento:</strong> DARF ou GPS específica<br>
+                        • <strong>Comprovação:</strong> Sentença judicial, acordo, revisão salarial<br>
+                        • <strong>Prazo:</strong> Dentro do prazo prescricional (10 anos)<br><br>
+                        
+                        <strong>Exemplo:</strong> Diferenças de 2024 pagas em 2025 devem ser recolhidas sobre a competência 2024, com atualização monetária e juros.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Competência:</strong> Mês a que se referem (não pagamento)<br>
+                            <strong>Recuperação:</strong> Possível (com recolhimento)<br>
+                            <strong>Guia:</strong> DARF ou GPS específica<br>
+                            <strong>Comprovação:</strong> Sentença, acordo, revisão<br>
+                            <strong>Prazo:</strong> 10 anos (prescrição)<br>
+                            <strong>Atualização:</strong> Monetária + juros
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="D" data-question="Revisão Geral - Conceitos Fundamentais">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre salário-de-contribuição e remuneração, analise as assertivas:<br><br>
+                    I. O salário-de-contribuição é sempre igual à remuneração, exceto quando limitado pelo teto do RGPS<br>
+                    II. O empregado doméstico tem salário-de-contribuição calculado sobre a remuneração mensal, sem limitação ao teto<br>
+                    III. O contribuinte individual pode optar por recolher sobre valor inferior à remuneração auferida<br>
+                    IV. O segurado especial tem salário-de-contribuição limitado a 1 salário-mínimo para fins de benefícios<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, III e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Revisão Geral - Salário-de-contribuição e Remuneração:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> O salário-de-contribuição é igual à remuneração, <strong>limitado ao teto</strong> do RGPS. Se a remuneração for inferior ao teto, são idênticos.<br><br>
+                        
+                        <strong>II. ERRADO:</strong> O empregado doméstico <strong>também está sujeito ao teto</strong> do RGPS (R$ 7.507,49 em 2025). A EC 72/2013 equiparou-o ao empregado urbano.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> O contribuinte individual pode optar por recolher sobre qualquer valor entre 1 salário-mínimo e o teto, <strong>mesmo que sua remuneração seja superior</strong>.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> O segurado especial tem salário-de-contribuição <strong>limitado a 1 salário-mínimo</strong> para fins de cálculo de benefícios (art. 39, Lei 8.213/1991).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Resumo Final:</div>
+                            <strong>Salário-de-contribuição:</strong> Remuneração limitada ao teto<br>
+                            <strong>Empregado doméstico:</strong> Sujeito ao teto (EC 72/2013)<br>
+                            <strong>Contribuinte individual:</strong> Pode optar por valor<br>
+                            <strong>Segurado especial:</strong> Limite 1 SM (benefícios)<br>
+                            <strong>Base legal:</strong> Lei 8.212/1991 e Lei 8.213/1991<br>
+                            <strong>Importante:</strong> Teto 2025: R$ 7.507,49
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • Questões sobre conceito: Diferença entre remuneração e salário-de-contribuição, limitação pelo teto<br>
+                • Questões sobre componentes: O que integra (horas extras, adicionais, 13º, férias) e o que não integra (auxílios até limites, reembolsos)<br>
+                • Questões sobre alíquotas: Progressivas do empregado (7,5% a 14%) vs. fixa do contribuinte individual/facultativo (20%)<br>
+                • Questões sobre categorias especiais: Segurado especial (1,2% sobre produção, limite 1 SM), avulso (8%), facultativo (opção de valor)<br>
+                • Questões sobre acumulação: Soma de remunerações de múltiplas fontes, respeitado o teto<br>
+                • Questões sobre competência: Diferenças de remuneração integram mês de competência, não de pagamento<br>
+                • Base legal: Lei 8.212/1991 (arts. 21, 25, 28), Lei 8.213/1991 (art. 39), IN 128/2022<br>
+                • Valores atualizados: Teto 2025 (R$ 7.507,49), Salário-mínimo 2025 (R$ 1.518,00)
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Direito Previdenciário - Salário-de-contribuição e Remuneração. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê um exemplo numérico prático se aplicar
+4. Alguma dica de memorização ou mnemônica
+5. Qual artigo da Lei 8.212/1991 ou Lei 8.213/1991 se aplica
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina Salário-de-contribuição e Remuneração e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise as alíquotas de contribuição e componentes da remuneração.';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nos conceitos básicos de salário-de-contribuição vs. remuneração.';
+            } else {
+                message = '⚠️ É preciso estudar mais. O tema Salário-de-contribuição é fundamental para o INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
