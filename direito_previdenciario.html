@@ -10,19 +10,19 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
         }
-        
+
         .back-btn {
             display: inline-block;
             margin-bottom: 30px;
@@ -31,11 +31,11 @@
             font-size: 1.1em;
             transition: all 0.3s ease;
         }
-        
+
         .back-btn:hover {
             transform: translateX(-5px);
         }
-        
+
         header {
             background: white;
             border-radius: 20px;
@@ -44,18 +44,18 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-align: center;
         }
-        
+
         .icone {
             font-size: 4em;
             margin-bottom: 20px;
         }
-        
+
         header h1 {
             color: #1e3c72;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
-        
+
         .conteudo {
             background: white;
             border-radius: 20px;
@@ -68,7 +68,7 @@
         .page-transition {
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -81,7 +81,7 @@
                 filter: blur(0);
             }
         }
-        
+
         @keyframes scaleIn {
             from {
                 opacity: 0;
@@ -92,12 +92,12 @@
                 transform: scale(1);
             }
         }
-        
+
         /* Efeito de saída suave */
         body.fade-out {
             animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        
+
         @keyframes fadeOut {
             to {
                 opacity: 0;
@@ -105,27 +105,27 @@
                 filter: blur(10px);
             }
         }
-        
+
         /* Container com animação */
         .container {
             animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         /* Transições suaves em todos elementos */
         * {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        
+
         /* Header com animação especial */
         header {
             animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
         }
-        
+
         /* Ícone com bounce */
         .icone {
             animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        
+
         @keyframes bounceIn {
             0% {
                 opacity: 0;
@@ -156,37 +156,37 @@
             transition: all 0.3s ease;
             animation: slideInRight 0.6s ease-out;
         }
-        
+
         .prova-link:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
         }
-        
+
         .prova-content {
             display: flex;
             align-items: center;
             gap: 20px;
         }
-        
+
         .prova-icone {
             font-size: 2.5em;
         }
-        
+
         .prova-info h3 {
             font-size: 1.4em;
             margin-bottom: 5px;
         }
-        
+
         .prova-info p {
             opacity: 0.9;
             font-size: 0.95em;
         }
-        
+
         .prova-arrow {
             margin-left: auto;
             font-size: 1.5em;
         }
-        
+
         @keyframes slideInRight {
             from {
                 opacity: 0;
@@ -198,16 +198,17 @@
             }
         }
     </style>
+<base target="_blank">
 </head>
 <body class="page-transition">
     <div class="container">
         <a href="inss.html" class="back-btn">← Voltar para INSS</a>
-        
+
         <header>
             <div class="icone">⚖️</div>
             <h1>Direito Previdenciário</h1>
         </header>
-        
+
         <div class="conteudo">
             <!-- Link para Seguridade Social -->
             <a href="previdenciario1.html" class="prova-link">
@@ -220,7 +221,7 @@
                     <span class="prova-arrow">→</span>
                 </div>
             </a>
-            
+
             <!-- Link para Legislação Previdenciária -->
             <a href="previdenciario2.html" class="prova-link">
                 <div class="prova-content">
@@ -232,7 +233,7 @@
                     <span class="prova-arrow">→</span>
                 </div>
             </a>
-            
+
             <!-- NOVO BOTÃO: RGPS -->
             <a href="previdenciario3.html" class="prova-link">
                 <div class="prova-content">
@@ -244,7 +245,7 @@
                     <span class="prova-arrow">→</span>
                 </div>
             </a>
-            
+
             <!-- NOVO BOTÃO: Empregado Doméstico -->
             <a href="previdenciario4.html" class="prova-link">
                 <div class="prova-content">
@@ -256,7 +257,7 @@
                     <span class="prova-arrow">→</span>
                 </div>
             </a>
-            
+
             <!-- NOVO BOTÃO: Segurados -->
             <a href="previdenciario5.html" class="prova-link">
                 <div class="prova-content">
@@ -264,6 +265,18 @@
                     <div class="prova-info">
                         <h3>Segurados: Conceito, Requisitos e Classificação</h3>
                         <p>Clique para acessar o conteúdo sobre Segurados</p>
+                    </div>
+                    <span class="prova-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- NOVO BOTÃO: Salário-de-contribuição e remuneração -->
+            <a href="previdenciario6.html" class="prova-link">
+                <div class="prova-content">
+                    <span class="prova-icone">💰</span>
+                    <div class="prova-info">
+                        <h3>Salário-de-contribuição e remuneração</h3>
+                        <p>Clique para acessar o conteúdo sobre Salário-de-contribuição e remuneração</p>
                     </div>
                     <span class="prova-arrow">→</span>
                 </div>
@@ -277,19 +290,19 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const href = this.getAttribute('href');
-                
+
                 // Adiciona classe de saída
                 document.body.style.opacity = '0';
                 document.body.style.transform = 'translateY(-20px)';
                 document.body.style.filter = 'blur(10px)';
                 document.body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                
+
                 setTimeout(() => {
                     window.location.href = href;
                 }, 400);
             });
         });
-        
+
         // Animação de entrada ao carregar
         window.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('page-transition');
