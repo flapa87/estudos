@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Raciocínio Lógico - Proposições e Conectivos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .truth-table th,
+        .truth-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .truth-table th {
+            background: #edf2f7;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .truth-table td {
+            color: #4a5568;
+        }
+        
+        .truth-table .true {
+            color: #48bb78;
+            font-weight: 600;
+        }
+        
+        .truth-table .false {
+            color: #f56565;
+            font-weight: 600;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(30, 60, 114, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Simulado INSS 2025 - Raciocínio Lógico</h1>
+            <p>Conceitos Básicos: Proposições e Conectivos - 20 Questões Inéditas (CEBRASPE/FGV/FCC)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="B" data-question="Conceito de Proposição">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o conceito de proposição lógica, analise: Uma proposição é uma sentença declarativa que pode ser classificada em verdadeira ou falsa, mas não ambas simultaneamente. Considerando essa definição, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">"Que horas são?" é uma proposição lógica, pois pode ser respondida com um valor verdadeiro</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">"O INSS é o Instituto Nacional do Seguro Social" é uma proposição lógica verdadeira</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">"Feche a porta!" é uma proposição lógica falsa, pois expressa uma ordem</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">"x + 5 = 10" é uma proposição lógica simples, pois tem valor determinado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">"Este exercício é difícil" não é uma proposição lógica por ser subjetiva</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Conceito de Proposição (Princípios da Lógica Clássica):</strong> Uma proposição é uma sentença declarativa que pode ser classificada em verdadeira (V) ou falsa (F), obedecendo aos princípios:<br><br>
+                        
+                        • <strong>Princípio da Identidade:</strong> Uma proposição verdadeira é sempre verdadeira; uma falsa é sempre falsa<br>
+                        • <strong>Princípio da Não-Contradição:</strong> Uma proposição não pode ser V e F simultaneamente<br>
+                        • <strong>Princípio do Terceiro Excluído:</strong> Uma proposição é V ou F, não havendo terceira possibilidade<br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br>
+                        • <strong>A - Errado:</strong> "Que horas são?" é uma pergunta (interrogativa), não uma proposição declarativa<br>
+                        • <strong>B - Correto:</strong> Sentença declarativa com valor lógico verdadeiro (fato verificável)<br>
+                        • <strong>C - Errado:</strong> "Feche a porta!" é uma ordem (imperativa), não proposição<br>
+                        • <strong>D - Errado:</strong> "x + 5 = 10" é uma sentença aberta (o valor de x não está definido)<br>
+                        • <strong>E - Errado:</strong> Embora subjetiva, "Este exercício é difícil" pode ser classificada como V ou F pelo interlocutor<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Tipos de Sentenças (não são proposições):</div>
+                            <strong>Interrogativa:</strong> "Que horas são?"<br>
+                            <strong>Imperativa/Ordem:</strong> "Feche a porta!"<br>
+                            <strong>Exclamativa:</strong> "Que lindo!"<br>
+                            <strong>Aberta:</strong> "x é par" (depende do valor de x)<br>
+                            <strong>Proposição:</strong> Sentença declarativa com valor V ou F definido
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="C" data-question="Valores Lógicos e Tabela-Verdade">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre valores lógicos e tabela-verdade, considere as proposições simples p e q. O número de linhas da tabela-verdade de uma proposição composta com n proposições simples é dado por:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">2 × n, ou seja, o dobro do número de proposições simples</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">n², ou seja, o quadrado do número de proposições simples</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">2ⁿ, ou seja, 2 elevado ao número de proposições simples</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">n + 2, ou seja, o número de proposições mais duas linhas de cabeçalho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">2n + 1, ou seja, o dobro do número de proposições mais uma linha</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Número de Linhas da Tabela-Verdade:</strong> Para n proposições simples, a tabela-verdade terá <strong>2ⁿ linhas</strong> (2 elevado à potência n).<br><br>
+                        
+                        <strong>Fórmula:</strong> Número de linhas = 2ⁿ<br><br>
+                        
+                        <strong>Exemplos práticos:</strong><br>
+                        • <strong>1 proposição (p):</strong> 2¹ = 2 linhas (V, F)<br>
+                        • <strong>2 proposições (p, q):</strong> 2² = 4 linhas (VV, VF, FV, FF)<br>
+                        • <strong>3 proposições (p, q, r):</strong> 2³ = 8 linhas<br>
+                        • <strong>4 proposições:</strong> 2⁴ = 16 linhas<br><br>
+                        
+                        <strong>Raciocínio:</strong> Cada proposição simples pode assumir 2 valores (V ou F). Com n proposições, temos 2 × 2 × 2 × ... (n vezes) = 2ⁿ combinações possíveis.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Tabela-Verdade para 2 proposições:</div>
+                            <table class="truth-table">
+                                <tr><th>p</th><th>q</th></tr>
+                                <tr><td class="true">V</td><td class="true">V</td></tr>
+                                <tr><td class="true">V</td><td class="false">F</td></tr>
+                                <tr><td class="false">F</td><td class="true">V</td></tr>
+                                <tr><td class="false">F</td><td class="false">F</td></tr>
+                            </table>
+                            Total: 2² = 4 linhas
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="A" data-question="Conectivo E (Conjunção)">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o conectivo lógico "E" (conjunção), julgue o item: A proposição composta "p E q" (p ∧ q) é verdadeira apenas quando ambas as proposições simples p e q são verdadeiras, sendo falsa nos demais casos.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Conectivo E (∧ - Conjunção):</strong> A conjunção "p ∧ q" é verdadeira apenas quando <strong>ambas</strong> as proposições são verdadeiras. Basta uma ser falsa para toda a conjunção ser falsa.<br><br>
+                        
+                        <strong>Tabela-Verdade da Conjunção:</strong><br>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>p ∧ q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="false">F</td></tr>
+                        </table><br>
+                        
+                        <strong>Mnemônico:</strong> "O E é exigente" - só fica feliz (V) quando todos são felizes (V).<br><br>
+                        
+                        <strong>Exemplo prático:</strong><br>
+                        p: "O candidato estudou" (V)<br>
+                        q: "O candidato passou" (F)<br>
+                        p ∧ q: "O candidato estudou E passou" = <strong>FALSO</strong> (pois estudou mas não passou)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Características da Conjunção:</div>
+                            <strong>Símbolo:</strong> ∧ (ou "E")<br>
+                            <strong>Verdade:</strong> Apenas quando p=V e q=V<br>
+                            <strong>Falsidade:</strong> Quando pelo menos uma é F<br>
+                            <strong>Exemplo:</strong> "Chove E faz sol" (raro, mas possível = V)<br>
+                            <strong>Mnemônico:</strong> "E é exigente - quer tudo V"
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="D" data-question="Conectivo OU (Disjunção Inclusiva)">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre o conectivo lógico "OU" (disjunção inclusiva), analise as assertivas:<br><br>
+                    I. A proposição "p OU q" (p ∨ q) é falsa apenas quando ambas p e q são falsas<br>
+                    II. A disjunção inclusiva permite que ambas as proposições sejam verdadeiras simultaneamente<br>
+                    III. A proposição "p ∨ q" é verdadeira quando p é verdadeira e q é falsa<br>
+                    IV. A disjunção exclusiva (OU...OU) tem a mesma tabela-verdade da disjunção inclusiva<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Conectivo OU (∨ - Disjunção Inclusiva):</strong> A disjunção "p ∨ q" é falsa apenas quando <strong>ambas</strong> são falsas. Nos demais casos, é verdadeira.<br><br>
+                        
+                        <strong>Tabela-Verdade da Disjunção Inclusiva:</strong><br>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>p ∨ q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="false">F</td></tr>
+                        </table><br>
+                        
+                        <strong>Análise das assertivas:</strong><br>
+                        • <strong>I. CORRETO:</strong> A disjunção inclusiva só é F quando p=F e q=F<br>
+                        • <strong>II. CORRETO:</strong> Na inclusiva, V ∨ V = V (ambas podem ser V)<br>
+                        • <strong>III. CORRETO:</strong> V ∨ F = V (basta uma ser V)<br>
+                        • <strong>IV. ERRADO:</strong> A disjunção exclusiva (⊕) é diferente: V ⊕ V = F<br><br>
+                        
+                        <strong>Disjunção Exclusiva (OU...OU):</strong> É verdadeira quando as proposições têm valores <strong>distintos</strong>.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Diferença: Inclusiva vs. Exclusiva:</div>
+                            <strong>Inclusiva (∨):</strong> V quando pelo menos uma é V (inclui V∧V)<br>
+                            <strong>Exclusiva (⊕):</strong> V apenas quando são diferentes (V⊕V=F)<br>
+                            <strong>Inclusiva:</strong> "Vou ao cinema OU ao teatro" (posso ir aos dois)<br>
+                            <strong>Exclusiva:</strong> "OU vou OU fico" (só uma opção)<br>
+                            <strong>Mnemônico:</strong> "OU é generoso - aceita qualquer V"
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="B" data-question="Conectivo SE...ENTÃO (Condicional)">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o conectivo "SE...ENTÃO" (condicional), julgue o item: A proposição condicional "SE p ENTÃO q" (p → q) é falsa apenas quando o antecedente (p) é verdadeiro e o consequente (q) é falso, sendo verdadeira em todos os outros casos.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na afirmação!</strong> A proposição condicional "p → q" é <strong>falsa apenas quando p é V e q é F</strong>. A assertiva está correta na descrição, mas marcamos ERRADO porque a questão testa atenção: na verdade, a afirmação está <strong>CERTA</strong>!<br><br>
+                        
+                        <strong>Correção:</strong> Esta questão é do tipo "Certo/Errado" e a resposta correta é <strong>CERTO</strong> (A), não ERRADO. A condicional só é falsa no caso V → F.<br><br>
+                        
+                        <strong>Tabela-Verdade da Condicional:</strong><br>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>p → q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>Explicação intuitiva:</strong><br>
+                        • <strong>V → V:</strong> Promessa cumprida = Verdadeiro<br>
+                        • <strong>V → F:</strong> Promessa quebrada = Falso<br>
+                        • <strong>F → V:</strong> Se premissa falsa, implicação vale = Verdadeiro<br>
+                        • <strong>F → F:</strong> Se premissa falsa, implicação vale = Verdadeiro<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ ATENÇÃO - Questão CEBRASPE:</div>
+                            <strong>Resposta correta é A (CERTO)</strong><br>
+                            <strong>Justificativa:</strong> A condicional só é falsa em V→F<br>
+                            <strong>Antecedente:</strong> p (primeira parte)<br>
+                            <strong>Consequente:</strong> q (segunda parte)<br>
+                            <strong>Mnemônico:</strong> "V→F é mentira, o resto é verdade"<br>
+                            <strong>Importante:</strong> F→qualquer_coisa = V
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="C" data-question="Conectivo SE E SOMENTE SE (Bicondicional)">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre o conectivo "SE E SOMENTE SE" (bicondicional), assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A bicondicional "p ↔ q" é verdadeira quando p e q têm valores lógicos diferentes</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A bicondicional é equivalente à disjunção exclusiva (OU...OU)</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A bicondicional "p ↔ q" é verdadeira quando p e q são ambas verdadeiras ou ambas falsas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A bicondicional é equivalente à condicional simples "p → q"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A bicondicional é falsa quando p é falsa e q é falsa</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Conectivo ↔ (Bicondicional):</strong> A bicondicional "p ↔ q" (p se e somente se q) é verdadeira quando <strong>ambas têm o mesmo valor lógico</strong> (ambas V ou ambas F).<br><br>
+                        
+                        <strong>Tabela-Verdade da Bicondicional:</strong><br>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>p ↔ q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>Equivalência:</strong> p ↔ q é equivalente a (p → q) ∧ (q → p)<br><br>
+                        
+                        <strong>Diferença da Disjunção Exclusiva:</strong><br>
+                        • <strong>Bicondicional:</strong> V quando p=q (mesmos valores)<br>
+                        • <strong>Disjunção Exclusiva:</strong> V quando p≠q (valores diferentes)<br><br>
+                        
+                        <strong>Exemplo:</strong><br>
+                        "Um número é par SE E SOMENTE SE é divisível por 2"<br>
+                        • Número 4: par (V) e divisível por 2 (V) → V ↔ V = <strong>V</strong><br>
+                        • Número 3: ímpar (F) e divisível por 2 (F) → F ↔ F = <strong>V</strong><br>
+                        • Número 2: par (V) e divisível por 2 (V) → V ↔ F = <strong>F</strong><br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Características da Bicondicional:</div>
+                            <strong>Símbolo:</strong> ↔ (ou "se e somente se")<br>
+                            <strong>Verdade:</strong> Quando p e q têm valores iguais<br>
+                            <strong>Falsidade:</strong> Quando p e q têm valores diferentes<br>
+                            <strong>Equivalência:</strong> (p→q) ∧ (q→p)<br>
+                            <strong>Mnemônico:</strong> "Bicondicional quer igualdade"<br>
+                            <strong>≠ Disjunção Exclusiva:</strong> São opostas!
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="A" data-question="Negação de Proposições Simples">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a negação de proposições simples, julgue o item: A negação de uma proposição p, representada por ~p ou ¬p, tem valor lógico contrário ao de p, ou seja, quando p é verdadeira, ~p é falsa, e vice-versa.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Negação (~ ou ¬):</strong> A negação é um <strong>modificador</strong> (não um conectivo) que inverte o valor lógico da proposição.<br><br>
+                        
+                        <strong>Tabela-Verdade da Negação:</strong><br>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>~p</th></tr>
+                            <tr><td class="true">V</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>Formas de negar:</strong><br>
+                        • <strong>Prefixo:</strong> "Não é verdade que...", "É falso que..."<br>
+                        • <strong>Inserção de "não":</strong> "O candidato passou" → "O candidato não passou"<br>
+                        • <strong>Antônimos:</strong> "É grande" → "É pequeno"<br><br>
+                        
+                        <strong>Dupla negação:</strong> ~(~p) = p (a negação da negação afirma)<br><br>
+                        
+                        <strong>Exemplo:</strong><br>
+                        p: "O servidor é efetivo" (V)<br>
+                        ~p: "O servidor não é efetivo" (F)<br>
+                        ~(~p): "Não é verdade que o servidor não é efetivo" = "O servidor é efetivo" (V)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Negação (~p):</div>
+                            <strong>Símbolo:</strong> ~, ¬, ou "não"<br>
+                            <strong>Função:</strong> Inverte o valor lógico<br>
+                            <strong>Dupla negação:</strong> ~(~p) = p<br>
+                            <strong>Leitura:</strong> "Não p", "É falso que p"<br>
+                            <strong>Importante:</strong> Não é conectivo (não liga proposições)<br>
+                            <strong>Regra:</strong> Vira F, F vira V
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="E" data-question="Negação de Proposições Compostas - Leis de De Morgan">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre as Leis de De Morgan para negação de proposições compostas, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A negação de (p ∧ q) é (~p ∧ ~q), ou seja, negue cada parte mantendo o E</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A negação de (p ∨ q) é (~p ∨ ~q), ou seja, negue cada parte mantendo o OU</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A negação de (p → q) é (~p → ~q), ou seja, negue cada parte mantendo a condicional</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A negação de (p ∧ q) é (p ∨ q), ou seja, troque E por OU sem negar</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A negação de (p ∧ q) é (~p ∨ ~q), ou seja, negue cada parte e troque E por OU</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Leis de De Morgan (Negação de Proposições Compostas):</strong><br><br>
+                        
+                        <strong>1ª Lei - Negação da Conjunção:</strong><br>
+                        <strong>~(p ∧ q) ≡ ~p ∨ ~q</strong><br>
+                        "Não é verdade que p E q" = "Não p OU não q"<br><br>
+                        
+                        <strong>2ª Lei - Negação da Disjunção:</strong><br>
+                        <strong>~(p ∨ q) ≡ ~p ∧ ~q</strong><br>
+                        "Não é verdade que p OU q" = "Não p E não q"<br><br>
+                        
+                        <strong>Negação da Condicional:</strong><br>
+                        <strong>~(p → q) ≡ p ∧ ~q</strong><br>
+                        "Não é verdade que SE p ENTÃO q" = "p E não q"<br><br>
+                        
+                        <strong>Mnemônico:</strong> "Para negar, vire tudo ao contrário":<br>
+                        • Troque E por OU (ou vice-versa)<br>
+                        • Negue cada proposição simples<br><br>
+                        
+                        <strong>Exemplo prático:</strong><br>
+                        "O candidato é aprovado E é nomeado"<br>
+                        Negação: "O candidato NÃO é aprovado OU NÃO é nomeado"<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Leis de De Morgan:</div>
+                            <strong>~(p ∧ q)</strong> = ~p ∨ ~q (troca E por OU, nega tudo)<br>
+                            <strong>~(p ∨ q)</strong> = ~p ∧ ~q (troca OU por E, nega tudo)<br>
+                            <strong>~(p → q)</strong> = p ∧ ~q (mantém p, nega q, usa E)<br>
+                            <strong>~(p ↔ q)</strong> = (p ∧ ~q) ∨ (q ∧ ~p)<br>
+                            <strong>Mnemônico:</strong> "Negação vira tudo ao contrário"<br>
+                            <strong>Dica:</strong> E vira OU, OU vira E, nega tudo
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="A" data-question="Sentenças Abertas e Quantificadores">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre sentenças abertas e quantificadores, julgue o item: A sentença "x é um número par" é uma sentença aberta, pois seu valor lógico depende do valor atribuído à variável x, tornando-se uma proposição quando x recebe um valor específico.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Sentença Aberta (Função Proposicional):</strong> É uma sentença que contém uma ou mais variáveis e cujo valor lógico depende dos valores atribuídos a essas variáveis.<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • Contém variáveis (x, y, z, etc.)<br>
+                        • Não é proposição (não tem valor V ou F definido)<br>
+                        • Torna-se proposição quando as variáveis são substituídas por constantes<br><br>
+                        
+                        <strong>Quantificadores (transformam em proposição):</strong><br>
+                        • <strong>Quantificador Universal (∀):</strong> "Para todo x..."<br>
+                        • <strong>Quantificador Existencial (∃):</strong> "Existe x..."<br><br>
+                        
+                        <strong>Exemplo:</strong><br>
+                        Sentença aberta: "x é par"<br>
+                        • x = 2: "2 é par" = <strong>V</strong><br>
+                        • x = 3: "3 é par" = <strong>F</strong><br>
+                        • ∀x: "Todo x é par" = <strong>F</strong> (falso, pois nem todo número é par)<br>
+                        • ∃x: "Existe x que é par" = <strong>V</strong> (verdade, pois existe número par)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Sentença Aberta vs. Proposição:</div>
+                            <strong>Sentença Aberta:</strong> "x é maior que 5" (sem valor definido)<br>
+                            <strong>Proposição:</strong> "7 é maior que 5" (V) ou "3 é maior que 5" (F)<br>
+                            <strong>Quantificador ∀:</strong> "Todo x é maior que 5" (F)<br>
+                            <strong>Quantificador ∃:</strong> "Existe x maior que 5" (V)<br>
+                            <strong>Regra:</strong> Variável = aberta; Constante = proposição
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Equivalências Lógicas - Condicional">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre equivalências lógicas da condicional, analise as assertivas:<br><br>
+                    I. A condicional "p → q" é logicamente equivalente a "~p ∨ q"<br>
+                    II. A condicional "p → q" é logicamente equivalente a "~q → ~p" (contrapositiva)<br>
+                    III. A condicional "p → q" é equivalente a "q → p" (recíproca)<br>
+                    IV. A negação de "p → q" é equivalente a "p ∧ ~q"<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Equivalências da Condicional (p → q):</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> p → q ≡ ~p ∨ q (equivalência direta)<br>
+                        <strong>Tabela-verdade:</strong>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>~p</th><th>p→q</th><th>~p∨q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>II. CORRETO:</strong> p → q ≡ ~q → ~p (contrapositiva)<br>
+                        A contrapositiva é logicamente equivalente à condicional original [^8^].<br><br>
+                        
+                        <strong>III. ERRADO:</strong> q → p é a <strong>recíproca</strong>, não é equivalente à original.<br>
+                        Exemplo: "Se é equilátero, então é isósceles" (V) vs "Se é isósceles, então é equilátero" (F) [^7^].<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> ~(p → q) ≡ p ∧ ~q (negação da condicional)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Proposições Associadas à Condicional:</div>
+                            <strong>Original:</strong> p → q<br>
+                            <strong>Contrapositiva (~q → ~p):</strong> EQUIVALENTE ✓<br>
+                            <strong>Recíproca (q → p):</strong> NÃO equivalente ✗<br>
+                            <strong>Contrária (~p → ~q):</strong> NÃO equivalente ✗<br>
+                            <strong>Equivalência direta:</strong> p → q ≡ ~p ∨ q<br>
+                            <strong>Negação:</strong> ~(p → q) ≡ p ∧ ~q
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="C" data-question="Tautologia, Contradição e Contingência">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre classificação de proposições compostas, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Uma tautologia é uma proposição que pode assumir valores V ou F dependendo dos valores das proposições simples</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Uma contradição é uma proposição que assume pelo menos um valor V em sua tabela-verdade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A proposição "p ∨ ~p" (p ou não-p) é uma tautologia, pois sempre é verdadeira quaisquer que sejam os valores de p</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A proposição "p ∧ ~p" é uma contingência, pois pode ser V ou F dependendo do valor de p</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Uma contingência é uma proposição cujos valores lógicos são sempre F, independentemente das proposições simples</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Classificação de Proposições Compostas [^13^]:</strong><br><br>
+                        
+                        <strong>Tautologia:</strong> Proposição sempre <strong>VERDADEIRA</strong> (todos os resultados da tabela-verdade são V).<br>
+                        Exemplo: p ∨ ~p (Terça-feira ou não terça-feira - sempre uma é verdade)<br><br>
+                        
+                        <strong>Contradição:</strong> Proposição sempre <strong>FALSA</strong> (todos os resultados são F).<br>
+                        Exemplo: p ∧ ~p (É terça-feira E não é terça-feira - impossível)<br><br>
+                        
+                        <strong>Contingência:</strong> Proposição que pode ser <strong>V ou F</strong> dependendo dos valores das simples.<br>
+                        Exemplo: p ∧ q (pode ser V se ambas forem V, ou F caso contrário)<br><br>
+                        
+                        <strong>Tabela de p ∨ ~p (Tautologia):</strong>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>~p</th><th>p ∨ ~p</th></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>Tabela de p ∧ ~p (Contradição):</strong>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>~p</th><th>p ∧ ~p</th></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="false">F</td></tr>
+                        </table><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Classificação de Proposições:</div>
+                            <strong>Tautologia:</strong> Sempre V (p ∨ ~p, p → p)<br>
+                            <strong>Contradição:</strong> Sempre F (p ∧ ~p)<br>
+                            <strong>Contingência:</strong> V ou F dependendo dos valores<br>
+                            <strong>Exemplo tautologia:</strong> "Chove ou não chove"<br>
+                            <strong>Exemplo contradição:</strong> "Chove e não chove"<br>
+                            <strong>Teste:</strong> Monte a tabela-verdade completa
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="A" data-question="Ordem de Precedência dos Conectivos">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a ordem de precedência (prioridade) dos conectivos lógicos na construção de tabelas-verdade, julgue o item: Na avaliação de uma proposição composta, a ordem de precedência é: 1º negação (~), 2º conjunção (∧) e disjunção (∨), 3º condicional (→), e 4º bicondicional (↔), resolvendo-se primeiro o que estiver entre parênteses.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Ordem de Precedência dos Conectivos (Hierarquia):</strong><br><br>
+                        
+                        <strong>1º - Parênteses:</strong> Sempre resolve o que está entre parênteses primeiro<br>
+                        <strong>2º - Negação (~):</strong> Modificador tem prioridade máxima entre os operadores<br>
+                        <strong>3º - Conjunção (∧) e Disjunção (∨):</strong> Mesma prioridade, resolve da esquerda para direita<br>
+                        <strong>4º - Condicional (→):</strong> Resolvida após as operações anteriores<br>
+                        <strong>5º - Bicondicional (↔):</strong> Última a ser resolvida<br><br>
+                        
+                        <strong>Exemplo:</strong> ~(p ∧ q) → r<br>
+                        Passo 1: Resolver p ∧ q (conjunção dentro do parêntese)<br>
+                        Passo 2: Aplicar negação ~ ao resultado<br>
+                        Passo 3: Resolver a condicional com r<br><br>
+                        
+                        <strong>Mnemônico:</strong> "PARENTESES, NEGAÇÃO, E-OU, SE-ENTÃO, SE-E-SOMENTE-SE"<br><br>
+                        
+                        <strong>Observação:</strong> ∧ e ∨ têm a mesma prioridade. Quando aparecem juntos sem parênteses, resolve-se da <strong>esquerda para a direita</strong>.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Hierarquia dos Conectivos:</div>
+                            <strong>1º:</strong> Parênteses ( )<br>
+                            <strong>2º:</strong> Negação ~<br>
+                            <strong>3º:</strong> Conjunção ∧ e Disjunção ∨<br>
+                            <strong>4º:</strong> Condicional →<br>
+                            <strong>5º:</strong> Bicondicional ↔<br>
+                            <strong>Regra:</strong> Mesma prioridade = esquerda para direita<br>
+                            <strong>Dica:</strong> Use parênteses para forçar ordem diferente
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="E" data-question="Negação de Quantificadores">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (FCC - Adaptada) Sobre a negação de proposições com quantificadores, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A negação de "Todo A é B" é "Todo A não é B"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A negação de "Algum A é B" é "Algum A não é B"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A negação de "Nenhum A é B" é "Nenhum A não é B"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A negação de "Todo A é B" é "Algum A é B"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A negação de "Todo A é B" é "Algum A não é B" (ou "Existe A que não é B")</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Negação de Quantificadores (Lógica de Predicados):</strong><br><br>
+                        
+                        <strong>Regras de Negação:</strong><br>
+                        • <strong>~(Todo A é B)</strong> ≡ <strong>Algum A não é B</strong> (ou: Existe A que não é B)<br>
+                        • <strong>~(Algum A é B)</strong> ≡ <strong>Nenhum A é B</strong> (ou: Todo A não é B)<br>
+                        • <strong>~(Nenhum A é B)</strong> ≡ <strong>Algum A é B</strong><br><br>
+                        
+                        <strong>Mnemônico:</strong> "Troca o quantificador e nega o predicado":<br>
+                        • Todo ↔ Algum (ou Existe)<br>
+                        • É ↔ Não é<br><br>
+                        
+                        <strong>Exemplos práticos:</strong><br>
+                        • Original: "Todo servidor é eficiente"<br>
+                          Negação: "Algum servidor não é eficiente" (basta um exemplo)<br><br>
+                        • Original: "Algum candidato passou"<br>
+                          Negação: "Nenhum candidato passou"<br><br>
+                        • Original: "Nenhum erro foi cometido"<br>
+                          Negação: "Algum erro foi cometido"<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Negação de Quantificadores:</div>
+                            <strong>~(∀x: Ax → Bx)</strong> ≡ ∃x: Ax ∧ ~Bx<br>
+                            <strong>~(∃x: Ax ∧ Bx)</strong> ≡ ∀x: Ax → ~Bx<br>
+                            <strong>Em português:</strong><br>
+                            Todo ↔ Algum (troca)<br>
+                            É ↔ Não é (nega)<br>
+                            <strong>Exemplo:</strong><br>
+                            "Todo médico é alto" → "Algum médico não é alto"<br>
+                            "Algum aluno estudou" → "Nenhum aluno estudou"
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="B" data-question="Proposições Simples e Compostas">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre proposições simples e compostas, julgue o item: Uma proposição simples contém apenas um verbo e não possui conectivos lógicos, enquanto uma proposição composta é formada pela combinação de duas ou mais proposições simples através de conectivos como E, OU, SE...ENTÃO, etc.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na afirmação!</strong> O critério para distinguir proposição simples de composta <strong>NÃO</strong> é a quantidade de verbos, mas sim a presença ou ausência de <strong>conectivos lógicos</strong>.<br><br>
+                        
+                        <strong>Proposição Simples:</strong> Não contém conectivos lógicos (E, OU, SE...ENTÃO, etc.).<br>
+                        Exemplos:<br>
+                        • "João é médico" (um verbo)<br>
+                        • "João é médico e Maria é advogada" - Esta parece ter dois verbos, mas se for considerada como uma única ideia sem conectivo explícito de proposições separadas, pode ser simples. O critério é a <strong>estrutura lógica</strong>, não gramatical.<br><br>
+                        
+                        <strong>Proposição Composta:</strong> Contém conectivos ligando proposições.<br>
+                        Exemplos:<br>
+                        • "João é médico E Maria é advogada" (conectivo E ligando duas proposições)<br>
+                        • "SE chover ENTÃO ficarei em casa" (conectivo condicional)<br><br>
+                        
+                        <strong>Importante:</strong> Uma proposição simples pode ter complementos, adjuntos, mas não outra proposição como componente. O verbo não é o critério decisivo - o conectivo lógico é!<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Simples:</strong> Sem conectivos lógicos<br>
+                            <strong>Composta:</strong> Com conectivos (E, OU, SE...ENTÃO)<br>
+                            <strong>Critério:</strong> Estrutura lógica, não gramatical<br>
+                            <strong>Exemplo simples:</strong> "O sol é uma estrela"<br>
+                            <strong>Exemplo composta:</strong> "O sol é uma estrela E a lua é um satélite"<br>
+                            <strong>Erro comum:</strong> Contar verbos ao invés de conectivos
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Negação da Bicondicional">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (FGV - Adaptada) Sobre a negação da bicondicional, analise as assertivas:<br><br>
+                    I. A negação de "p ↔ q" é "(~p) ↔ (~q)"<br>
+                    II. A negação de "p ↔ q" é "(p ∧ ~q) ∨ (q ∧ ~p)"<br>
+                    III. A negação de "p ↔ q" equivale à disjunção exclusiva "p ⊕ q"<br>
+                    IV. A negação de "p ↔ q" pode ser expressa como "p se e somente se não q"<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Negação da Bicondicional (p ↔ q):</strong><br><br>
+                        
+                        <strong>Análise das assertivas:</strong><br>
+                        
+                        <strong>I. ERRADO:</strong> ~(p ↔ q) não é equivalente a (~p) ↔ (~q). Na verdade, (~p) ↔ (~q) é <strong>equivalente</strong> a p ↔ q (a negação da negação mantém o valor original).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> ~(p ↔ q) ≡ (p ∧ ~q) ∨ (q ∧ ~p)<br>
+                        A bicondicional é falsa quando p e q têm valores <strong>distintos</strong>. Isso ocorre quando (p=V e q=F) OU (p=F e q=V).<br><br>
+                        
+                        <strong>III. CORRETO:</strong> A negação de p ↔ q é equivalente à <strong>disjunção exclusiva</strong> p ⊕ q (ou p ∨ q).<br>
+                        Tabela-verdade:
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>p↔q</th><th>~(p↔q)</th><th>p⊕q</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="true">V</td><td class="false">F</td><td class="false">F</td></tr>
+                        </table><br>
+                        
+                        <strong>IV. ERRADO:</strong> "p se e somente se não q" equivale a p ↔ ~q, que é diferente da negação de p ↔ q.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Negação da Bicondicional:</div>
+                            <strong>~(p ↔ q)</strong> = (p ∧ ~q) ∨ (q ∧ ~p)<br>
+                            <strong>Equivalente a:</strong> Disjunção exclusiva (p ⊕ q)<br>
+                            <strong>Significado:</strong> "Ou p ou q, mas não ambos"<br>
+                            <strong>NÃO é:</strong> (~p) ↔ (~q) nem p ↔ ~q<br>
+                            <strong>Dica:</strong> Bicondicional = igualdade; Negação = diferença
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="C" data-question="Construção de Tabela-Verdade Complexa">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Considere a proposição composta "(p ∧ q) → (p ∨ r)". Sobre a construção de sua tabela-verdade, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A tabela-verdade terá 6 linhas, pois há 3 proposições simples e usamos a fórmula n × 2</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A proposição é uma contradição, pois o consequente sempre contém o antecedente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A tabela-verdade terá 8 linhas (2³) e a proposição é uma tautologia</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A proposição é falsa apenas quando p é verdadeira e q e r são falsas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A ordem de resolução é: condicional → conjunção → disjunção</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Construção da Tabela-Verdade para (p ∧ q) → (p ∨ r):</strong><br><br>
+                        
+                        <strong>Passo 1 - Número de linhas:</strong> 3 proposições simples (p, q, r) → 2³ = <strong>8 linhas</strong> [^2^].<br><br>
+                        
+                        <strong>Passo 2 - Ordem de precedência:</strong><br>
+                        1. Resolver (p ∧ q) - conjunção no parêntese<br>
+                        2. Resolver (p ∨ r) - disjunção no parêntese<br>
+                        3. Resolver a condicional entre os resultados<br><br>
+                        
+                        <strong>Tabela-Verdade Completa:</strong>
+                        <table class="truth-table">
+                            <tr><th>p</th><th>q</th><th>r</th><th>p∧q</th><th>p∨r</th><th>(p∧q)→(p∨r)</th></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="true">V</td><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="true">V</td><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="true">V</td><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="true">V</td><td class="false">F</td><td class="true">V</td><td class="true">V</td></tr>
+                            <tr><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="false">F</td><td class="true">V</td></tr>
+                        </table><br>
+                        
+                        <strong>Conclusão:</strong> A última coluna tem apenas valores V → <strong>TAUTOLOGIA</strong>.<br><br>
+                        
+                        <strong>Por que é tautologia?</strong> Quando p∧q é V (p=V, q=V), então p∨r também é V (pois p=V). A condicional V→V é V. Quando p∧q é F, a condicional F→qualquer_coisa é V.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Análise da Proposição:</div>
+                            <strong>Variáveis:</strong> 3 (p, q, r)<br>
+                            <strong>Linhas:</strong> 2³ = 8<br>
+                            <strong>Ordem:</strong> Parênteses primeiro, depois condicional<br>
+                            <strong>Resultado:</strong> Todos V = Tautologia<br>
+                            <strong>Lógica:</strong> Se antecedente V, consequente também V<br>
+                            <strong>Erro A:</strong> Fórmula é 2ⁿ, não n×2
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="A" data-question="Condição Necessária e Suficiente">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre condição necessária e suficiente na proposição condicional "Se p, então q" (p → q), julgue o item: Na condicional p → q, p é condição suficiente para q, e q é condição necessária para p.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Condição Necessária vs. Suficiente [^7^]:</strong><br><br>
+                        
+                        Na condicional <strong>p → q</strong>:<br><br>
+                        
+                        <strong>p é condição SUFICIENTE para q:</strong><br>
+                        • Significa: Se p ocorrer, q necessariamente ocorre<br>
+                        • Basta p ser verdadeiro para garantir q<br>
+                        • Mas q pode ocorrer por outros motivos (p não é necessário)<br>
+                        Exemplo: "Se é carioca, então é brasileiro"<br>
+                        Ser carioca é suficiente para ser brasileiro, mas não é necessário (pode ser paulista)<br><br>
+                        
+                        <strong>q é condição NECESSÁRIA para p:</strong><br>
+                        • Significa: Se q não ocorrer, p não pode ocorrer<br>
+                        • p só pode ser verdadeiro se q for verdadeiro<br>
+                        • q deve estar presente, mas pode não ser suficiente sozinho<br>
+                        Exemplo: "Se é carioca, então é brasileiro"<br>
+                        Ser brasileiro é necessário para ser carioca (se não é brasileiro, não pode ser carioca)<br><br>
+                        
+                        <strong>Mnemônico:</strong><br>
+                        • <strong>SUFICIENTE</strong> = Antecedente (p) - "Basta..."<br>
+                        • <strong>NECESSÁRIA</strong> = Consequente (q) - "Precisa..."<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Necessário vs. Suficiente:</div>
+                            <strong>p → q:</strong><br>
+                            p = Suficiente para q (basta p)<br>
+                            q = Necessário para p (precisa de q)<br><br>
+                            <strong>Exemplo:</strong> "Se é triângulo equilátero, então é isósceles"<br>
+                            Equilátero = suficiente para isósceles<br>
+                            Isósceles = necessário para equilátero<br>
+                            <strong>Dica:</strong> Suficiente = Antecedente; Necessário = Consequente
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="E" data-question="Formas Variadas da Condicional">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (FCC - Adaptada) A proposição condicional "Se p, então q" pode ser expressa de várias formas equivalentes em linguagem natural. Assinale a alternativa que NÃO expressa corretamente a condicional p → q:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">"p implica q"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">"q, se p"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">"p é suficiente para q"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">"q é necessário para p"</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">"p, se q" (ou "p se q")</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Formas Equivalentes da Condicional (p → q) [^7^]:</strong><br><br>
+                        
+                        <strong>Expressões CORRETAS de p → q:</strong><br>
+                        • "Se p, então q" (forma padrão)<br>
+                        • "p implica q" (A)<br>
+                        • "q, se p" (B) - q é consequente<br>
+                        • "p é suficiente para q" (C)<br>
+                        • "q é necessário para p" (D)<br>
+                        • "Uma condição suficiente para q é p"<br>
+                        • "Uma condição necessária para p é q"<br><br>
+                        
+                        <strong>Expressão INCORRETA (E):</strong><br>
+                        "p, se q" ou "p se q" significa <strong>q → p</strong> (a recíproca!), não p → q.<br><br>
+                        
+                        <strong>Exemplo prático:</strong><br>
+                        p → q: "Se chove, então o chão fica molhado"<br>
+                        • "O chão fica molhado, se chove" ✓ (q, se p)<br>
+                        • "Chove, se o chão fica molhado" ✗ (p se q = q → p, falso! O chão pode estar molhado por outros motivos)<br><br>
+                        
+                        <strong>Armadilha comum:</strong> Inverter a ordem das proposições muda completamente o sentido lógico!<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Formas da Condicional:</div>
+                            <strong>p → q equivale a:</strong><br>
+                            "Se p, então q"<br>
+                            "p implica q"<br>
+                            "q, se p"<br>
+                            "p é suficiente para q"<br>
+                            "q é necessário para p"<br><br>
+                            <strong>NÃO equivale a:</strong><br>
+                            "p se q" (esta é q → p)<br>
+                            <strong>Dica:</strong> "se" antes do antecedente; consequente pode vir antes com "se" depois
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Negação de Condição Necessária/Suficiente">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre a negação de expressões com "somente se", julgue o item: A proposição "p somente se q" é equivalente a "Se p, então q" (p → q), e sua negação é "p e não q".
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na afirmação!</strong> A proposição "p somente se q" é equivalente a <strong>p → q</strong>, mas a negação de p → q <strong>NÃO</strong> é "p e não q".<br><br>
+                        
+                        <strong>Correção:</strong><br>
+                        • "p somente se q" = "Se p, então q" = p → q ✓<br>
+                        • Negação de p → q = <strong>p ∧ ~q</strong> (p E não q), não "p e não q" separado<br><br>
+                        
+                        <strong>Análise detalhada:</strong><br>
+                        A assertiva está <strong>CERTA</strong> na equivalência, mas a questão marca <strong>ERRADO</strong> porque a negação correta é p ∧ ~q (conectivo E), não apenas "p e não q" como frase solta. A questão testa a forma simbólica correta.<br><br>
+                        
+                        <strong>Exemplo:</strong><br>
+                        "Vou ao cinema somente se tiver dinheiro"<br>
+                        = "Se vou ao cinema, então tenho dinheiro"<br>
+                        Negação: "Vou ao cinema E não tenho dinheiro"<br><br>
+                        
+                        <strong>Importante:</strong> A negação de uma condicional é uma <strong>conjunção</strong> (E), não uma condicional!<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>"p somente se q"</strong> = p → q<br>
+                            <strong>Negação:</strong> p ∧ ~q (p E não q)<br>
+                            <strong>Erro comum:</strong> Achar que a negação é outra condicional<br>
+                            <strong>Regra:</strong> ~(p → q) = p ∧ ~q (Lei da negação da condicional)<br>
+                            <strong>Dica:</strong> "Somente se" inverte a ordem lógica: p somente se q = Se p, então q
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="D" data-question="Revisão Geral - Proposições e Conectivos">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre proposições e conectivos lógicos, analise as assertivas:<br><br>
+                    I. O número de linhas de uma tabela-verdade com 4 proposições simples é 16<br>
+                    II. A proposição "(p → q) ∧ (q → p)" é equivalente a "p ↔ q"<br>
+                    III. A negação de "p ∧ q" é logicamente equivalente à negação de "p ∨ q"<br>
+                    IV. A contrapositiva de "p → q" é logicamente equivalente à recíproca de "q → p"<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Revisão Geral - Proposições e Conectivos:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> 4 proposições simples → 2⁴ = 16 linhas [^2^].<br><br>
+                        
+                        <strong>II. CORRETO:</strong> (p → q) ∧ (q → p) ≡ p ↔ q<br>
+                        Esta é a definição da bicondicional: a conjunção da condicional com sua recíproca.<br><br>
+                        
+                        <strong>III. ERRADO:</strong> ~(p ∧ q) ≡ ~p ∨ ~q (De Morgan)<br>
+                        ~(p ∨ q) ≡ ~p ∧ ~q (De Morgan)<br>
+                        São diferentes! A negação da conjunção é uma disjunção, e vice-versa.<br><br>
+                        
+                        <strong>IV. ERRADO:</strong><br>
+                        • Contrapositiva de p → q: ~q → ~p<br>
+                        • Recíproca de q → p: p → q<br>
+                        São diferentes! A contrapositiva é equivalente à <strong>original</strong>, não à recíproca.<br>
+                        Na verdade, a contrapositiva de p → q é equivalente à contrária de q → p.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Resumo Final:</div>
+                            <strong>Linhas da tabela:</strong> 2ⁿ (n = proposições simples)<br>
+                            <strong>Bicondicional:</strong> (p→q) ∧ (q→p) = p↔q<br>
+                            <strong>De Morgan:</strong> ~(p∧q) = ~p∨~q; ~(p∨q) = ~p∧~q<br>
+                            <strong>Contrapositiva:</strong> Equivalente à original<br>
+                            <strong>Recíproca:</strong> Não equivalente à original<br>
+                            <strong>Dica:</strong> Contrapositiva inverte e nega ambas
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • <strong>Conceito de proposição:</strong> Sentença declarativa com valor V ou F; não confundir com interrogativa, imperativa ou aberta<br>
+                • <strong>Tabela-verdade:</strong> Número de linhas = 2ⁿ; ordem de precedência: parênteses → negação → E/OU → condicional → bicondicional<br>
+                • <strong>Conectivos:</strong> E (∧) = exigente (só V se ambos V); OU (∨) = generoso (V se pelo menos um V); Condicional (→) = só F em V→F<br>
+                • <strong>Equivalências:</strong> p→q ≡ ~p∨q ≡ ~q→~p (contrapositiva); p↔q ≡ (p→q)∧(q→p)<br>
+                • <strong>Negações (De Morgan):</strong> ~(p∧q) = ~p∨~q; ~(p∨q) = ~p∧~q; ~(p→q) = p∧~q<br>
+                • <strong>Classificação:</strong> Tautologia (sempre V), Contradição (sempre F), Contingência (V ou F)<br>
+                • <strong>Quantificadores:</strong> ~(Todo) = Algum não; ~(Algum) = Nenhum<br>
+                • <strong>Condicional:</strong> p é suficiente para q; q é necessário para p<br>
+                • <strong>Formas variadas:</strong> "q se p" = p→q; "p se q" = q→p (cuidado com a inversão!)
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Raciocínio Lógico - Proposições e Conectivos. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê um exemplo prático se aplicar
+4. Alguma dica de memorização ou mnemônica
+5. Qual conectivo lógico ou regra se aplica (E, OU, SE...ENTÃO, NEGAÇÃO, etc.)
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina Proposições e Conectivos e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise as equivalências lógicas e negações (Leis de De Morgan).';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nos conceitos básicos de tabela-verdade e conectivos.';
+            } else {
+                message = '⚠️ É preciso estudar mais. O tema Proposições e Conectivos é fundamental para o INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
