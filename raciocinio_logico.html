@@ -63,7 +63,51 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             min-height: 300px;
         }
+
+        /* Botão de conteúdo */
+        .prova-link {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .prova-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .prova-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .prova-icone {
+            font-size: 2.5em;
+        }
+
+        .prova-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }
+
+        .prova-info p {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
+        .prova-arrow {
+            margin-left: auto;
+            font-size: 1.5em;
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
     <div class="container">
@@ -75,7 +119,17 @@
         </header>
 
         <div class="conteudo">
-            <!-- Adicione seu conteúdo aqui -->
+            <!-- Botão: Conceitos básicos de lógica -->
+            <a href="raciocinio1.html" class="prova-link">
+                <div class="prova-content">
+                    <span class="prova-icone">🧠</span>
+                    <div class="prova-info">
+                        <h3>Conceitos básicos de lógica: proposições e conectivos</h3>
+                        <p>Clique para acessar o conteúdo sobre proposições e conectivos lógicos</p>
+                    </div>
+                    <span class="prova-arrow">→</span>
+                </div>
+            </a>
         </div>
     </div>
 </body>
