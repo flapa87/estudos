@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Regime Jurídico dos Servidores Públicos Federais - Lei 8.112/90</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Simulado INSS 2025 - Lei 8.112/90</h1>
+            <p>Regime Jurídico dos Servidores Públicos Federais - 20 Questões Inéditas</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="C" data-question="Cargo Público - Conceito e Natureza">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Analise as assertivas sobre cargo público conforme a Lei 8.112/1990:<br><br>
+                    I. O cargo público é criado por lei, com denominação própria, atribuições definidas, vencimento pago pelos cofres públicos e preenchimento por nomeação.<br>
+                    II. O cargo público é propriedade do servidor, podendo ser vendido ou cedido.<br>
+                    III. O cargo público é criado para atender a necessidade permanente da Administração.<br>
+                    IV. O cargo público pode ser criado por ato administrativo do chefe do Executivo.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Cargo Público - Art. 2º e 3º da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 2º: "Cargo público é o conjunto de atribuições e responsabilidades previstas na estrutura organizacional que devem ser cometidas a um servidor." Características: criação por lei, denominação própria, atribuições definidas, vencimento público, preenchimento por nomeação.<br><br>
+                        
+                        <strong>II. ERRADO:</strong> O cargo público <strong>não é propriedade</strong> do servidor. É um <strong>bem público</strong>, vinculado ao Estado. Não pode ser vendido, cedido ou transmitido. O servidor tem apenas o <strong>direito ao cargo</strong> (estabilidade após estágio probatório).<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 3º: "O cargo público é criado para atender a <strong>necessidade permanente</strong> da Administração." Se for necessidade temporária, deve ser criada <strong>função pública</strong> (Art. 4º).<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> O cargo público só pode ser criado por <strong>lei</strong> (princípio da legalidade). Não pode ser criado por ato administrativo.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Cargo vs. Função Pública:</div>
+                            <strong>Cargo Público:</strong> Necessidade permanente, criado por lei, vencimento<br>
+                            <strong>Função Pública:</strong> Necessidade temporária, criada por lei ou ato legal, gratificação<br>
+                            <strong>Emprego Público:</strong> Regime celetista (CLT), não estatutário<br>
+                            <strong>Característica essencial:</strong> Não é propriedade do servidor (impessoalidade)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="B" data-question="Provimento - Formas e Conceito">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Sobre o provimento de cargo público federal, julgue o item: O provimento é o ato pelo qual o servidor é investido no cargo público, podendo ocorrer por nomeação, promoção, readaptação, reversão, aproveitamento, reintegração ou recondução.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva confunde <strong>provimento</strong> com <strong>investidura</strong>.<br><br>
+                        
+                        <strong>Distinção fundamental (Art. 5º e 6º da Lei 8.112/90):</strong><br><br>
+                        
+                        <strong>Provimento:</strong> É o <strong>ato administrativo</strong> que preenche o cargo vago. É o momento em que o cargo passa a estar ocupado.<br><br>
+                        
+                        <strong>Investidura:</strong> É o <strong>ato pelo qual o servidor toma posse</strong> e passa a exercer o cargo. Ocorre após a nomeação.<br><br>
+                        
+                        <strong>Formas de Provimento (Art. 7º):</strong><br>
+                        • <strong>Nomeação:</strong> Investidura em cargo efetivo<br>
+                        • <strong>Promoção:</strong> Ascensão a cargo de maior complexidade<br>
+                        • <strong>Readaptação:</strong> Reclassificação por limitação física/mental<br>
+                        • <strong>Reversão:</strong> Retorno de aposentado por invalidez<br>
+                        • <strong>Aproveitamento:</strong> Investidura em cargo vago por extinção/redução<br>
+                        • <strong>Reintegração:</strong> Retorno após anulação de demissão/exoneração<br>
+                        • <strong>Recondução:</strong> Retorno após anulação de promoção/aproveitamento<br><br>
+                        
+                        <strong>O erro na assertiva:</strong><br>
+                        • O provimento é o <strong>preenchimento do cargo</strong>, não o "ato pelo qual o servidor é investido"<br>
+                        • A <strong>investidura</strong> ocorre por <strong>nomeação</strong> (e suas espécies)<br>
+                        • As demais formas (promoção, readaptação, etc.) são <strong>modalidades de provimento</strong>, não de investidura<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        O <strong>provimento</strong> é o preenchimento do cargo vago. A <strong>investidura</strong> é o ato pelo qual o servidor toma posse. A assertiva confundiu os conceitos.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="D" data-question="Nomeação - Prazos e Efeitos">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) João foi aprovado em 3º lugar no concurso público para Analista do Seguro Social do INSS. O concurso teve validade de 2 anos, prorrogável por igual período. Sobre a nomeação de João, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">João deve ser nomeado em até 6 meses após a homologação do concurso, sob pena de caducidade do direito</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">João perde o direito à nomeação se não for chamado antes de 1 ano da homologação</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A nomeação de João é ato discricionário da Administração, que pode escolher qualquer candidato aprovado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">João tem direito à nomeação enquanto durar a validade do concurso (2 anos, prorrogáveis por mais 2), respeitada a ordem de classificação</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">João deve tomar posse em até 15 dias contados da publicação do ato de nomeação, sendo este prazo improrrogável</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Nomeação - Art. 7º, §1º e Art. 13 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> Não existe prazo de 6 meses para nomeação. O candidato tem direito à nomeação durante toda a <strong>validade do concurso</strong> (2 anos, prorrogáveis por mais 2).<br><br>
+                        
+                        <strong>B) Errado:</strong> O prazo de 1 ano não existe. O direito persiste durante a validade do concurso.<br><br>
+                        
+                        <strong>C) Errado:</strong> A nomeação é <strong>ato vinculado</strong> (não discricionário) quando há candidato habilitado em concurso público. A Administração deve respeitar a <strong>ordem de classificação</strong>.<br><br>
+                        
+                        <strong>D) CORRETO:</strong> Art. 7º, §1º: O candidato tem direito à nomeação durante a validade do concurso (2 anos, prorrogáveis por mais 2). A nomeação deve respeitar a <strong>ordem de classificação</strong> (Art. 7º, §2º).<br><br>
+                        
+                        <strong>E) Errado:</strong> O prazo para posse é de <strong>30 dias</strong> (não 15), contados da publicação do ato de nomeação. É <strong>prorrogável</strong> por igual período a pedido do servidor (Art. 13, caput e §1º).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Prazos da Nomeação:</div>
+                            <strong>Validade do concurso:</strong> 2 anos (prorrogáveis por mais 2)<br>
+                            <strong>Prazo para posse:</strong> 30 dias (prorrogáveis por mais 30)<br>
+                            <strong>Início do exercício:</strong> Até 15 dias após a posse<br>
+                            <strong>Natureza:</strong> Ato vinculado (respeitar classificação)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="A" data-question="Posse - Requisitos e Efeitos">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre a posse no cargo público, analise as assertivas:<br><br>
+                    I. A posse ocorre mediante o compromisso do servidor em termo de posse, com a assinatura do respectivo termo.<br>
+                    II. A posse em cargo efetivo depende de prévia inscrição no órgão de origem do servidor.<br>
+                    III. A posse gera para o servidor o exercício das atribuições do cargo e a percepção dos vencimentos.<br>
+                    IV. O servidor nomeado para cargo em comissão deve apresentar certidão negativa de débitos trabalhistas.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Letra A</div>
+                    <div class="explanation-text">
+                        <strong>Posse - Art. 13 e 14 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 13, §1º: "A posse ocorrerá mediante o compromisso do servidor em termo de posse, com a assinatura do respectivo termo."<br><br>
+                        
+                        <strong>II. ERRADO:</strong> A posse em cargo efetivo <strong>não depende de prévia inscrição</strong> em órgão de origem. Isso é requisito para <strong>readaptação</strong> ou <strong>reversão</strong>, não para posse inicial.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 14: "A posse gera para o servidor o exercício das atribuições do cargo e a percepção dos vencimentos."<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> A certidão negativa de débitos trabalhistas é exigida para <strong>readaptação</strong> (Art. 24, §2º), <strong>reversão</strong> (Art. 25, §2º) e <strong>reintegração</strong> (Art. 27, §2º), não para posse em cargo em comissão.<br><br>
+                        
+                        <strong>Documentos para posse (Art. 13, §2º):</strong><br>
+                        • Documentos de identificação<br>
+                        • CPF<br>
+                        • Título de eleitor<br>
+                        • Certificado de reservista (se homem)<br>
+                        • Certidão de nascimento ou casamento<br>
+                        • Certidão negativa de antecedentes criminais<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Posse - Efeitos e Requisitos:</div>
+                            <strong>Efeitos:</strong> Exercício das atribuições + percepção de vencimentos<br>
+                            <strong>Prazo:</strong> 30 dias após a nomeação (prorrogável)<br>
+                            <strong>Forma:</strong> Termo de posse assinado<br>
+                            <strong>Documentos:</strong> Identidade, CPF, título, certidões<br>
+                            <strong>Certidão trabalhista:</strong> Só para readaptação/reversão/reintegração
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="C" data-question="Estágio Probatório - Avaliação">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Maria foi nomeada para o cargo de Técnico do Seguro Social do INSS. Durante o estágio probatório, ela será avaliada quanto à sua capacidade e desenho no exercício do cargo. Sobre o estágio probatório, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O estágio probatório tem duração de 3 anos, podendo ser reduzido se o servidor demonstrar excelente desempenho</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Durante o estágio probatório, o servidor não tem direito a férias, licenças ou progressão funcional</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A avaliação do estágio probatório é trimestral e considera assiduidade, disciplina, produtividade e responsabilidade</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A reprovação no estágio probatório gera demissão do servidor, com necessidade de processo administrativo disciplinar</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O servidor estável que for promovido deve passar por novo estágio probatório no cargo de destino</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Estágio Probatório - Art. 20 a 22 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> O estágio probatório tem duração de <strong>2 anos</strong> (24 meses), não 3 anos. A EC 19/1998 reduziu de 3 para 2 anos. Não pode ser reduzido.<br><br>
+                        
+                        <strong>B) Errado:</strong> Durante o estágio probatório, o servidor tem <strong>todos os direitos</strong> do servidor estável, exceto a <strong>estabilidade</strong>. Tem direito a férias, licenças e progressão.<br><br>
+                        
+                        <strong>C) CORRETO:</strong> Art. 20, §1º: "A avaliação será <strong>trimestral</strong> e considerará: <strong>I - assiduidade; II - disciplina; III - produtividade; IV - responsabilidade</strong>."<br><br>
+                        
+                        <strong>D) Errado:</strong> A reprovação no estágio probatório gera <strong>recondução</strong> (se houver cargo anterior) ou <strong>demissão</strong> (se não houver). <strong>Não exige processo administrativo disciplinar</strong>, pois não é punição, mas avaliação de desempenho.<br><br>
+                        
+                        <strong>E) Errado:</strong> O servidor estável <strong>não faz novo estágio probatório</strong> quando promovido. O estágio probatório é apenas na <strong>investidura inicial</strong> no cargo efetivo.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Estágio Probatório:</div>
+                            <strong>Duração:</strong> 2 anos (24 meses)<br>
+                            <strong>Avaliação:</strong> Trimestral (assiduidade, disciplina, produtividade, responsabilidade)<br>
+                            <strong>Resultado:</strong> Aprovação (estabilidade) ou reprovação (recondução/demissão)<br>
+                            <strong>Direitos:</strong> Todos, exceto estabilidade<br>
+                            <strong>Processo administrativo:</strong> Não exigido para reprovação
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="B" data-question="Estabilidade - Conceito e Aquisição">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre a estabilidade do servidor público, julgue o item: O servidor público federal somente adquire estabilidade após 3 anos de efetivo exercício, desde que aprovado em avaliação de desempenho específica.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A assertiva confunde os prazos e requisitos da estabilidade.<br><br>
+                        
+                        <strong>Estabilidade - Art. 21 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Requisitos para estabilidade:</strong><br>
+                        • <strong>2 anos</strong> de estágio probatário (não 3 anos)<br>
+                        • <strong>Aprovação</strong> no estágio probatório<br>
+                        • <strong>Não há</strong> avaliação de desempenho específica além do estágio probatório<br><br>
+                        
+                        <strong>O erro na assertiva:</strong><br>
+                        • Prazo de <strong>3 anos</strong> está incorreto (é 2 anos)<br>
+                        • <strong>Avaliação específica</strong> não existe. A avaliação é trimestral durante o estágio probatório<br><br>
+                        
+                        <strong>Efeitos da estabilidade (Art. 21, parágrafo único):</strong><br>
+                        • O servidor só pode ser demitido por <strong>falta grave</strong>, apurada em <strong>processo administrativo disciplinar</strong><br>
+                        • Direito à <strong>reintegração</strong> se demitido/exonerado indevidamente<br>
+                        • Garantia de <strong>permanência</strong> no serviço público<br><br>
+                        
+                        <strong>EC 19/1998:</strong> Reduziu o estágio probatório de 3 anos para 2 anos.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        A estabilidade é adquirida após <strong>2 anos de estágio probatório</strong> (não 3 anos de efetivo exercício), desde que aprovado nas avaliações trimestrais. Não há avaliação específica adicional.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="D" data-question="Vacância - Causas e Efeitos">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre as causas de vacância do cargo público federal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A promoção do servidor causa vacância do cargo anterior, que deve ser preenchido por nomeação de novo candidato</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A exoneração a pedido do servidor estável só pode ocorrer após 5 anos de efetivo exercício</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A aposentadoria voluntária só pode ser requerida após o servidor completar 35 anos de contribuição</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O abandono de cargo, caracterizado pela ausência injustificada por mais de 30 dias consecutivos, gera vacância do cargo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A readaptação mantém o servidor no mesmo cargo, apenas alterando suas atribuições para compatibilizar com a limitação física</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Vacância - Art. 33 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> A <strong>promoção</strong> não causa vacância. O servidor <strong>ascende</strong> no mesmo cargo (ou para cargo de maior complexidade), não o deixa vago. É <strong>forma de provimento</strong>, não de vacância.<br><br>
+                        
+                        <strong>B) Errado:</strong> A exoneração <strong>a pedido</strong> pode ocorrer a <strong>qualquer tempo</strong>, mesmo durante o estágio probatório. Não há prazo mínimo de 5 anos.<br><br>
+                        
+                        <strong>C) Errado:</strong> A aposentadoria voluntária tem requisitos variáveis conforme a regra (EC 103/2019). Pode ocorrer com <strong>25 anos de contribuição</strong> (regra permanente), não necessariamente 35 anos.<br><br>
+                        
+                        <strong>D) CORRETO:</strong> Art. 33, VII: Vacância ocorre pelo "<strong>abandono de cargo</strong>, caracterizado pela ausência injustificada ao trabalho por mais de <strong>30 dias consecutivos</strong> ou <strong>60 dias alternados</strong> no período de <strong>6 meses</strong>."<br><br>
+                        
+                        <strong>E) Errado:</strong> A <strong>readaptação</strong> gera <strong>vacância</strong> do cargo anterior (Art. 33, V). O servidor é investido em cargo de <strong>menor complexidade</strong> (não mantém o mesmo cargo).<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Causas de Vacância (Art. 33):</div>
+                            <strong>Promoção:</strong> Não causa vacância (ascensão)<br>
+                            <strong>Exoneração:</strong> A pedido (qualquer tempo) ou de ofício<br>
+                            <strong>Aposentadoria:</strong> Voluntária ou compulsória<br>
+                            <strong>Demissão:</strong> Por falta grave<br>
+                            <strong>Readaptação:</strong> Gera vacância (cargo menor)<br>
+                            <strong>Abandono:</strong> 30 dias consecutivos ou 60 alternados em 6 meses<br>
+                            <strong>Óbito:</strong> Falecimento do servidor
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="A" data-question="Exoneração - Espécies e Efeitos">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre a exoneração de servidor público federal, analise as assertivas:<br><br>
+                    I. A exoneração a pedido é direito subjetivo do servidor, não dependendo de discricionariedade da Administração.<br>
+                    II. A exoneração de ofício ocorre em caso de acumulação ilegal de cargos públicos.<br>
+                    III. A exoneração do cargo efetivo implica perda automática do cargo em comissão que o servidor esteja exercendo.<br>
+                    IV. O servidor exonerado a pedido tem direito a readaptação, reversão ou reintegração.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Letra A</div>
+                    <div class="explanation-text">
+                        <strong>Exoneração - Art. 34 e 35 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> A exoneração <strong>a pedido</strong> é <strong>direito subjetivo</strong> do servidor. A Administração <strong>não pode recusar</strong>, desde que preenchidos os requisitos formais (Art. 34, I).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> A exoneração <strong>de ofício</strong> ocorre nas hipóteses do Art. 34, II: acumulação ilegal de cargos, não aceitação de promoção/aproveitamento, não cumprimento de requisitos para investidura.<br><br>
+                        
+                        <strong>III. ERRADO:</strong> A exoneração do cargo efetivo <strong>não implica perda automática</strong> do cargo em comissão. O servidor pode continuar exercendo o cargo em comissão, salvo se a exoneração for por acumulação ilegal (Art. 35, §2º).<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Art. 35, §1º: O servidor exonerado <strong>a pedido</strong> tem direito a <strong>readaptação</strong>, <strong>reversão</strong> ou <strong>reintegração</strong>, desde que preencha os requisitos legais.<br><br>
+                        
+                        <strong>Efeitos da exoneração (Art. 35):</strong><br>
+                        • <strong>A pedido:</strong> Preservação de direitos (readaptação, reversão, reintegração)<br>
+                        • <strong>De ofício:</strong> Perda do cargo e direitos vinculados<br>
+                        • <strong>Remuneração:</strong> Se nomeado para cargo em comissão, não perde o vencimento do efetivo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Exoneração (Art. 34-35):</div>
+                            <strong>A pedido:</strong> Direito subjetivo, não discricionária<br>
+                            <strong>De ofício:</strong> Acumulação ilegal, não aceitação de promoção<br>
+                            <strong>Efeitos a pedido:</strong> Preservação de direitos<br>
+                            <strong>Cargo em comissão:</strong> Não perdido automaticamente<br>
+                            <strong>Processo administrativo:</strong> Não exigido (diferente da demissão)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="B" data-question="Demissão - Falta Grave e Processo">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre a demissão de servidor público federal, julgue o item: A demissão do servidor estável pode ocorrer por inassiduidade habitual, caracterizada por 3 faltas não justificadas em 60 dias, sem necessidade de processo administrativo disciplinar.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A demissão do servidor estável <strong>sempre exige processo administrativo disciplinar</strong>.<br><br>
+                        
+                        <strong>Demissão - Art. 138 a 148 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Falta grave - Inassiduidade habitual (Art. 138, II):</strong><br>
+                        • 3 faltas não justificadas em <strong>60 dias</strong><br>
+                        • É falta grave passível de <strong>demissão</strong><br><br>
+                        
+                        <strong>Processo administrativo disciplinar:</strong><br>
+                        • Art. 139: O servidor estável só pode ser demitido após <strong>processo administrativo disciplinar</strong><br>
+                        • Garantias: <strong>ampla defesa</strong> e <strong>contraditório</strong><br>
+                        • Prazo para defesa: <strong>10 dias</strong><br>
+                        • Prazo do processo: <strong>60 dias</strong>, prorrogáveis por mais 60 (e mais 60 em casos excepcionais)<br><br>
+                        
+                        <strong>O erro na assertiva:</strong><br>
+                        • A inassiduidade habitual é falta grave, mas <strong>exige processo administrativo</strong> para demissão do servidor estável<br>
+                        • Não pode ocorrer "sem necessidade de processo administrativo"<br><br>
+                        
+                        <strong>Distinção:</strong><br>
+                        • <strong>Estágio probatório:</strong> Reprovação por avaliação trimestral (sem processo)<br>
+                        • <strong>Servidor estável:</strong> Demissão só por falta grave com processo administrativo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                        A demissão do servidor estável <strong>sempre exige processo administrativo disciplinar</strong>, mesmo para inassiduidade habitual. Sem o processo, a demissão é ilegal e pode ser anulada.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="C" data-question="Aposentadoria - Requisitos EC 103/2019">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (EC 103/2019 - Estilo INSS) Sobre a aposentadoria dos servidores públicos federais após a Reforma da Previdência, analise as assertivas:<br><br>
+                    I. A aposentadoria compulsória ocorre aos 75 anos de idade, com proventos integrais.<br>
+                    II. A aposentadoria voluntária por idade exige 62 anos para mulher e 65 anos para homem, com 25 anos de contribuição.<br>
+                    III. A aposentadoria por invalidez exige idade mínima de 60 anos para mulher e 65 anos para homem.<br>
+                    IV. O tempo mínimo de contribuição para aposentadoria é de 25 anos para ambos os sexos.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Aposentadoria - Art. 40 da CF (EC 103/2019):</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 40, §1º, II: Aposentadoria compulsória aos <strong>75 anos</strong> de idade, com <strong>proventos integrais</strong>, independentemente do tempo de contribuição.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 40, §1º, I: Aposentadoria voluntária por idade aos <strong>62 anos (mulher)</strong> e <strong>65 anos (homem)</strong>, com <strong>25 anos de contribuição</strong> (igualdade estabelecida pela EC 103/2019).<br><br>
+                        
+                        <strong>III. ERRADO:</strong> A aposentadoria por <strong>invalidez</strong> <strong>não exige idade mínima</strong>. Exige apenas incapacidade total e permanente para o trabalho, comprovada por perícia médica oficial.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> A EC 103/2019 estabeleceu <strong>25 anos de contribuição</strong> como tempo mínimo para ambos os sexos (igualdade). Antes era 30 anos para mulher e 35 para homem.<br><br>
+                        
+                        <strong>Cálculo dos proventos (EC 103/2019):</strong><br>
+                        • Base: média de todas as remunerações desde julho/1994 (descarte 20% menores)<br>
+                        • Percentual inicial: <strong>60%</strong><br>
+                        • Majoração: <strong>2% por ano</strong> que exceder 20 anos de contribuição<br>
+                        • Limite: <strong>100%</strong> da média<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aposentadoria (EC 103/2019):</div>
+                            <strong>Compulsória:</strong> 75 anos (proventos integrais)<br>
+                            <strong>Voluntária por idade:</strong> 62/65 anos + 25 anos contribuição<br>
+                            <strong>Voluntária por tempo:</strong> 25 anos + pedágio 100% + idade mínima (52/57)<br>
+                            <strong>Invalidez:</strong> Sem idade mínima, incapacidade total/permanente<br>
+                            <strong>Cálculo:</strong> 60% + 2% por ano > 20 anos (limite 100%)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="A" data-question="Remoção - Espécies e Direitos">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre a remoção de servidor público federal, julgue o item: A remoção de ofício, realizada em interesse da Administração, concede ao servidor direito a diárias e transporte de si e de sua família, desde que a nova sede esteja a mais de 50 km da anterior.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Remoção - Art. 36 e 37 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Conceito:</strong> A remoção é o deslocamento do servidor, <strong>sem alteração de cargo</strong>, para outra localidade, unidade organizacional ou lotação.<br><br>
+                        
+                        <strong>Espécies de remoção:</strong><br><br>
+                        
+                        <strong>1. De ofício (Art. 37, I):</strong><br>
+                        • Interesse da Administração<br>
+                        • <strong>Direitos:</strong> Diárias e transporte (se > 50 km)<br>
+                        • Prazo de aviso: <strong>30 dias</strong><br>
+                        • Período de instalação: até <strong>30 dias</strong> de diárias<br><br>
+                        
+                        <strong>2. A pedido (Art. 37, II):</strong><br>
+                        • Interesse do servidor<br>
+                        • <strong>Sem direito</strong> a diárias ou transporte<br>
+                        • Depende de vacância no destino<br><br>
+                        
+                        <strong>3. Por permuta (Art. 37, §§ 1º e 2º):</strong><br>
+                        • Entre servidores de mesma categoria<br>
+                        • Cargos de <strong>igual nível de vencimento</strong><br>
+                        • <strong>Sem direito</strong> a diárias ou transporte<br><br>
+                        
+                        <strong>Direitos na remoção de ofício (Art. 37, §§ 3º a 5º):</strong><br>
+                        • <strong>Diárias:</strong> Se nova sede > 50 km da anterior, por até 30 dias<br>
+                        • <strong>Transporte:</strong> Do servidor, cônjuge/companheiro, dependentes, bens móveis e animais domésticos<br>
+                        • <strong>Trânsito:</strong> Até 10 dias com diárias<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Remoção - Direitos:</div>
+                            <strong>De ofício (> 50 km):</strong> Diárias (30 dias) + transporte<br>
+                            <strong>De ofício (≤ 50 km):</strong> Sem diárias/transporte<br>
+                            <strong>A pedido:</strong> Sem diárias/transporte<br>
+                            <strong>Por permuta:</strong> Sem diárias/transporte<br>
+                            <strong>Aviso prévio:</strong> 30 dias (só na remoção de ofício)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="D" data-question="Readaptação - Requisitos e Efeitos">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre a readaptação de servidor público federal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A readaptação ocorre quando o servidor sofre limitação física ou mental por doença ou acidente de trabalho exclusivamente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A readaptação mantém o servidor no mesmo cargo, apenas reduzindo suas atribuições</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O servidor readaptado tem direito à remuneração do cargo anterior, mesmo que o novo cargo tenha vencimento inferior</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A readaptação gera vacância do cargo anterior e investidura em cargo de atribuições compatíveis com a limitação, de menor complexidade</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A readaptação só pode ocorrer por doença, não sendo possível como efeito de penalidade</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Readaptação - Art. 24 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> A readaptação pode ocorrer por <strong>qualquer doença</strong> ou <strong>qualquer acidente</strong> (não apenas de trabalho), ou por <strong>penalidade</strong> que importe perda da função.<br><br>
+                        
+                        <strong>B) Errado:</strong> A readaptação <strong>não mantém no mesmo cargo</strong>. O servidor é investido em cargo de <strong>menor complexidade</strong> (menor nível de vencimento), gerando <strong>vacância</strong> do cargo anterior (Art. 33, V).<br><br>
+                        
+                        <strong>C) Errado:</strong> O servidor readaptado recebe o <strong>vencimento do novo cargo</strong> (menor). Não há preservação da remuneração anterior (diferente do aproveitamento).<br><br>
+                        
+                        <strong>D) CORRETO:</strong> Art. 24: A readaptação é a investidura em cargo de <strong>atribuições compatíveis com a limitação</strong>, de <strong>menor complexidade</strong>, gerando <strong>vacância</strong> do cargo anterior.<br><br>
+                        
+                        <strong>E) Errado:</strong> A readaptação pode ocorrer por <strong>penalidade</strong> (Art. 24, caput: "ou penalidade que importe na perda da função").<br><br>
+                        
+                        <strong>Requisitos para readaptação:</strong><br>
+                        • Limitação física ou mental<br>
+                        • Por doença, acidente ou penalidade<br>
+                        • Perícia médica oficial confirmando incapacidade parcial<br>
+                        • Cargo de menor complexidade disponível<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Readaptação (Art. 24):</div>
+                            <strong>Causas:</strong> Doença, acidente ou penalidade<br>
+                            <strong>Efeito:</strong> Vacância do cargo anterior<br>
+                            <strong>Novo cargo:</strong> Menor complexidade, atribuições compatíveis<br>
+                            <strong>Remuneração:</strong> Do novo cargo (menor)<br>
+                            <strong>Perícia:</strong> Médica oficial obrigatória<br>
+                            <strong>Documentos:</strong> Certidão negativa de débitos trabalhistas
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="B" data-question="Reversão - Causas e Procedimento">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre a reversão de servidor à atividade, julgue o item: A reversão ocorre quando o aposentado por invalidez tiver sua capacidade física ou mental restabelecida, devendo retornar ao mesmo cargo ou a cargo equivalente, sem necessidade de novo concurso público.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Reversão - Art. 25 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Conceito:</strong> A reversão é a <strong>retomada do exercício</strong> pelo aposentado por invalidez que tiver sua <strong>capacidade física ou mental restabelecida</strong>.<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • <strong>Não exige novo concurso:</strong> Retorna ao mesmo cargo ou equivalente<br>
+                        • <strong>Perícia médica oficial:</strong> Atesta o restabelecimento<br>
+                        • <strong>Intimação:</strong> 30 dias para retorno<br>
+                        • <strong>Não comparecimento:</strong> Configura abandono de cargo<br><br>
+                        
+                        <strong>Direitos do reversível (Art. 25, §1º):</strong><br>
+                        • Pode exercer <strong>cargo em comissão</strong> ou <strong>função de confiança</strong> sem prejuízo dos proventos<br>
+                        • Período de aposentadoria conta para <strong>quinqüênios</strong> e <strong>triênios</strong><br><br>
+                        
+                        <strong>Distinção com Reintegração e Recondução:</strong><br>
+                        • <strong>Reversão:</strong> Aposentado por invalidez → retorna à atividade<br>
+                        • <strong>Reintegração:</strong> Servidor estável demitido/exonerado → retorna ao cargo<br>
+                        • <strong>Recondução:</strong> Servidor não estável (reprovado no estágio) → retorna ao cargo anterior<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Reversão (Art. 25):</div>
+                            <strong>Causa:</strong> Restabelecimento da capacidade (aposentado por invalidez)<br>
+                            <strong>Concurso:</strong> Não exigido<br>
+                            <strong>Retorno:</strong> Mesmo cargo ou equivalente<br>
+                            <strong>Cargo em comissão:</strong> Permitido (sem prejuízo de proventos)<br>
+                            <strong>Prazo:</strong> 30 dias para retorno após intimação<br>
+                            <strong>Efeito:</strong> Cessação dos proventos de aposentadoria
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="C" data-question="Reintegração vs Recondução">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Analise as assertivas sobre reintegração e recondução:<br><br>
+                    I. A reintegração ocorre quando a demissão ou exoneração do servidor estável for anulada.<br>
+                    II. A recondução ocorre quando a promoção ou aproveitamento do servidor não estável for anulada.<br>
+                    III. Ambas geram efeitos financeiros retroativos para o servidor.<br>
+                    IV. Ambas exigem novo concurso público para o retorno do servidor.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Reintegração (Art. 27) e Recondução (Art. 28):</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 27: A reintegração é a reinvestidura do <strong>servidor estável</strong> quando a <strong>demissão</strong> ou <strong>exoneração</strong> for <strong>anulada</strong> por decisão administrativa ou judicial.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 28: A recondução é a reinvestidura do servidor no cargo anterior quando a <strong>promoção</strong> ou <strong>aproveitamento</strong> for <strong>anulada</strong>. Aplica-se ao servidor <strong>não estável</strong> (em estágio probatório).<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Ambas geram <strong>efeitos financeiros retroativos</strong>:<br>
+                        • <strong>Reintegração:</strong> Diferenças de remuneração desde a demissão/exoneração (Art. 27, §1º)<br>
+                        • <strong>Recondução:</strong> Direito a diferenças de remuneração (Art. 28, parágrafo único)<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> <strong>Nenhuma exige novo concurso</strong>. Ambas são retornos a cargos que o servidor já ocupava.<br><br>
+                        
+                        <strong>Quadro comparativo:</strong><br>
+                        <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                            <tr style="background: #f7fafc;">
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Instituto</strong></td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Sujeito</strong></td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;"><strong>Causa</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Reversão</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Aposentado por invalidez</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Restabelecimento</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Reintegração</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Servidor estável</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Anulação de demissão/exoneração</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Recondução</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Servidor não estável</td>
+                                <td style="border: 1px solid #e2e8f0; padding: 8px;">Anulação de promoção/aproveitamento</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Cargos em Comissão - Características">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre os cargos em comissão na Administração Pública Federal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Os cargos em comissão são criados por lei e preenchidos mediante concurso público de provas ou de provas e títulos</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O servidor nomeado para cargo em comissão perde automaticamente o cargo efetivo que ocupava anteriormente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Os cargos em comissão são de livre provimento e estáveis, garantindo ao ocupante a permanência por tempo indeterminado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Os cargos em comissão são de livre nomeação e exoneração, destinados a funções de chefia, assessoramento e controle, e o servidor não perde a estabilidade no cargo efetivo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O servidor nomeado para cargo em comissão só pode retornar ao cargo efetivo após 2 anos de exercício na comissão</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Cargos em Comissão - Art. 9º da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> Cargos em comissão são de <strong>livre nomeação</strong>, não exigem concurso público. São criados por lei, mas o preenchimento é por <strong>confiança política</strong>.<br><br>
+                        
+                        <strong>B) Errado:</strong> O servidor <strong>não perde</strong> o cargo efetivo. Art. 9º, §2º: "O servidor nomeado para cargo em comissão <strong>não perde a estabilidade</strong> no cargo efetivo."<br><br>
+                        
+                        <strong>C) Errado:</strong> São de <strong>livre provimento e livre exoneração</strong> (não estáveis). O ocupante pode ser exonerado a qualquer momento.<br><br>
+                        
+                        <strong>D) CORRETO:</strong> Art. 9º: Cargos em comissão são de <strong>livre nomeação e exoneração</strong>, destinados a <strong>funções de chefia, assessoramento e controle</strong>. O servidor <strong>preserva a estabilidade</strong> no efetivo.<br><br>
+                        
+                        <strong>E) Errado:</strong> O servidor pode retornar ao cargo efetivo <strong>imediatamente</strong> quando exonerado do cargo em comissão, sem prazo mínimo de espera.<br><br>
+                        
+                        <strong>Características dos cargos em comissão:</strong><br>
+                        • Criação por lei<br>
+                        • Destinação: chefia, assessoramento, controle<br>
+                        • Livre nomeação e exoneração (confiança política)<br>
+                        • Sem estabilidade<br>
+                        • Remuneração própria (não vencimento)<br>
+                        • Não acumuláveis (salvo exceções)<br>
+                        • Preservação da estabilidade no efetivo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Cargos em Comissão (Art. 9º):</div>
+                            <strong>Criação:</strong> Por lei<br>
+                            <strong>Provisão:</strong> Livre nomeação e exoneração<br>
+                            <strong>Concurso:</strong> Não exigido<br>
+                            <strong>Estabilidade:</strong> Não há (preservada no efetivo)<br>
+                            <strong>Retorno:</strong> Imediato ao efetivo quando exonerado<br>
+                            <strong>Remuneração:</strong> Própria do cargo em comissão
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="A" data-question="Aproveitamento - Conceito e Direitos">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre o aproveitamento de servidor público federal, julgue o item: O aproveitamento é a investidura do servidor em cargo vago de atribuições e responsabilidades compatíveis, ocorrendo em caso de extinção do órgão, redução de quadro ou unificação de serviços, com direito à remuneração do cargo anterior.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Aproveitamento - Art. 26 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Conceito:</strong> O aproveitamento é a <strong>investidura do servidor em cargo vago</strong> de atribuições e responsabilidades compatíveis.<br><br>
+                        
+                        <strong>Causas (Art. 26, caput):</strong><br>
+                        • <strong>Extinção</strong> do órgão ou entidade<br>
+                        • <strong>Redução</strong> de quadro<br>
+                        • <strong>Unificação</strong> de serviços<br><br>
+                        
+                        <strong>Direito à remuneração (Art. 26, §1º):</strong><br>
+                        O servidor aproveitado tem direito à <strong>remuneração do cargo anterior</strong> (proventos integrais), enquanto não for enquadrado na nova classe ou padrão.<br><br>
+                        
+                        <strong>Distinção com Readaptação:</strong><br>
+                        • <strong>Aproveitamento:</strong> Preserva remuneração anterior<br>
+                        • <strong>Readaptação:</strong> Recebe vencimento do novo cargo (menor)<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • Cargo de <strong>atribuições compatíveis</strong><br>
+                        • Pode ser de <strong>menor nível</strong> de vencimento<br>
+                        • <strong>Preservação da remuneração</strong> anterior<br>
+                        • Não exige novo concurso<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aproveitamento (Art. 26):</div>
+                            <strong>Causas:</strong> Extinção, redução de quadro, unificação<br>
+                            <strong>Cargo:</strong> Vago, atribuições compatíveis<br>
+                            <strong>Remuneração:</strong> Preservada (do cargo anterior)<br>
+                            <strong>Nível:</strong> Pode ser menor, com preservação de vencimento<br>
+                            <strong>Concurso:</strong> Não exigido<br>
+                            <strong>Distinção:</strong> Diferente de readaptação (que reduz vencimento)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="B" data-question="Processo Administrativo Disciplinar - Prazos">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre o processo administrativo disciplinar (PAD), analise as assertivas:<br><br>
+                    I. O PAD deve ser concluído no prazo de 60 dias, prorrogáveis por mais 60 dias em caso de necessidade.<br>
+                    II. O servidor tem direito a 10 dias para apresentar defesa escrita.<br>
+                    III. O prazo prescricional para a instauração do PAD é de 5 anos para faltas graves.<br>
+                    IV. O servidor pode ser representado por sindicato ou advogado durante o PAD.<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II, III e IV</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">I, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Processo Administrativo Disciplinar - Art. 150 a 158 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> Art. 150: O PAD deve ser concluído em <strong>60 dias</strong>, prorrogáveis por mais <strong>60 dias</strong>. Em casos excepcionais, pode haver <strong>segunda prorrogação</strong> de 60 dias (total máximo: 180 dias).<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Art. 153: O servidor tem <strong>10 dias</strong> para apresentar <strong>defesa escrita</strong>, contados da intimação.<br><br>
+                        
+                        <strong>III. CORRETO:</strong> Art. 142: O prazo prescricional para instauração do PAD é de <strong>5 anos</strong> para faltas graves, contados da prática da infração.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Art. 151, §1º: O servidor pode constituir <strong>advogado</strong> ou sindical para acompanhá-lo no processo. Art. 152: Direito à <strong>assistência sindical</strong>.<br><br>
+                        
+                        <strong>Outras garantias do servidor no PAD:</strong><br>
+                        • Ampla defesa<br>
+                        • Contraditório<br>
+                        • Julgamento imparcial<br>
+                        • Presunção de inocência<br>
+                        • Direito a recorrer (10 dias)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Processo Administrativo Disciplinar:</div>
+                            <strong>Prazo:</strong> 60 dias (prorrogável por 60 + 60)<br>
+                            <strong>Defesa:</strong> 10 dias<br>
+                            <strong>Prescrição:</strong> 5 anos (faltas graves)<br>
+                            <strong>Representação:</strong> Advogado ou sindicato<br>
+                            <strong>Garantias:</strong> Ampla defesa, contraditório, assistência sindical<br>
+                            <strong>Recurso:</strong> 10 dias da decisão
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="C" data-question="Acumulação de Cargos - Regras">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (EC 103/2019 - Estilo INSS) Sobre a acumulação de cargos públicos, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">É vedada a acumulação de quaisquer cargos públicos, seja na esfera federal, estadual, distrital ou municipal</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O servidor pode acumular dois cargos em comissão de chefia, desde que em órgãos diferentes</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">É permitida a acumulação de dois cargos de professor, desde que haja compatibilidade de horários</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O servidor pode acumular cargo efetivo com cargo em comissão de qualquer natureza</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A acumulação ilegal de cargos gera demissão automática do servidor, sem direito a processo administrativo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Acumulação de Cargos - Art. 37 da CF e Art. 38 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> A acumulação é <strong>vedada</strong> genericamente, mas existem <strong>exceções</strong> constitucionais (Art. 37, XVI e XVII).<br><br>
+                        
+                        <strong>B) Errado:</strong> Cargos em comissão <strong>não são acumuláveis</strong>, salvo exceções específicas (como cargos eletivos).<br><br>
+                        
+                        <strong>C) CORRETO:</strong> Art. 37, XVI, CF: É permitida a acumulação de <strong>dois cargos de professor</strong>, desde que haja <strong>compatibilidade de horários</strong>.<br><br>
+                        
+                        <strong>D) Errado:</strong> O servidor só pode acumular cargo efetivo com cargo em comissão de <strong>chefia, assessoramento ou controle</strong> (Art. 38, caput), não de "qualquer natureza".<br><br>
+                        
+                        <strong>E) Errado:</strong> A acumulação ilegal gera <strong>exoneração de ofício</strong> (Art. 34, II, b), não demissão. E o servidor <strong>estável tem direito a processo</strong> para comprovar a legalidade.<br><br>
+                        
+                        <strong>Acumulações permitidas (Art. 37 da CF):</strong><br>
+                        • Dois cargos de <strong>professor</strong><br>
+                        • Dois cargos de <strong>médico</strong><br>
+                        • Dois cargos <strong>técnicos ou científicos</strong><br>
+                        • Cargo de professor, médico ou técnico com <strong>cargo eletivo</strong><br>
+                        • Cargo efetivo com cargo em comissão de <strong>chefia, assessoramento ou controle</strong><br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Acumulação de Cargos:</div>
+                            <strong>Regra geral:</strong> Vedada (Art. 37, XVI, CF)<br>
+                            <strong>Exceções:</strong> Professor, médico, técnico/científico, eletivo<br>
+                            <strong>Comissão:</strong> Só chefia, assessoramento, controle<br>
+                            <strong>Ilegalidade:</strong> Exoneração de ofício (não demissão)<br>
+                            <strong>Compatibilidade:</strong> Horários compatíveis exigidos
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="A" data-question="Licenças e Afastamentos">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (FCC - Estilo INSS) Sobre as licenças do servidor público federal, julgue o item: O servidor pode ser licenciado para tratar de interesse particular por até 3 anos, sem prejuízo da remuneração, desde que não haja prejuízo para o serviço.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Licença para Tratar de Interesse Particular - Art. 91 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Conceito:</strong> É a licença concedida ao servidor para <strong>tratar de assuntos particulares</strong>, sem prejuízo da remuneração.<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • <strong>Duração:</strong> Até <strong>3 anos</strong> (consecutivos ou não)<br>
+                        • <strong>Remuneração:</strong> <strong>Integrais</strong> (sem prejuízo)<br>
+                        • <strong>Requisito:</strong> Não pode haver <strong>prejuízo para o serviço</strong><br>
+                        • <strong>Contagem de tempo:</strong> Não conta para fins de aposentadoria (exceto para efeito de quinquênios)<br>
+                        • <strong>Acumulação:</strong> Não pode acumular com outro cargo público<br><br>
+                        
+                        <strong>Outras licenças importantes:</strong><br>
+                        • <strong>Licença por motivo de doença:</strong> Até 6 meses (comprovação médica)<br>
+                        • <strong>Licença por motivo de doença em pessoa da família:</strong> Até 1 ano<br>
+                        • <strong>Licença-maternidade:</strong> 180 dias (Lei 13.301/2016)<br>
+                        • <strong>Licença-paternidade:</strong> 20 dias<br>
+                        • <strong>Licença para capacitação:</strong> Até 3 meses (a cada 5 anos)<br>
+                        • <strong>Licença para atividade política:</strong> Para candidatos a cargo eletivo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Licença para Interesse Particular:</div>
+                            <strong>Duração:</strong> Até 3 anos (consecutivos ou não)<br>
+                            <strong>Remuneração:</strong> Integral<br>
+                            <strong>Requisito:</strong> Sem prejuízo ao serviço<br>
+                            <strong>Aposentadoria:</strong> Não conta para tempo de contribuição<br>
+                            <strong>Acumulação:</strong> Vedada com outro cargo<br>
+                            <strong>Concessão:</strong> Discricionária da Administração
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="D" data-question="Direitos e Vantagens - Férias e Abono">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (CESPE/CEBRASPE - Estilo INSS) Sobre os direitos e vantagens do servidor público federal, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">O servidor tem direito a 30 dias de férias a cada 12 meses de exercício, sem possibilidade de acumulação</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">O abono pecuniário é de 50% do valor das férias, podendo ser convertido em dinheiro</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">O servidor em estágio probatório não tem direito a férias, licenças ou progressão funcional</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">O servidor pode acumular até 3 períodos de férias, totalizando 90 dias, quando o interesse do serviço assim exigir</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">O adicional por tempo de serviço (quinquênio) é de 5% a cada 5 anos, limitado a 35% do vencimento</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Direitos e Vantagens - Art. 67 a 78 da Lei 8.112/90:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> O servidor tem direito a <strong>30 dias de férias</strong>, mas pode <strong>acumular</strong> até <strong>3 períodos</strong> (90 dias) quando o interesse do serviço exigir (Art. 67, §2º).<br><br>
+                        
+                        <strong>B) Errado:</strong> O <strong>abono pecuniário</strong> é de <strong>1/3 das férias</strong> (não 50%), podendo ser convertido em dinheiro (Art. 67, §§ 3º e 4º).<br><br>
+                        
+                        <strong>C) Errado:</strong> O servidor em <strong>estágio probatório</strong> tem <strong>todos os direitos</strong>, exceto a <strong>estabilidade</strong>. Tem direito a férias, licenças e progressão.<br><br>
+                        
+                        <strong>D) CORRETO:</strong> Art. 67, §2º: "Quando o interesse do serviço exigir, poderão ser acumulados até <strong>3 períodos de férias</strong>." Total: <strong>90 dias</strong>.<br><br>
+                        
+                        <strong>E) Errado:</strong> O <strong>quinquênio</strong> é de <strong>5% a cada 5 anos</strong>, mas o limite é de <strong>35 anos</strong> (7 quinquênios = 35%), não 35% do vencimento. A EC 103/2019 limitou a 35 anos de contribuição para fins de aposentadoria, mas o quinquênio continua até o limite legal.<br><br>
+                        
+                        <strong>Principais direitos:</strong><br>
+                        • <strong>Férias:</strong> 30 dias por ano (acumuláveis até 90 dias)<br>
+                        • <strong>Abono pecuniário:</strong> 1/3 das férias<br>
+                        • <strong>13º salário:</strong> Integral<br>
+                        • <strong>Adicional por tempo de serviço:</strong> 5% a cada 5 anos (quinquênio)<br>
+                        • <strong>Adicional de insalubridade/periculosidade:</strong> Quando aplicável<br>
+                        • <strong>Gratificações:</strong> Por função exercida<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Direitos do Servidor:</div>
+                            <strong>Férias:</strong> 30 dias/ano (acumuláveis até 90 dias)<br>
+                            <strong>Abono:</strong> 1/3 das férias<br>
+                            <strong>13º:</strong> Integral<br>
+                            <strong>Quinquênio:</strong> 5% a cada 5 anos<br>
+                            <strong>Estágio probatório:</strong> Todos os direitos, exceto estabilidade<br>
+                            <strong>Licenças:</strong> Por doença, interesse particular, maternidade, etc.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • Questões sobre provimento: Dominar Art. 7º (nomeação, promoção, readaptação, reversão, aproveitamento, reintegração, recondução)<br>
+                • Questões sobre vacância: Focar no Art. 33 (exoneração, demissão, aposentadoria, readaptação, abandono)<br>
+                • Questões sobre remoção: Art. 36-37 (de ofício, a pedido, por permuta)<br>
+                • Questões sobre aposentadoria: EC 103/2019 (idades, tempos, cálculos, regras de transição)<br>
+                • Questões sobre processo disciplinar: Art. 138-158 (faltas graves, prazos, garantias)<br>
+                • Questões sobre cargos em comissão: Art. 9º (livre nomeação, estabilidade preservada)<br>
+                • Distinguir: Reversão (aposentado), Reintegração (estável), Recondução (não estável)<br>
+                • Licenças e afastamentos: Art. 67-91 (férias, licença por doença, interesse particular, maternidade)<br>
+                • Acumulação de cargos: Art. 37 da CF (professor, médico, técnico, eletivo)<br>
+                • Estágio probatório: Art. 20-22 (2 anos, avaliação trimestral, estabilidade após aprovação)
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Direito Administrativo - Lei 8.112/90. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê um exemplo prático do cotidiano para eu entender melhor
+4. Alguma dica de memorização se aplicável
+5. Qual artigo da Lei 8.112/90, Constituição Federal (EC 103/2019) ou outra norma se aplica
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina a Lei 8.112/90 e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise os conceitos de provimento, vacância e as regras da EC 103/2019.';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nas diferenças entre reversão, reintegração e recondução.';
+            } else {
+                message = '⚠️ É preciso estudar mais. A Lei 8.112/90 é fundamental para o concurso do INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
