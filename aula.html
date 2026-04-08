@@ -1,0 +1,2451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGIME JURÍDICO DOS SERVIDORES PÚBLICOS FEDERAIS - Lei 8.112/1990 | Guia Definitivo INSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+        }
+        
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        
+        .expandable-content.active {
+            max-height: 3000px;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .highlight-red {
+            background: linear-gradient(120deg, #fee2e2 0%, #fee2e2 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            color: #991b1b;
+            font-weight: 700;
+        }
+        
+        .highlight-green {
+            background: linear-gradient(120deg, #d1fae5 0%, #d1fae5 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            color: #065f46;
+            font-weight: 700;
+        }
+        
+        .highlight-yellow {
+            background: linear-gradient(120deg, #fef3c7 0%, #fef3c7 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            color: #92400e;
+            font-weight: 700;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .progress-step {
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 100;
+        }
+        
+        .memory-card {
+            perspective: 1000px;
+        }
+        
+        .memory-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .memory-card:hover .memory-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .memory-card-front, .memory-card-back {
+            backface-visibility: hidden;
+        }
+        
+        .memory-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .step-active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .badge-important {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        .badge-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navigation Sticky -->
+    <nav class="sticky-nav bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-blue rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">8.112</div>
+                    <div>
+                        <span class="font-bold text-xl text-slate-800">Lei 8.112/90</span>
+                        <span class="text-xs text-slate-500 block">Regime Jurídico dos Servidores Públicos Federais</span>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-1">
+                    <button onclick="scrollToSection('conceitos')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Conceitos</button>
+                    <button onclick="scrollToSection('provimento')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Provimento</button>
+                    <button onclick="scrollToSection('direitos')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Direitos</button>
+                    <button onclick="scrollToSection('deveres')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Deveres</button>
+                    <button onclick="scrollToSection('licencas')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Licenças</button>
+                    <button onclick="scrollToSection('regime')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Disciplinar</button>
+                    <button onclick="scrollToSection('simulador')" class="px-3 py-2 rounded-lg text-sm font-medium hover:bg-slate-100 transition">Simulador</button>
+                    <button onclick="scrollToSection('quiz')" class="px-4 py-2 rounded-lg text-sm font-medium gradient-blue text-white hover:opacity-90 transition">Quiz</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progresso de Leitura -->
+    <div class="fixed top-16 left-0 w-full h-1 bg-slate-200 z-50">
+        <div id="readingProgress" class="h-full gradient-blue transition-all duration-300" style="width: 0%"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-16 px-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                    <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    <span class="text-sm font-semibold tracking-wide">ATUALIZADO COM JURISPRUDÊNCIA 2024/2025</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    Regime Jurídico dos<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Servidores Públicos</span><br>
+                    <span class="text-4xl md:text-6xl font-light">Federais</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-300 mb-8 max-w-4xl mx-auto leading-relaxed">
+                    O guia mais completo sobre a <span class="highlight-yellow">Lei 8.112/1990</span>. 
+                    De <strong>A a Z</strong>, com todas as pegadinhas de prova, jurisprudência atualizada e esquemas de memorização.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button onclick="scrollToSection('conceitos')" class="px-8 py-4 bg-white text-blue-900 rounded-full font-bold text-lg hover:scale-105 transition transform shadow-xl flex items-center">
+                        <span class="mr-2">📖</span> Começar do Início
+                    </button>
+                    <button onclick="scrollToSection('simulador')" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition flex items-center">
+                        <span class="mr-2">🧮</span> Simular Casos
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto text-left">
+                    <div class="glass rounded-xl p-6 text-slate-800">
+                        <div class="text-3xl mb-2">⚖️</div>
+                        <h3 class="font-bold text-lg mb-1">Lei 8.112/1990</h3>
+                        <p class="text-sm text-slate-600">Estatuto completo com todas as alterações até 2025</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-slate-800">
+                        <div class="text-3xl mb-2">🏛️</div>
+                        <h3 class="font-bold text-lg mb-1">STF/STJ/TNU</h3>
+                        <p class="text-sm text-slate-600">Súmulas vinculantes e teses firmadas</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-slate-800">
+                        <div class="text-3xl mb-2">🎯</div>
+                        <h3 class="font-bold text-lg mb-1">Pegadinhas INSS</h3>
+                        <p class="text-sm text-slate-600">Questões mais cobradas no último concurso</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-slate-800">
+                        <div class="text-3xl mb-2">🧠</div>
+                        <h3 class="font-bold text-lg mb-1">Memorização</h3>
+                        <p class="text-sm text-slate-600">Técnicas e esquemas visuais</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Índice Rápido -->
+    <section class="py-8 bg-white border-b border-slate-200 sticky top-16 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide">
+                <button onclick="scrollToSection('conceitos')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">1. Conceitos</button>
+                <button onclick="scrollToSection('provimento')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">2. Provimento</button>
+                <button onclick="scrollToSection('vacancia')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">3. Vacância</button>
+                <button onclick="scrollToSection('remocao')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">4. Remoção</button>
+                <button onclick="scrollToSection('direitos')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">5. Direitos</button>
+                <button onclick="scrollToSection('deveres')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">6. Deveres</button>
+                <button onclick="scrollToSection('licencas')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">7. Licenças</button>
+                <button onclick="scrollToSection('regime')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">8. Regime Disciplinar</button>
+                <button onclick="scrollToSection('aposentadoria')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">9. Aposentadoria</button>
+                <button onclick="scrollToSection('jurisprudencia')" class="whitespace-nowrap px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-blue-100 hover:text-blue-700 transition">10. Jurisprudência</button>
+                <button onclick="scrollToSection('pegadinhas')" class="whitespace-nowrap px-4 py-2 bg-red-100 rounded-full text-sm font-medium hover:bg-red-200 hover:text-red-700 transition">11. Pegadinhas</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 1: CONCEITOS FUNDAMENTAIS -->
+    <section id="conceitos" class="py-16 px-4 max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">1. Conceitos Fundamentais</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Art. 1º ao 4º da Lei 8.112/1990 - Base para tudo!</p>
+        </div>
+
+        <!-- Cards de Conceitos com Flip -->
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="memory-card h-80 cursor-pointer">
+                <div class="memory-card-inner relative w-full h-full">
+                    <div class="memory-card-front absolute w-full h-full bg-white rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center border-2 border-blue-200">
+                        <div class="text-6xl mb-4">👤</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Servidor Público</h3>
+                        <p class="text-slate-500 text-center">Passe o mouse para descobrir</p>
+                    </div>
+                    <div class="memory-card-back absolute w-full h-full gradient-blue rounded-2xl shadow-xl p-8 flex flex-col justify-center text-white">
+                        <h3 class="text-xl font-bold mb-4">Art. 2º</h3>
+                        <p class="text-lg leading-relaxed">"É a <strong>pessoa legalmente investida em cargo público</strong>"</p>
+                        <div class="mt-4 p-3 bg-white/20 rounded-lg">
+                            <p class="text-sm">💡 <strong>Chave:</strong> Não basta ser nomeado, precisa ter <em>investidura</em> (posse + exercício)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-card h-80 cursor-pointer">
+                <div class="memory-card-inner relative w-full h-full">
+                    <div class="memory-card-front absolute w-full h-full bg-white rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center border-2 border-purple-200">
+                        <div class="text-6xl mb-4">📋</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Cargo Público</h3>
+                        <p class="text-slate-500 text-center">Passe o mouse para descobrir</p>
+                    </div>
+                    <div class="memory-card-back absolute w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl shadow-xl p-8 flex flex-col justify-center text-white">
+                        <h3 class="text-xl font-bold mb-4">Art. 3º</h3>
+                        <p class="text-lg leading-relaxed">"É o <strong>conjunto de atribuições e responsabilidades</strong> previstas na estrutura organizacional"</p>
+                        <div class="mt-4 p-3 bg-white/20 rounded-lg">
+                            <p class="text-sm">💡 <strong>Elementos:</strong> Criado por lei, denominação própria, vencimento pago por cofres públicos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-card h-80 cursor-pointer">
+                <div class="memory-card-inner relative w-full h-full">
+                    <div class="memory-card-front absolute w-full h-full bg-white rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center border-2 border-green-200">
+                        <div class="text-6xl mb-4">🚫</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Gratuidade</h3>
+                        <p class="text-slate-500 text-center">Passe o mouse para descobrir</p>
+                    </div>
+                    <div class="memory-card-back absolute w-full h-full bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl shadow-xl p-8 flex flex-col justify-center text-white">
+                        <h3 class="text-xl font-bold mb-4">Art. 4º</h3>
+                        <p class="text-lg leading-relaxed">"É <strong>proibida a prestação de serviços gratuitos</strong>, salvo os casos previstos em lei"</p>
+                        <div class="mt-4 p-3 bg-white/20 rounded-lg">
+                            <p class="text-sm">💡 <strong>Exceções:</strong> Estágio, trabalho voluntário, serviço militar, entre outros previstos em lei</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aplicação da Lei -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h3 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center text-white mr-3">📍</span>
+                A Quem se Aplica a Lei 8.112/1990?
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <div class="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                        <h4 class="font-bold text-green-900 mb-2">✓ Aplica-se a:</h4>
+                        <ul class="space-y-2 text-green-800 text-sm">
+                            <li class="flex items-start"><span class="mr-2">•</span>Servidores da Administração Pública Federal Direta</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Servidores de Autarquias Federais (inclusive em regime especial)</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Servidores de Fundações Públicas Federais</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Serventuários da Justiça (quando remunerados pela União)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-red-50 rounded-xl border-l-4 border-red-500">
+                        <h4 class="font-bold text-red-900 mb-2">✗ NÃO se aplica a:</h4>
+                        <ul class="space-y-2 text-red-800 text-sm">
+                            <li class="flex items-start"><span class="mr-2">•</span>Empregados públicos (CLT) - ex: empregados da Petrobras</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Servidores estaduais e municipais (cada um tem seu estatuto)</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Empresas públicas e sociedades de economia mista</li>
+                            <li class="flex items-start"><span class="mr-2">•</span>Servidores do Legislativo e Judiciário (têm regime próprio)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-yellow-50 rounded-xl border-2 border-yellow-200">
+                <p class="text-yellow-800 text-sm">
+                    <strong>⚠️ Pegadinha de prova:</strong> A Lei 8.112/90 é <span class="highlight-yellow">federal</span> e não se aplica automaticamente aos estados e municípios. 
+                    Estes têm seus próprios estatutos, embora possam aplicá-la <em>subsidiariamente</em> em caso de lacunas.
+                </p>
+            </div>
+        </div>
+
+        <!-- Tipos de Cargo -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border-2 border-blue-200">
+            <h3 class="text-2xl font-bold mb-6 text-blue-900">Tipos de Cargo Público</h3>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl mr-4">📝</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">Cargo Efetivo</h4>
+                            <span class="text-xs text-slate-500">Art. 3º, parágrafo único</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li>• Acesso por <strong>concurso público</strong></li>
+                        <li>• Estabilidade após estágio probatório</li>
+                        <li>• Direito a todos os benefícios</li>
+                        <li>• Pode acumular (se houver compatibilidade)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl mr-4">⭐</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-800">Cargo em Comissão</h4>
+                            <span class="text-xs text-slate-500">Art. 3º, parágrafo único</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li>• Livre nomeação e exoneração</li>
+                        <li>• <strong>Sem estabilidade</strong></li>
+                        <li>• Funções de direção, chefia e assessoramento</li>
+                        <li>• Destina-se exclusivamente a <strong>servidores públicos</strong> (art. 9º)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 bg-white p-4 rounded-xl shadow-sm">
+                <h4 class="font-bold text-slate-800 mb-2">🔍 Diferença: Função de Confiança vs. Cargo em Comissão</h4>
+                <p class="text-sm text-slate-600 mb-2">
+                    <strong>Função de confiança:</strong> Atribuições de chefia, direção ou assessoramento exercidas por <strong>servidor efetivo</strong>. 
+                    É uma "função", não cargo. O servidor continua no cargo efetivo, apenas exerce funções diferentes.
+                </p>
+                <p class="text-sm text-slate-600">
+                    <strong>Cargo em comissão:</strong> É um cargo propriamente dito, ocupado livremente pelo indicado da autoridade.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 2: PROVIMENTO -->
+    <section id="provimento" class="py-16 px-4 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">2. Provimento de Cargo Público</h2>
+                <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+                <p class="text-lg text-slate-600">Art. 5º a 20 da Lei 8.112/1990</p>
+            </div>
+
+            <!-- Requisitos Básicos -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center text-white mr-3">✓</span>
+                    Requisitos Básicos (Art. 5º)
+                </h3>
+                
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">🇧🇷</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Nacionalidade</h4>
+                        <p class="text-sm text-slate-600">Brasileira nato ou naturalizado</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">🗳️</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Direitos Políticos</h4>
+                        <p class="text-sm text-slate-600">Gozo dos direitos políticos (eleitor ativo e passivo)</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">🎖️</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Obrigações</h4>
+                        <p class="text-sm text-slate-600">Quitação com obrigações militares e eleitorais</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">🎓</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Escolaridade</h4>
+                        <p class="text-sm text-slate-600">Nível exigido para o cargo</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">🎂</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Idade Mínima</h4>
+                        <p class="text-sm text-slate-600">18 anos completos</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition">
+                        <div class="text-3xl mb-2">💪</div>
+                        <h4 class="font-bold text-slate-800 mb-1">Aptidão</h4>
+                        <p class="text-sm text-slate-600">Física e mental (atestado médico)</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                    <p class="text-blue-800 text-sm">
+                        <strong>💡 Dica:</strong> O § 1º do Art. 5º permite que a lei exija outros requisitos conforme as atribuições do cargo 
+                        (ex: curso superior para analista, experiência para cargo de chefia, etc.).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Formas de Provimento -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Formas de Provimento (Art. 8º)</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700 mr-4 flex-shrink-0">1</div>
+                        <div>
+                            <h4 class="font-bold text-green-900">Nomeação</h4>
+                            <p class="text-sm text-green-800 mt-1">
+                                <strong>Para cargo efetivo:</strong> em caráter efetivo (após concurso) ou em comissão.<br>
+                                <strong>Para cargo em comissão:</strong> livre nomeação.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-700 mr-4 flex-shrink-0">2</div>
+                        <div>
+                            <h4 class="font-bold text-blue-900">Promoção</h4>
+                            <p class="text-sm text-blue-800 mt-1">
+                                Acesso do servidor a cargo de maior complexidade na mesma carreira, 
+                                por mérito ou antiguidade (art. 29).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-purple-50 rounded-xl border-l-4 border-purple-500">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-700 mr-4 flex-shrink-0">3</div>
+                        <div>
+                            <h4 class="font-bold text-purple-900">Aproveitamento</h4>
+                            <p class="text-sm text-purple-800 mt-1">
+                                Aproveitamento de servidor estável em cargo em extinção para outro cargo 
+                                de atribuições e vencimentos compatíveis.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-orange-50 rounded-xl border-l-4 border-orange-500">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center font-bold text-orange-700 mr-4 flex-shrink-0">4</div>
+                        <div>
+                            <h4 class="font-bold text-orange-900">Readaptação</h4>
+                            <p class="text-sm text-orange-800 mt-1">
+                                Provação do servidor em cargo de atribuições e vencimentos compatíveis 
+                                com a limitação física ou mental verificada (art. 24).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-pink-50 rounded-xl border-l-4 border-pink-500">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center font-bold text-pink-700 mr-4 flex-shrink-0">5</div>
+                        <div>
+                            <h4 class="font-bold text-pink-900">Reversão</h4>
+                            <p class="text-sm text-pink-800 mt-1">
+                                Retorno do aposentado ou disponibilizado ao cargo em comissão ou efetivo 
+                                anterior (art. 25).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-indigo-50 rounded-xl border-l-4 border-indigo-500">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-4 flex-shrink-0">6</div>
+                        <div>
+                            <h4 class="font-bold text-indigo-900">Reintegração</h4>
+                            <p class="text-sm text-indigo-800 mt-1">
+                                Retorno do servidor estável ao cargo anteriormente ocupado, 
+                                após invalidação de sua exoneração ou demissão (art. 27).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start p-4 bg-teal-50 rounded-xl border-l-4 border-teal-500">
+                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center font-bold text-teal-700 mr-4 flex-shrink-0">7</div>
+                        <div>
+                            <h4 class="font-bold text-teal-900">Recondução</h4>
+                            <p class="text-sm text-teal-800 mt-1">
+                                Retorno do servidor ao cargo anteriormente ocupado, 
+                                quando a promoção ou a readaptação for anulada (art. 28).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posse e Exercício -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 border-2 border-amber-200">
+                <h3 class="text-2xl font-bold mb-6 text-amber-900">Posse e Exercício (Art. 13 a 17)</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <h4 class="font-bold text-lg mb-4 flex items-center">
+                            <span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2 text-amber-600">1</span>
+                            Posse (Art. 13)
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>• Prazo: <strong>30 dias</strong> contados da publicação do ato</li>
+                            <li>• Pode ser <strong>por procuração</strong></li>
+                            <li>• Efeito: torna-se servidor, mas ainda não exerce</li>
+                            <li>• Não comparecimento: <strong>vacância do cargo</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <h4 class="font-bold text-lg mb-4 flex items-center">
+                            <span class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-2 text-orange-600">2</span>
+                            Exercício (Art. 14)
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>• Prazo: <strong>15 dias</strong> contados da posse</li>
+                            <li>• É <strong>personalíssimo</strong> (não pode ser por procuração)</li>
+                            <li>• Efeito: início efetivo das atribuições</li>
+                            <li>• Não comparecimento: <strong>exoneração</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-500">
+                    <p class="text-red-800 text-sm">
+                        <strong>⚠️ Pegadinha:</strong> A posse pode ser por procuração, mas o <strong>exercício é personalíssimo</strong>! 
+                        Além disso, o estágio probatório só começa a contar a partir do <strong>exercício</strong>, não da posse.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: VACÂNCIA -->
+    <section id="vacancia" class="py-16 px-4 max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">3. Vacância do Cargo Público</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Art. 33 a 35 da Lei 8.112/1990</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-green-500 card-hover">
+                <h3 class="text-xl font-bold mb-4 text-green-900">Exoneração (Art. 34)</h3>
+                <div class="space-y-3">
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <h4 class="font-bold text-green-800 text-sm mb-1">A pedido</h4>
+                        <p class="text-xs text-green-700">A qualquer tempo, desde que não haja processo administrativo disciplinar em curso.</p>
+                    </div>
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <h4 class="font-bold text-green-800 text-sm mb-1">De ofício</h4>
+                        <p class="text-xs text-green-700">Quando não tomar posse no prazo, não entrar em exercício, ou acumular ilegalmente.</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="text-xs text-yellow-800">
+                        <strong>💡 Dica:</strong> Exoneração não é punição! É apenas o desligamento do cargo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-red-500 card-hover">
+                <h3 class="text-xl font-bold mb-4 text-red-900">Demissão (Art. 35)</h3>
+                <div class="space-y-3">
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <h4 class="font-bold text-red-800 text-sm mb-1">Punição disciplinar</h4>
+                        <p class="text-xs text-red-700">Penalidade máxima do regime disciplinar (falta grave).</p>
+                    </div>
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <h4 class="font-bold text-red-800 text-sm mb-1">Por improbidade</h4>
+                        <p class="text-xs text-red-700">Condenação por ato de improbidade administrativa.</p>
+                    </div>
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <h4 class="font-bold text-red-800 text-sm mb-1">Acumulação ilegal</h4>
+                        <p class="text-xs text-red-700">Acumulação vedada constitucionalmente.</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-3 bg-red-100 rounded-lg border border-red-300">
+                    <p class="text-xs text-red-800 font-bold">
+                        ⚠️ Efeito: perda do cargo e impede nova investidura por 5 anos!
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
+                <h3 class="text-xl font-bold mb-4 text-blue-900">Aposentadoria (Art. 3º, inc. III)</h3>
+                <div class="space-y-2 text-sm text-slate-600">
+                    <p>• Voluntária (ao atingir requisitos)</p>
+                    <p>• Compulsória (aos 75 anos de idade)</p>
+                    <p>• Por invalidez (incapacidade permanente)</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-purple-500 card-hover">
+                <h3 class="text-xl font-bold mb-4 text-purple-900">Outras formas</h3>
+                <div class="space-y-2 text-sm text-slate-600">
+                    <p>• <strong>Promoção:</strong> acesso a cargo superior</p>
+                    <p>• <strong>Readaptação:</strong> para cargo compatível</p>
+                    <p>• <strong> falecimento</strong></p>
+                    <p>• <strong>Cassação de aposentadoria</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estabilidade -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-8 text-white shadow-xl">
+            <h3 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="text-3xl mr-3">🛡️</span>
+                Estabilidade do Servidor Efetivo (Art. 41 CF + Art. 20 da Lei 8.112/90)
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <h4 class="font-bold text-lg mb-3">Como adquirir?</h4>
+                    <ul class="space-y-2 text-sm text-blue-100">
+                        <li>• Entrar em exercício no cargo efetivo</li>
+                        <li>• Cumprir o <strong>estágio probatório</strong> (36 meses)</li>
+                        <li>• Ser <strong>aprovado</strong> na avaliação de desempenho</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                    <h4 class="font-bold text-lg mb-3">O que significa?</h4>
+                    <ul class="space-y-2 text-sm text-blue-100">
+                        <li>• <strong>Só perde o cargo</strong> por sentença judicial transitada em julgado</li>
+                        <li>• Ou em processo administrativo disciplinar (PAD)</li>
+                        <li>• Proteção contra demissão arbitrária</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-400/20 rounded-xl p-4 border border-yellow-400/50">
+                <p class="text-yellow-200 text-sm">
+                    <strong>⚠️ Atenção:</strong> O estágio probatório foi ampliado para <strong>36 meses</strong> pela EC 19/1998, 
+                    mas muitas questões antigas ainda citam 24 meses. Sempre verifique o enunciado!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4: REMOÇÃO E REDISTRIBUIÇÃO -->
+    <section id="remocao" class="py-16 px-4 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">4. Remoção e Redistribuição</h2>
+                <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+                <p class="text-lg text-slate-600">Art. 36 a 40 da Lei 8.112/1990</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-8">
+                <!-- Remoção -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <span class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center text-white mr-3">🚚</span>
+                        Remoção (Art. 36)
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="font-bold text-blue-900 mb-2">I - De ofício (interesse da Administração)</h4>
+                            <p class="text-sm text-blue-800">
+                                A critério da administração, com ou sem mudança de sede. 
+                                Se houver mudança de sede, o servidor tem direito à <strong>ajuda de custo</strong> (Art. 53).
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-purple-50 rounded-xl border-l-4 border-purple-500">
+                            <h4 class="font-bold text-purple-900 mb-2">II - A pedido (a critério da Administração)</h4>
+                            <p class="text-sm text-purple-800">
+                                Solicitada pelo servidor, mas depende de autorização da administração. 
+                                Pode ocorrer com ou sem mudança de sede.
+                            </p>
+                        </div>
+
+                        <div class="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-900 mb-2">III - A pedido (independente do interesse da Administração)</h4>
+                            <p class="text-sm text-green-800 mb-2">
+                                É um <strong>DIREITO</strong> do servidor nas seguintes hipóteses:
+                            </p>
+                            <ul class="text-sm text-green-700 space-y-1 ml-4">
+                                <li>• a) Acompanhar cônjuge ou companheiro também servidor público ou empregado removido no interesse da administração</li>
+                                <li>• b) Assistir cônjuge, companheiro ou parente consanguíneo até 2º grau (doente ou incapaz)</li>
+                                <li>• c) Tratamento de saúde próprio (por mais de 1 ano)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-xl border-2 border-yellow-200">
+                        <p class="text-yellow-800 text-sm">
+                            <strong>⚠️ Jurisprudência STF/STJ:</strong> O cônjuge/companheiro "A" pode ser de <strong>qualquer ente da Federação</strong> 
+                            (União, Estado, DF, Município) e de <strong>qualquer Poder</strong>, mas o "B" (que pede a remoção) 
+                            precisa ser servidor federal sujeito à Lei 8.112/90.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Redistribuição -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center">
+                        <span class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center text-white mr-3">🔄</span>
+                        Redistribuição (Art. 37)
+                    </h3>
+                    
+                    <p class="text-slate-600 mb-4 text-sm">
+                        Deslocamento de servidor de um órgão para outro, <strong>sem mudança de sede</strong>, 
+                        para atender ao interesse público.
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-orange-50 rounded-lg">
+                            <h4 class="font-bold text-orange-900 text-sm">Requisitos:</h4>
+                            <ul class="text-xs text-orange-800 space-y-1 mt-1">
+                                <li>• Cargos de mesma denominação</li>
+                                <li>• Atribuições idênticas</li>
+                                <li>• Vencimentos iguais</li>
+                                <li>• Necessidade de ambos os órgãos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 p-3 bg-slate-100 rounded-lg">
+                        <p class="text-xs text-slate-600">
+                            <strong>Diferença:</strong> Remoção é no mesmo órgão; Redistribuição é entre órgãos diferentes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prazo para Entrar em Exercício -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h3 class="text-2xl font-bold mb-6">Prazo para Entrar em Exercício após Remoção (Art. 18)</h3>
+                
+                <div class="flex items-center justify-center mb-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-24 h-24 bg-blue-100 rounded-full flex flex-col items-center justify-center text-blue-700 font-bold">
+                            <span class="text-2xl">10</span>
+                            <span class="text-xs">dias mínimo</span>
+                        </div>
+                        <span class="text-2xl text-slate-400">a</span>
+                        <div class="w-24 h-24 bg-blue-100 rounded-full flex flex-col items-center justify-center text-blue-700 font-bold">
+                            <span class="text-2xl">30</span>
+                            <span class="text-xs">dias máximo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-slate-50 rounded-xl">
+                        <h4 class="font-bold text-slate-800 mb-2">Contagem:</h4>
+                        <p class="text-sm text-slate-600">
+                            A contar da <strong>publicação do ato</strong>, incluído o tempo necessário para o deslocamento.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl">
+                        <h4 class="font-bold text-slate-800 mb-2">Se estiver em licença:</h4>
+                        <p class="text-sm text-slate-600">
+                            O prazo conta a partir do <strong>término do impedimento</strong> (licença/afastamento).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 5: DIREITOS -->
+    <section id="direitos" class="py-16 px-4 max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">5. Direitos dos Servidores</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Art. 37 a 64 da Lei 8.112/1990</p>
+        </div>
+
+        <!-- Remuneração -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h3 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center text-white mr-3">💰</span>
+                Remuneração e Vantagens
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border-2 border-green-200">
+                    <h4 class="font-bold text-green-900 mb-3">Remuneração (Art. 39)</h4>
+                    <p class="text-sm text-slate-700 mb-2">
+                        Composta de:
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Vencimento (salário-base)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Vantagens pecuniárias permanentes</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Vantagens eventuais</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 bg-gradient-to-br from-red-50 to-pink-50 rounded-xl border-2 border-red-200">
+                    <h4 class="font-bold text-red-900 mb-3">Teto Constitucional (Art. 37, XI CF)</h4>
+                    <p class="text-sm text-slate-700 mb-2">
+                        <strong>Art. 42 da Lei 8.112/90:</strong> Nenhum servidor pode perceber remuneração superior ao teto constitucional.
+                    </p>
+                    <div class="p-3 bg-white rounded-lg">
+                        <p class="text-xs text-red-800">
+                            <strong>⚠️ Súmula Vinculante 4:</strong> O salário mínimo <strong>não pode</strong> ser usado como indexador de vantagens!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vantagens Específicas -->
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 bg-blue-50 rounded-xl">
+                    <h4 class="font-bold text-blue-900 text-sm mb-2">Anuênio (Art. 61)</h4>
+                    <p class="text-xs text-slate-700">
+                        Adicional por tempo de serviço: <strong>1% do vencimento</strong> por ano de efetivo exercício, 
+                        até o máximo de <strong>35%</strong> (art. 40, § 5º CF).
+                    </p>
+                </div>
+
+                <div class="p-4 bg-purple-50 rounded-xl">
+                    <h4 class="font-bold text-purple-900 text-sm mb-2">Gratificações (Art. 61, II-VII)</h4>
+                    <p class="text-xs text-slate-700">
+                        GACF, GACE, GAEC, Gratificação de Representação, etc. 
+                        Incidem sobre o <strong>vencimento</strong>.
+                    </p>
+                </div>
+
+                <div class="p-4 bg-orange-50 rounded-xl">
+                    <h4 class="font-bold text-orange-900 text-sm mb-2">Adicionais (Art. 52)</h4>
+                    <p class="text-xs text-slate-700">
+                        Insalubridade, periculosidade, produtividade. 
+                        Calculados sobre o <strong>vencimento</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Férias -->
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 border-2 border-blue-200 mb-8">
+            <h3 class="text-2xl font-bold mb-6 text-blue-900">Férias (Art. 77 a 80)</h3>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h4 class="font-bold text-lg mb-4">Direitos</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li>• <strong>30 dias</strong> de férias por período aquisitivo</li>
+                        <li>• Pagamento até <strong>2 dias antes</strong> do início</li>
+                        <li>• Acúmulo de até <strong>2 períodos</strong> (se necessidade do serviço)</li>
+                        <li>• Parcelamento em até <strong>3 etapas</strong> (se requerido pelo servidor)</li>
+                        <li>• <strong>1/3 constitucional</strong> (adicional)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h4 class="font-bold text-lg mb-4">Proibições</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li>• Levar faltas à conta de férias</li>
+                        <li>• Interrupção salvo em casos específicos (calamidade pública, convocação para júri, etc.)</li>
+                        <li>• Início nas vésperas de feriado ou fim de semana (se prejudicar o serviço)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-white p-4 rounded-xl shadow-sm">
+                <p class="text-sm text-slate-700">
+                    <strong>Período aquisitivo:</strong> 12 meses de exercício. 
+                    <strong>Pecúlio:</strong> Se exonerado, recebe indenização proporcional (1/12 por mês).
+                </p>
+            </div>
+        </div>
+
+        <!-- Outros Direitos -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-bold mb-6">Outros Direitos Importantes</h3>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">🏥</div>
+                    <h4 class="font-bold text-sm mb-1">Assistência Médica</h4>
+                    <p class="text-xs text-slate-600">Art. 223</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">🦷</div>
+                    <h4 class="font-bold text-sm mb-1">Assistência Odontológica</h4>
+                    <p class="text-xs text-slate-600">Art. 223-A</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">🍽️</div>
+                    <h4 class="font-bold text-sm mb-1">Auxílio-Alimentação</h4>
+                    <p class="text-xs text-slate-600">Art. 122-A</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">👶</div>
+                    <h4 class="font-bold text-sm mb-1">Auxílio-Creche</h4>
+                    <p class="text-xs text-slate-600">Art. 122-B</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">📚</div>
+                    <h4 class="font-bold text-sm mb-1">Licença-Capacitação</h4>
+                    <p class="text-xs text-slate-600">Art. 87-A a 87-D</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">🎓</div>
+                    <h4 class="font-bold text-sm mb-1">Licença para Estudo</h4>
+                    <p class="text-xs text-slate-600">Art. 91</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">⏰</div>
+                    <h4 class="font-bold text-sm mb-1">Horário Especial</h4>
+                    <p class="text-xs text-slate-600">Art. 108 a 110</p>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl text-center card-hover">
+                    <div class="text-3xl mb-2">🚗</div>
+                    <h4 class="font-bold text-sm mb-1">Transporte</h4>
+                    <p class="text-xs text-slate-600">Art. 58 a 60</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 6: DEVERES -->
+    <section id="deveres" class="py-16 px-4 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">6. Deveres e Proibições</h2>
+                <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+                <p class="text-lg text-slate-600">Art. 116 a 126 da Lei 8.112/1990</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Deveres -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-blue-900">
+                        <span class="w-10 h-10 gradient-blue rounded-lg flex items-center justify-center text-white mr-3">✓</span>
+                        Deveres (Art. 116)
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">1</span>
+                            <p class="text-sm text-slate-700">Exercer com <strong>dedicação integral</strong> as atribuições do cargo</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">2</span>
+                            <p class="text-sm text-slate-700">Ser <strong>pontual</strong> e <strong>assíduo</strong></p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">3</span>
+                            <p class="text-sm text-slate-700">Obedecer às <strong>ordens superiores</strong> (salvo manifesta ilegalidade)</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">4</span>
+                            <p class="text-sm text-slate-700">Tratar com <strong>respeito</strong> os superiores, pares e subordinados</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">5</span>
+                            <p class="text-sm text-slate-700">Manter <strong>sigilo</strong> sobre dados e informações (Art. 117)</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">6</span>
+                            <p class="text-sm text-slate-700">Zelar pela <strong>economia</strong> dos materiais e patrimônio público</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">7</span>
+                            <p class="text-sm text-slate-700">Manter <strong>atualizado</strong> seu endereço</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-blue-50 rounded-lg">
+                            <span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs font-bold text-blue-700 mr-3 flex-shrink-0">8</span>
+                            <p class="text-sm text-slate-700">Conduzir-se com <strong>ética</strong> e <strong>decoro</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proibições -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-red-900">
+                        <span class="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-500 rounded-lg flex items-center justify-center text-white mr-3">🚫</span>
+                        Proibições (Art. 117 a 126)
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">1</span>
+                            <p class="text-sm text-slate-700">Acumular ilegalmente cargos (Art. 37, XVI CF)</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">2</span>
+                            <p class="text-sm text-slate-700">Exercer <strong>atividade privada</strong> que conflite com o cargo</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">3</span>
+                            <p class="text-sm text-slate-700">Aceitar <strong>comissão</strong>, <strong>presente</strong> ou <strong>vantagem</strong> em razão do cargo</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">4</span>
+                            <p class="text-sm text-slate-700">Usar cargo para <strong>prestígio</strong> ou <strong>favorecimento</strong></p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">5</span>
+                            <p class="text-sm text-slate-700">Revelar <strong>segredo</strong> de que tenha conhecimento em razão do cargo</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">6</span>
+                            <p class="text-sm text-slate-700">Fazer <strong>propaganda</strong> comercial no local de trabalho</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">7</span>
+                            <p class="text-sm text-slate-700">Ausentar-se sem prévia autorização (Art. 119)</p>
+                        </div>
+                        <div class="flex items-start p-3 bg-red-50 rounded-lg border-l-4 border-red-400">
+                            <span class="w-6 h-6 bg-red-200 rounded-full flex items-center justify-center text-xs font-bold text-red-700 mr-3 flex-shrink-0">8</span>
+                            <p class="text-sm text-slate-700">Fazer <strong>política partidária</strong> no local de trabalho (Art. 126)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acumulação -->
+            <div class="mt-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 border-2 border-amber-200">
+                <h3 class="text-2xl font-bold mb-6 text-amber-900">Acumulação de Cargos (Art. 37, XVI CF + Art. 120)</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <h4 class="font-bold text-green-900 mb-3 flex items-center">
+                            <span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-2">✓</span>
+                            Permitida
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>• Dois cargos de <strong>professor</strong></li>
+                            <li>• Um cargo de professor + outro de <strong>profissional de saúde</strong> (com carga horária compatível)</li>
+                            <li>• Dois cargos de <strong>profissional de saúde</strong> (com carga horária compatível)</li>
+                            <li>• Cargos <strong>técnicos</strong> ou <strong>científicos</strong> (com carga horária compatível)</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <h4 class="font-bold text-red-900 mb-3 flex items-center">
+                            <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-2">✗</span>
+                            Proibida
+                        </h4>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li>• Dois cargos de <strong>chefia</strong> ou <strong>direção</strong></li>
+                            <li>• Cargo efetivo + emprego público (salvo se houver compatibilidade)</li>
+                            <li>• Mais de dois cargos de qualquer natureza</li>
+                            <li>• Cargos em entes diferentes sem previsão constitucional</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-whitep-4 rounded-xl shadow-sm border-l-4 border-amber-500">
+<p class="text-amber-800 text-sm"><strong> A acumulação é vedada constitucionalmente, salvo as exceções do Art. 37, XVI da CF.
+Se o servidor acumular ilegalmente, pode ser <strong> (art. 138, IV).<!-- SEÇÃO 7: LICENÇAS E AFASTAMENTOS -->
+<section id="licencas" class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="mb-12">
+        <h2 class="text-4xl font-bold mb-4 gradient-text">7. Licenças e Afastamentos</h2>
+        <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+        <p class="text-lg text-slate-600">Art. 81 a 115 da Lei 8.112/1990 - O mais cobrado em provas!</p>
+    </div>
+
+    <!-- Tabela Comparativa de Licenças -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+        <div class="p-6 bg-slate-800 text-white">
+            <h3 class="text-xl font-bold">Tipos de Licença - Resumo Comparativo</h3>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-slate-100">
+                    <tr>
+                        <th class="p-4 font-bold">Tipo</th>
+                        <th class="p-4 font-bold">Artigo</th>
+                        <th class="p-4 font-bold">Prazo</th>
+                        <th class="p-4 font-bold">Remuneração</th>
+                        <th class="p-4 font-bold">Observações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200">
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-blue-700">Saúde (doença)</td>
+                        <td class="p-4">Art. 83</td>
+                        <td class="p-4">Até 6 meses (prorrogável por mais 6 meses)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Após 12 meses, se não puder retornar → aposentadoria por invalidez</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-blue-700">Saúde (pessoal)</td>
+                        <td class="p-4">Art. 84</td>
+                        <td class="p-4">Até 30 dias/ano (até 3 dias/mês)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Para tratamento de doença do servidor ou familiar</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-purple-700">Maternidade</td>
+                        <td class="p-4">Art. 81</td>
+                        <td class="p-4">180 dias (6 meses)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Adoção: 90 dias (se criança até 1 ano); 60 dias (1-4 anos); 30 dias (4-8 anos)</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-purple-700">Paternidade</td>
+                        <td class="p-4">Art. 81, § 1º</td>
+                        <td class="p-4">20 dias</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Pode ser usufruído em até 6 meses após nascimento/adopção</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-orange-700">Afastamento cônjuge</td>
+                        <td class="p-4">Art. 84-A</td>
+                        <td class="p-4">Até 60 dias</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Para acompanhar cônjuge/companheiro removido no interesse da administração</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-orange-700">Capacitação</td>
+                        <td class="p-4">Art. 87-A</td>
+                        <td class="p-4">Até 3 meses (por período de 5 anos)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Para participar de curso de capacitação</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-pink-700">Interesse particular</td>
+                        <td class="p-4">Art. 91</td>
+                        <td class="p-4">Até 3 anos (prorrogável por mais 3 anos)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-bold">SEM</span></td>
+                        <td class="p-4">Só para servidor efetivo. Não pode haver acumulação ilegal</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-pink-700">Mandato classista</td>
+                        <td class="p-4">Art. 96</td>
+                        <td class="p-4">Até 2 anos (prorrogável)</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold">SINDICATO</span></td>
+                        <td class="p-4">Remunerado pela entidade sindical ou associativa</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-indigo-700">Serviço militar</td>
+                        <td class="p-4">Art. 99</td>
+                        <td class="p-4">Tempo do serviço</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-bold">INTEGRAL</span></td>
+                        <td class="p-4">Afastamento obrigatório, com garantia do emprego</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-4 font-semibold text-indigo-700">Atividade política</td>
+                        <td class="p-4">Art. 102</td>
+                        <td class="p-4">Até 90 dias antes da eleição</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-bold">SEM</span></td>
+                        <td class="p-4">Para candidato a cargo eletivo. Se eleito: afastamento automático</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Licença Saúde - Detalhada -->
+    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 border-2 border-blue-200 mb-8">
+        <h3 class="text-2xl font-bold mb-6 text-blue-900">Licença por Doença (Art. 83) - Super Detalhada</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 shadow-md">
+                <h4 class="font-bold text-lg mb-4 text-blue-900">Fases da Licença Saúde</h4>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-700 mr-3 flex-shrink-0">1</div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Primeiros 6 meses</p>
+                            <p class="text-sm text-slate-600">Remuneração integral. Prorrogável por mais 6 meses.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-700 mr-3 flex-shrink-0">2</div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Prorrogação (6 meses)</p>
+                            <p class="text-sm text-slate-600">Remuneração integral. Total: até 12 meses.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center font-bold text-red-700 mr-3 flex-shrink-0">3</div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Após 12 meses</p>
+                            <p class="text-sm text-slate-600">Se não puder retornar → <strong>aposentadoria por invalidez</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-md">
+                <h4 class="font-bold text-lg mb-4 text-blue-900">Requisitos e Procedimentos</h4>
+                <ul class="space-y-3 text-sm text-slate-600">
+                    <li class="flex items-start">
+                        <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-2 flex-shrink-0 text-xs">✓</span>
+                        <span>Laudo médico da <strong>perícia oficial</strong> (INSS ou médico designado)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-2 flex-shrink-0 text-xs">✓</span>
+                        <span>Comunicação à chefia imediata <strong>imediatamente</strong></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-2 flex-shrink-0 text-xs">✓</span>
+                        <span>Para prorrogação: nova perícia antes do término do prazo</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-2 flex-shrink-0 text-xs">✓</span>
+                        <span><strong>Doença grave:</strong> pode ser tratada em hospital particular (Súmula 385 STF)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-6 bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-500">
+            <p class="text-red-800 text-sm">
+                <strong>⚠️ Pegadinha:</strong> A licença saúde é <strong>remunerada</strong>, diferente do <strong>afastamento por doença</strong> 
+                que ocorre após 12 meses (que é para fins de aposentadoria por invalidez). 
+                Muitas questões confundem os termos!
+            </p>
+        </div>
+    </div>
+
+    <!-- Licença Maternidade vs. INSS -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-6">Licença Maternidade: Servidor Público vs. INSS</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-6 bg-pink-50 rounded-xl border-2 border-pink-200">
+                <h4 class="font-bold text-pink-900 mb-4">Servidora Pública Federal</h4>
+                <ul class="space-y-2 text-sm text-slate-700">
+                    <li>• <strong>180 dias</strong> (6 meses) de licença</li>
+                    <li>• Remuneração <strong>integral</strong> (pago pela União)</li>
+                    <li>• Art. 81 da Lei 8.112/90</li>
+                    <li>• <strong>Adoção:</strong> prazos diferenciados (90/60/30 dias conforme idade)</li>
+                </ul>
+            </div>
+
+            <div class="p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                <h4 class="font-bold text-blue-900 mb-4">Trabalhadora Urbana (CLT/INSS)</h4>
+                <ul class="space-y-2 text-sm text-slate-700">
+                    <li>• <strong>120 dias</strong> (4 meses) de salário-maternidade</li>
+                    <li>• Pago pelo <strong>INSS</strong> (ou empregador)</li>
+                    <li>• Lei 8.213/91, Art. 71</li>
+                    <li>• <strong>Adoção:</strong> 120 dias (se criança até 1 ano)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-6 p-4 bg-yellow-50 rounded-xl border-2 border-yellow-200">
+            <p class="text-yellow-800 text-sm">
+                <strong>💡 Dica:</strong> Em provas do INSS, fique atento! Se a questão fala em "servidora pública federal", 
+                são <strong>180 dias</strong>. Se fala em "trabalhadora", "empregada" ou "segurada do INSS", são <strong>120 dias</strong>.
+            </p>
+        </div>
+    </div>
+
+    <!-- Licença Interesse Particular -->
+    <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-8 border-2 border-orange-200">
+        <h3 class="text-2xl font-bold mb-6 text-orange-900">Licença para Trato de Interesse Particular (Art. 91)</h3>
+        
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-orange-600 mb-1">3 anos</div>
+                <p class="text-sm text-slate-600">Prazo inicial</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-orange-600 mb-1">+3 anos</div>
+                <p class="text-sm text-slate-600">Prorrogação possível</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-red-600 mb-1">SEM</div>
+                <p class="text-sm text-slate-600">Remuneração</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <h4 class="font-bold text-slate-800 mb-3">Condições Importantes:</h4>
+            <ul class="space-y-2 text-sm text-slate-600">
+                <li>• Apenas para <strong>servidor efetivo</strong> (não para comissionado!)</li>
+                <li>• Não pode exercer <strong>atividade remunerada</strong> durante a licença</li>
+                <li>• Não pode haver <strong>acumulação ilegal</strong> de cargos</li>
+                <li>• O servidor pode <strong>desistir</strong> da licença a qualquer tempo</li>
+                <li>• A administração pode <strong>revogar</strong> se houver interesse público</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO 8: REGIME DISCIPLINAR -->
+<section id="regime" class="py-16 px-4 bg-slate-100">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">8. Regime Disciplinar</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Art. 127 a 148 da Lei 8.112/1990</p>
+        </div>
+
+        <!-- Infrações e Penalidades -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h3 class="text-2xl font-bold mb-6">Infrações Disciplinares e Penalidades</h3>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Leve -->
+                <div class="bg-green-50 rounded-xl p-6 border-2 border-green-200">
+                    <h4 class="font-bold text-green-900 text-lg mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center mr-2 text-sm">1</span>
+                        Falta Leve
+                    </h4>
+                    <p class="text-sm text-slate-700 mb-3">Atos que comprometem a <strong>unidade</strong> ou <strong>disciplina</strong> da organização.</p>
+                    <div class="space-y-2">
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-green-800">Advertência</p>
+                        </div>
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-green-800">Suspensão até 3 dias</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Média -->
+                <div class="bg-yellow-50 rounded-xl p-6 border-2 border-yellow-200">
+                    <h4 class="font-bold text-yellow-900 text-lg mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-yellow-200 rounded-full flex items-center justify-center mr-2 text-sm">2</span>
+                        Falta Média
+                    </h4>
+                    <p class="text-sm text-slate-700 mb-3">Atos que causam <strong>prejuízo</strong> à administração ou <strong>incômodo</strong> aos cidadãos.</p>
+                    <div class="space-y-2">
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-yellow-800">Suspensão de 4 a 15 dias</p>
+                        </div>
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-yellow-800">Multa (até 30 dias de vencimento)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grave -->
+                <div class="bg-red-50 rounded-xl p-6 border-2 border-red-200">
+                    <h4 class="font-bold text-red-900 text-lg mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-red-200 rounded-full flex items-center justify-center mr-2 text-sm">3</span>
+                        Falta Grave
+                    </h4>
+                    <p class="text-sm text-slate-700 mb-3">Atos que causam <strong>grave dano</strong> à administração ou à sociedade.</p>
+                    <div class="space-y-2">
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-red-800">Suspensão de 16 a 90 dias</p>
+                        </div>
+                        <div class="p-2 bg-white rounded-lg">
+                            <p class="text-xs font-semibold text-red-800">Demissão</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-slate-50 rounded-xl">
+                <h4 class="font-bold text-slate-800 mb-2">Outras Penalidades (Art. 138):</h4>
+                <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-600">
+                    <ul class="space-y-1">
+                        <li>• Cassação de aposentadoria ou disponibilidade</li>
+                        <li>• Destituição de cargo em comissão</li>
+                        <li>• Destituição de função de confiança</li>
+                    </ul>
+                    <ul class="space-y-1">
+                        <li>• Exoneração (quando houver interesse público)</li>
+                        <li>• Suspensão de direitos políticos (se condenação criminal)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processo Administrativo Disciplinar -->
+        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-8 border-2 border-indigo-200">
+            <h3 class="text-2xl font-bold mb-6 text-indigo-900">Processo Administrativo Disciplinar (PAD)</h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h4 class="font-bold text-lg mb-4 text-indigo-900">Etapas do PAD</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <span class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-3 text-sm">1</span>
+                            <div>
+                                <p class="font-semibold text-sm">Instauração</p>
+                                <p class="text-xs text-slate-600">Ato da autoridade competente</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <span class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-3 text-sm">2</span>
+                            <div>
+                                <p class="font-semibold text-sm">Comissão Processante</p>
+                                <p class="text-xs text-slate-600">3 servidores estáveis (titular e suplentes)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <span class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-3 text-sm">3</span>
+                            <div>
+                                <p class="font-semibold text-sm">Instrução</p>
+                                <p class="text-xs text-slate-600">Coleta de provas, oitivas, documentos</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <span class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-3 text-sm">4</span>
+                            <div>
+                                <p class="font-semibold text-sm">Defesa</p>
+                                <p class="text-xs text-slate-600">Contraditório e ampla defesa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <span class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center font-bold text-indigo-700 mr-3 text-sm">5</span>
+                            <div>
+                                <p class="font-semibold text-sm">Julgamento</p>
+                                <p class="text-xs text-slate-600">Pela autoridade que instaurou</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h4 class="font-bold text-lg mb-4 text-indigo-900">Prazos Importantes</h4>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-50 rounded-lg">
+                            <p class="font-semibold text-sm text-slate-800">Prazo total do PAD</p>
+                            <p class="text-2xl font-bold text-indigo-600">60 dias</p>
+                            <p class="text-xs text-slate-500">Prorrogável por mais 60 dias (uma única vez)</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg">
+                            <p class="font-semibold text-sm text-slate-800">Prazo para defesa</p>
+                            <p class="text-2xl font-bold text-indigo-600">10 dias</p>
+                            <p class="text-xs text-slate-500">Após a intimação do relatório final</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg">
+                            <p class="font-semibold text-sm text-slate-800">Prescrição das infrações</p>
+                            <p class="text-2xl font-bold text-red-600">5 anos</p>
+                            <p class="text-xs text-slate-500">Art. 142: contados da prática da infração</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-500">
+                <p class="text-red-800 text-sm">
+                    <strong>⚠️ Pegadinha:</strong> O prazo de 60 dias do PAD é <strong>improrrogável</strong> na sua essência, 
+                    mas pode ser <strong>suspenso</strong> em caso de necessidade de diligências externas ou outras situações 
+                    previstas no art. 150. A prorrogação por mais 60 dias só pode ocorrer <strong>uma vez</strong>!
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO 9: APOSENTADORIA -->
+<section id="aposentadoria" class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="mb-12">
+        <h2 class="text-4xl font-bold mb-4 gradient-text">9. Aposentadoria</h2>
+        <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+        <p class="text-lg text-slate-600">Art. 40 da Constituição + Art. 186 a 194 da Lei 8.112/1990</p>
+    </div>
+
+    <!-- Regras de Transição e Definitivas -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+        <h3 class="text-2xl font-bold mb-6">Regras de Aposentadoria (Pós-Reforma - EC 103/2019)</h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                <h4 class="font-bold text-blue-900 mb-4">Aposentadoria Voluntária</h4>
+                <div class="space-y-3 text-sm">
+                    <div class="p-3 bg-white rounded-lg">
+                        <p class="font-semibold text-slate-800">Regra Geral (Art. 40, § 1º, III, "a" CF)</p>
+                        <ul class="mt-2 space-y-1 text-slate-600">
+                            <li>• Idade: <strong>65 anos</strong> (homem) / <strong>62 anos</strong> (mulher)</li>
+                            <li>• Tempo: <strong>25 anos</strong> de efetivo exercício</li>
+                            <li>• Carência: <strong>10 anos</strong> de contribuição</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-white rounded-lg">
+                        <p class="font-semibold text-slate-800">Regra dos 100%</p>
+                        <ul class="mt-2 space-y-1 text-slate-600">
+                            <li>• Idade: <strong>60 anos</strong> (se homem) / <strong>57 anos</strong> (se mulher)</li>
+                            <li>• Tempo: <strong>35 anos</strong> (homem) / <strong>30 anos</strong> (mulher)</li>
+                            <li>• Carência: <strong>25 anos</strong> de contribuição</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 bg-purple-50 rounded-xl border-2 border-purple-200">
+                <h4 class="font-bold text-purple-900 mb-4">Aposentadoria Compulsória</h4>
+                <div class="space-y-3 text-sm">
+                    <div class="p-3 bg-white rounded-lg">
+                        <p class="font-semibold text-slate-800">Idade limite</p>
+                        <p class="text-2xl font-bold text-purple-600">75 anos</p>
+                        <p class="text-xs text-slate-500">Art. 40, § 1º, II CF</p>
+                    </div>
+                    <div class="p-3 bg-white rounded-lg">
+                        <p class="font-semibold text-slate-800">Requisitos</p>
+                        <ul class="mt-2 space-y-1 text-slate-600">
+                            <li>• Idade: <strong>75 anos</strong></li>
+                            <li>• Tempo: <strong>10 anos</strong> de efetivo exercício</li>
+                            <li>• Carência: <strong>5 anos</strong> de contribuição</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 p-4 bg-yellow-50 rounded-xl border-2 border-yellow-200">
+            <p class="text-yellow-800 text-sm">
+                <strong>⚠️ Importante:</strong> A EC 103/2019 estabeleceu idades mínimas diferenciadas para homens e mulheres 
+                (65/62 na regra geral). Antes da reforma, a idade era 60 anos para ambos. Verifique sempre a data base da questão!
+            </p>
+        </div>
+    </div>
+
+    <!-- Cálculo da Aposentadoria -->
+    <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200">
+        <h3 class="text-2xl font-bold mb-6 text-green-900">Cálculo da Aposentadoria (Art. 40, §§ 3º a 9º CF)</h3>
+        
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">60%</span></div>
+                <p class="text-sm text-slate-600">Percentual inicial (20 anos)</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">+2%</span></div>
+                <p class="text-sm text-slate-600">Por ano que exceder 20 anos</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">100%</span></div>
+                <p class="text-sm text-slate-600">Teto máximo (35 anos homem / 30 anos mulher)</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <h4 class="font-bold text-slate-800 mb-3">Regras do Cálculo:</h4>
+            <ul class="space-y-2 text-sm text-slate-600">
+                <li>• <strong>Base de cálculo:</strong> média dos salários de contribuição desde julho/1994 (ou desde a entrada no serviço público, se posterior)</li>
+                <li>• <strong>Descarte:</strong> é possível descartar os menores salários (limitado por regra de transição)</li>
+                <li>• <strong>Paridade:</strong> servidor aposentado tem direito à revisão dos proventos na mesma data e índice dos servidores ativos</li>
+                <li>• <strong>Teto:</strong> remuneração não pode exceder o teto do INSS (R$ 7.507,49 em 2024, corrigido anualmente)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO 10: JURISPRUDÊNCIA -->
+<section id="jurisprudencia" class="py-16 px-4 bg-slate-100">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">10. Jurisprudência e Teses Firmadas</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Súmulas Vinculantes, TNU, STF e STJ</p>
+        </div>
+
+        <div class="space-y-6">
+            <!-- Súmula Vinculante 4 -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-red-500">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold mb-2">SÚMULA VINCULANTE 4</span>
+                        <h3 class="text-xl font-bold text-slate-800">Salário Mínimo como Indexador</h3>
+                    </div>
+                    <span class="text-4xl">⚖️</span>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <p class="text-slate-700 leading-relaxed mb-4">
+                        "É <strong>inconstitucional</strong> a vinculação do salário mínimo para <strong>qualquer fim</strong>, 
+                        ressalvado o disposto no art. 7º, IV, da Constituição Federal."
+                    </p>
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <p class="text-sm text-red-800">
+                            <strong>Impacto:</strong> O salário mínimo <strong>não pode</strong> ser usado como indexador de vantagens, 
+                            remunerações ou benefícios de servidores públicos. Vantagens devem ser calculadas sobre o 
+                            <strong>vencimento</strong>, não sobre o salário mínimo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Súmula Vinculante 11 -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-blue-500">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-2">SÚMULA VINCULANTE 11</span>
+                        <h3 class="text-xl font-bold text-slate-800">Acumulação de Cargos Públicos</h3>
+                    </div>
+                    <span class="text-4xl">📚</span>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <p class="text-slate-700 leading-relaxed mb-4">
+                        "A acumulação de cargos públicos é <strong>vedada</strong>, salvo quando houver <strong>compatibilidade de horários</strong>, 
+                        observado, em qualquer caso, o disposto no art. 37, XVI, da Constituição Federal."
+                    </p>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <p class="text-sm text-blue-800">
+                            <strong>Exceções constitucionais:</strong> Dois cargos de professor; professor + profissional de saúde; 
+                            dois cargos de profissional de saúde; cargos técnicos/científicos (com compatibilidade de horários).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tema TNU -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-purple-500">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-2">TEMA 1.179 TNU</span>
+                        <h3 class="text-xl font-bold text-slate-800">Remoção de Cônjuge/Companheiro</h3>
+                    </div>
+                    <span class="text-4xl">💑</span>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <p class="text-slate-700 leading-relaxed mb-4">
+                        "O direito à remoção para acompanhar cônjuge ou companheiro, previsto no art. 36, III, 'a', da Lei 8.112/1990, 
+                        aplica-se quando <strong>ambos</strong> são servidores públicos, <strong>independentemente</strong> do ente federativo 
+                        ou do poder a que pertençam, desde que um deles seja removido no interesse da administração."
+                    </p>
+                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <p class="text-sm text-purple-800">
+                            <strong>Interpretação:</strong> O cônjuge "A" pode ser de qualquer ente (União, Estado, DF, Município) e de qualquer Poder. 
+                            O "B" (que pede a remoção) deve ser servidor federal sujeito à Lei 8.112/90.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STF - Estabilidade -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-green-500">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mb-2">STF - RE 1.024.564</span>
+                        <h3 class="text-xl font-bold text-slate-800">Estágio Probatório e Estabilidade</h3>
+                    </div>
+                    <span class="text-4xl">🛡️</span>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-xl">
+                    <p class="text-slate-700 leading-relaxed mb-4">
+                        "O estágio probatório tem duração de <strong>36 meses</strong> (EC 19/1998), e a estabilidade é adquirida 
+                        <strong>após aprovação</strong> no estágio, não automaticamente pela permanência no prazo."
+                    </p>
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <p class="text-sm text-green-800">
+                            <strong>Pegadinha:</strong> A estabilidade não vem do "tempo", mas da <strong>aprovação expressa</strong> 
+                            na avaliação de desempenho. Se o servidor for reprovado no estágio probatório, é exonerado!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO 11: PEGADINHAS -->
+<section id="pegadinhas" class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="mb-12">
+        <h2 class="text-4xl font-bold mb-4 text-red-600">11. Pegadinhas de Prova - Fique Esperto!</h2>
+        <div class="w-24 h-1 bg-red-500 rounded-full mb-4"></div>
+        <p class="text-lg text-slate-600">Os erros mais comuns e como evitá-los no concurso INSS</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Pegadinha 1 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-red-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-2xl mr-4">🎭</span>
+                <h3 class="text-xl font-bold text-red-900">Pegadinha 1: Posse vs. Exercício</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Achar que posse e exercício são a mesma coisa ou que ambos podem ser por procuração.
+                </p>
+                <div class="p-4 bg-red-50 rounded-lg">
+                    <p class="text-sm text-red-800 mb-2">
+                        <strong>Correto:</strong>
+                    </p>
+                    <ul class="text-sm text-red-800 space-y-1">
+                        <li>• <strong>Posse:</strong> pode ser por procuração (30 dias)</li>
+                        <li>• <strong>Exercício:</strong> é <strong>personalíssimo</strong> (15 dias)</li>
+                    </ul>
+                </div>
+                <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="text-xs text-yellow-800">
+                        💡 O estágio probatório só começa após o <strong>exercício</strong>, não da posse!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pegadinha 2 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-2xl mr-4">📅</span>
+                <h3 class="text-xl font-bold text-orange-900">Pegadinha 2: Estágio Probatório</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Achar que o estágio probatório é de 24 meses (legislação antiga).
+                </p>
+                <div class="p-4 bg-orange-50 rounded-lg">
+                    <p class="text-sm text-orange-800 mb-2">
+                        <strong>Correto:</strong>
+                    </p>
+                    <ul class="text-sm text-orange-800 space-y-1">
+                        <li>• EC 19/1998: <strong>36 meses</strong> (3 anos)</li>
+                        <li>• Antes: 24 meses (2 anos)</li>
+                        <li>• Estabilidade só após <strong>aprovação expressa</strong></li>
+                    </ul>
+                </div>
+                <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="text-xs text-yellow-800">
+                        ⚠️ Se a questão não mencionar data, use <strong>36 meses</strong> (regra atual)!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pegadinha 3 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-yellow-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-2xl mr-4">🤱</span>
+                <h3 class="text-xl font-bold text-yellow-900">Pegadinha 3: Licença Maternidade</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Confundir 120 dias (INSS) com 180 dias (servidor público).
+                </p>
+                <div class="p-4 bg-yellow-50 rounded-lg">
+                    <p class="text-sm text-yellow-800 mb-2">
+                        <strong>Correto:</strong>
+                    </p>
+                    <ul class="text-sm text-yellow-800 space-y-1">
+                        <li>• <strong>Servidora pública federal:</strong> 180 dias (Lei 8.112/90)</li>
+                        <li>• <strong>Trabalhadora CLT/INSS:</strong> 120 dias (Lei 8.213/91)</li>
+                    </ul>
+                </div>
+                <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="text-xs text-blue-800">
+                        🎯 No concurso INSS, leia bem: se falar "servidora pública", é 180 dias!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pegadinha 4 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl mr-4">💰</span>
+                <h3 class="text-xl font-bold text-purple-900">Pegadinha 4: Salário Mínimo</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Achar que vantagens podem ser calculadas sobre o salário mínimo.
+                </p>
+                <div class="p-4 bg-purple-50 rounded-lg">
+                    <p class="text-sm text-purple-800 mb-2">
+                        <strong>Correto (Súmula Vinculante 4):</strong>
+                    </p>
+                    <ul class="text-sm text-purple-800 space-y-1">
+                        <li>• <strong>Proibida</strong> vinculação ao salário mínimo</li>
+                        <li>• Vantagens calculadas sobre o <strong>vencimento</strong></li>
+                        <li>• Exceção: salário mínimo como <strong>piso</strong> (art. 7º, IV CF)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pegadinha 5 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-pink-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-2xl mr-4">🚫</span>
+                <h3 class="text-xl font-bold text-pink-900">Pegadinha 5: Acumulação</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Achar que servidor pode acumular dois cargos de professor em qualquer situação.
+                </p>
+                <div class="p-4 bg-pink-50 rounded-lg">
+                    <p class="text-sm text-pink-800 mb-2">
+                        <strong>Correto:</strong>
+                    </p>
+                    <ul class="text-sm text-pink-800 space-y-1">
+                        <li>• Dois cargos de <strong>professor</strong>: permitido</li>
+                        <li>• Mas precisa haver <strong>compatibilidade de horários</strong></li>
+                        <li>• Dois cargos de <strong>chefia</strong>: <strong>sempre proibido</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pegadinha 6 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-indigo-200 card-hover">
+            <div class="flex items-center mb-4">
+                <span class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-2xl mr-4">⏱️</span>
+                <h3 class="text-xl font-bold text-indigo-900">Pegadinha 6: Prazo do PAD</h3>
+            </div>
+            <div class="space-y-3">
+                <p class="text-slate-700 text-sm">
+                    <strong>Erro comum:</strong> Achar que o PAD pode ser prorrogado indefinidamente.
+                </p>
+                <div class="p-4 bg-indigo-50 rounded-lg">
+                    <p class="text-sm text-indigo-800 mb-2">
+                        <strong>Correto:</strong>
+                    </p>
+                    <ul class="text-sm text-indigo-800 space-y-1">
+                        <li>• Prazo: <strong>60 dias</strong></li>
+                        <li>• Prorrogação: <strong>mais 60 dias</strong> (uma única vez)</li>
+                        <li>• Total máximo: <strong>120 dias</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checklist Final -->
+    <div class="mt-12 bg-white rounded-2xl shadow-xl p-8 border-2 border-slate-200">
+        <h3 class="text-2xl font-bold mb-6 text-center gradient-text">Checklist para Prova do INSS</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="space-y-3">
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Diferenciar posse e exercício</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Verificar prazo do estágio probatório (36 meses)</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Confirmar se é servidor ou trabalhador</span>
+                </label>
+            </div>
+            <div class="space-y-3">
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Verificar remuneração das licenças</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Analisar acumulação permitida</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Confirmar requisitos da aposentadoria</span>
+                </label>
+            </div>
+            <div class="space-y-3">
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Verificar data da legislação na questão</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Analisar se há súmula vinculante aplicável</span>
+                </label>
+                <label class="flex items-center p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 transition">
+                    <input type="checkbox" class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 mr-3">
+                    <span class="text-slate-700 text-sm">Confirmar prazos do PAD</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SIMULADOR DE CASOS -->
+<section id="simulador" class="py-16 px-4 bg-slate-100">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-12">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">Simulador de Casos Práticos</h2>
+            <div class="w-24 h-1 gradient-blue rounded-full mb-4"></div>
+            <p class="text-lg text-slate-600">Pratique com situações baseadas em questões reais do INSS</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 p-6 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="text-2xl font-bold" id="caseTitle">Caso 1: A Posse e o Exercício</h3>
+                    <p class="text-slate-300" id="caseSubtitle">Diferença entre posse e exercício</p>
+                </div>
+                <div class="text-4xl" id="caseIcon">📋</div>
+            </div>
+            
+            <div class="p-8">
+                <div id="caseContent" class="mb-8">
+                    <div class="bg-slate-50 p-6 rounded-xl mb-6">
+                        <h4 class="font-bold text-slate-800 mb-3">Fatos:</h4>
+                        <ul class="space-y-2 text-slate-600" id="caseFacts">
+                            <li>• João foi <strong>nomeado</strong> para um cargo efetivo em <strong>01/03/2024</strong></li>
+                            <li>• A publicação ocorreu no DOU do mesmo dia</li>
+                            <li>• Ele <strong>não compareceu</strong> à repartição para tomar posse</li>
+                            <li>• Enviou uma <strong>procuração</strong> para que seu advogado tomasse posse em seu nome</li>
+                            <li>• O advogado tomou posse em <strong>15/03/2024</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                        <h4 class="font-bold text-blue-900 mb-3">Pergunta:</h4>
+                        <p class="text-blue-800 text-lg" id="caseQuestion">
+                            Considerando a Lei 8.112/90, qual a situação de João?
+                        </p>
+                    </div>
+                </div>
+
+                <div id="caseOptions" class="space-y-3 mb-6">
+                    <!-- Opções serão preenchidas via JS -->
+                </div>
+
+                <div id="caseFeedback" class="hidden mb-6 p-6 rounded-xl"></div>
+
+                <div class="flex justify-between items-center pt-6 border-t border-slate-200">
+                    <button onclick="prevCase()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-lg font-semibold hover:bg-slate-300 transition disabled:opacity-50" id="btnPrev" disabled>
+                        ← Caso Anterior
+                    </button>
+                    <span class="text-slate-500 font-medium" id="caseCounter">Caso 1 de 5</span>
+                    <button onclick="nextCase()" class="px-6 py-3 gradient-blue text-white rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50" id="btnNext">
+                        Próximo Caso →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- QUIZ FINAL -->
+<section id="quiz" class="py-16 px-4 max-w-4xl mx-auto">
+    <div class="mb-12 text-center">
+        <h2 class="text-4xl font-bold mb-4 gradient-text">Quiz Final - Teste seus Conhecimentos</h2>
+        <div class="w-24 h-1 gradient-blue rounded-full mx-auto mb-4"></div>
+        <p class="text-lg text-slate-600">10 questões rápidas sobre a Lei 8.112/90</p>
+    </div>
+
+    <div id="quizContainer" class="space-y-6">
+        <!-- Questões serão inseridas via JS -->
+    </div>
+
+    <div id="quizResult" class="hidden mt-8 bg-white rounded-2xl shadow-xl p-8 text-center">
+        <div class="text-6xl mb-4" id="resultIcon">🏆</div>
+        <h3 class="text-3xl font-bold mb-2" id="resultTitle">Parabéns!</h3>
+        <p class="text-xl text-slate-600 mb-6" id="resultText">Você acertou 9 de 10 questões</p>
+        <div class="w-full bg-slate-200 rounded-full h-4 mb-6">
+            <div id="resultBar" class="gradient-blue h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
+        </div>
+        <button onclick="restartQuiz()" class="px-8 py-4 gradient-blue text-white rounded-full font-bold text-lg hover:opacity-90 transition">
+            Refazer Quiz
+        </button>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-slate-900 text-slate-400 py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h4 class="text-white font-bold mb-4">Legislação Base</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Lei 8.112/1990 (Estatuto)</li>
+                    <li>Lei 8.270/1991 (Segurança)</li>
+                    <li>EC 19/1998 (Reforma)</li>
+                    <li>EC 103/2019 (Nova Previdência)</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Jurisprudência</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>STF - Súmulas Vinculantes</li>
+                    <li>STJ - Teses Repetitivas</li>
+                    <li>TNU - Temas Uniformizados</li>
+                    <li>TCU - Decisões</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Prazos Importantes</h4>
+                <ul class="space-y-2 text-sm">
+                    <li>Posse: 30 dias</li>
+                    <li>Exercício: 15 dias</li>
+                    <li>Estágio probatório: 36 meses</li>
+                    <li>PAD: 60 dias (prorrogável 1x)</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Atualização</h4>
+                <p class="text-sm">Material atualizado com legislação e jurisprudência vigente em 2024/2025.</p>
+                <p class="text-xs mt-4 text-slate-500">Última revisão: Abril/2025</p>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 pt-8 text-center">
+            <p class="text-sm">Bons estudos e boa prova! 🎯</p>
+            <p class="text-xs mt-2 text-slate-500">Material elaborado conforme edital do último concurso INSS</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Dados dos Casos do Simulador
+    const cases = [
+        {
+            title: "Caso 1: A Posse e o Exercício",
+            subtitle: "Diferença entre posse e exercício",
+            icon: "📋",
+            facts: [
+                "João foi <strong>nomeado</strong> para um cargo efetivo em <strong>01/03/2024</strong>",
+                "A publicação ocorreu no DOU do mesmo dia",
+                "Ele <strong>não compareceu</strong> à repartição para tomar posse",
+                "Enviou uma <strong>procuração</strong> para que seu advogado tomasse posse em seu nome",
+                "O advogado tomou posse em <strong>15/03/2024</strong>"
+            ],
+            question: "Considerando a Lei 8.112/90, qual a situação de João?",
+            options: [
+                { text: "Vacância do cargo, pois não tomou posse pessoalmente", correct: false },
+                { text: "Posse válida, pois a posse pode ser por procuração", correct: true },
+                { text: "Exoneração, pois o prazo de 30 dias foi ultrapassado", correct: false },
+                { text: "Nomeação cancelada automaticamente", correct: false }
+            ],
+            explanation: "Correto! Art. 13, § 1º da Lei 8.112/90: a posse pode ser feita por <strong>procuração</strong>, com poderes especiais. O prazo de 30 dias conta da publicação (01/03 a 30/03). A posse em 15/03 está dentro do prazo. O exercício, sim, é personalíssimo e não pode ser por procuração."
+        },
+        {
+            title: "Caso 2: Estágio Probatório",
+            subtitle: "Cálculo do tempo para estabilidade",
+            icon: "🛡️",
+            facts: [
+                "Maria entrou em <strong>exercício</strong> em <strong>01/06/2021</strong>",
+                "Cumpriu 24 meses de estágio probatório",
+                "Em <strong>01/06/2023</strong> entrou em licença saúde por 6 meses",
+                "Retornou em <strong>01/12/2023</strong>",
+                "Em <strong>01/06/2024</strong> foi avaliada e <strong>aprovada</strong>"
+            ],
+            question: "Quando Maria adquiriu a estabilidade?",
+            options: [
+                { text: "01/06/2023 (após 24 meses)", correct: false },
+                { text: "01/12/2023 (após retorno da licença)", correct: false },
+                { text: "01/06/2024 (após 36 meses + aprovação)", correct: true },
+                { text: "01/06/2024 (automaticamente pelo tempo)", correct: false }
+            ],
+            explanation: "Correto! A EC 19/1998 estabeleceu o estágio probatório em <strong>36 meses</strong> (não 24). Além disso, a estabilidade não vem automaticamente do tempo, mas da <strong>aprovação expressa</strong> na avaliação de desempenho. A licença saúde <strong>não interrompe</strong> o estágio probatório (só afastamentos sem remuneração interrompem)."
+        },
+        {
+            title: "Caso 3: Remoção de Cônjuge",
+            subtitle: "Direito à remoção para acompanhar cônjuge",
+            icon: "💑",
+            facts: [
+                "Ana é <strong>servidora federal</strong> (Lei 8.112/90) em Brasília",
+                "Seu marido <strong>Pedro</strong> é <strong>servidor estadual</strong> em São Paulo",
+                "Pedro foi <strong>removido</strong> para o Rio de Janeiro <strong>no interesse da administração estadual</strong>",
+               "Ana quer se remeter para o Rio de Janeiro para acompanhar Pedro"
+],
+question: "Ana tem direito à remoção para acompanhar Pedro?",
+options: [
+{ text: "Sim, desde que ambos sejam servidores federais", correct: false },
+{ text: "Sim, independentemente de Pedro ser estadual ou federal", correct: true },
+{ text: "Não, porque Pedro não é servidor federal", correct: false },
+{ text: "Não, porque a remoção de Pedro não foi no interesse da União", correct: false }
+],
+explanation: "Correto! Segundo o <strong>, o direito à remoção para acompanhar cônjuge aplica-se quando ambos são servidores públicos, <strong> (União, Estado, DF ou Município) ou do poder a que pertençam. O importante é que um deles seja removido no interesse da administração (pública) e o outro seja servidor federal (para ter direito à remoção)."
+},
+{
+title: "Caso 4: Licença Saúde",
+subtitle: "Prazos e remuneração",
+icon: "🏥",
+facts: [
+"Carlos entrou em licença saúde em <strong>",
+"Ficou afastado por <strong> (até 31/08/2024)",
+"Retornou ao trabalho em <strong>",
+"Em <strong> precisou se afastar novamente por doença"
+],
+question: "Qual o tratamento do novo afastamento de Carlos?",
+options: [
+{ text: "Nova licença saúde por até 6 meses, com remuneração integral", correct: true },
+{ text: "Licença saúde por apenas 4 meses (completar 12 meses)", correct: false },
+{ text: "Afastamento para aposentadoria por invalidez", correct: false },
+{ text: "Licença sem remuneração", correct: false }
+],
+explanation: "Correto! A licença saúde é renovável a cada período de afastamento. Como Carlos retornou e exerceu efetivamente o cargo por mais de 3 meses (setembro a novembro = 3 meses), configurou-se novo período aquisitivo. Portanto, tem direito a nova licença saúde por até 6 meses, com remuneração integral. O limite de 12 meses é para <strong>, não para nova licença após retorno."
+},
+{
+title: "Caso 5: PAD e Prazos",
+subtitle: "Processo Administrativo Disciplinar",
+icon: "⚖️",
+facts: [
+"Um PAD foi instaurado contra o servidor <strong> em <strong>",
+"A comissão processante foi designada em <strong>",
+"O relatório final foi apresentado em <strong>",
+"José apresentou defesa em <strong> (prazo de 10 dias)",
+"A autoridade julgadora quer proferir a decisão em <strong>"
+],
+question: "Qual o problema com esse PAD?",
+options: [
+{ text: "Nenhum, todos os prazos foram cumpridos", correct: false },
+{ text: "O prazo total de 60 dias foi ultrapassado sem prorrogação", correct: true },
+{ text: "A defesa deveria ter sido em 5 dias, não 10", correct: false },
+{ text: "A comissão deveria ter sido designada em 24 horas", correct: false }
+],
+explanation: "Correto! O prazo do PAD é de <strong> (art. 150 da Lei 8.112/90), contados da instauração (01/03/2024). O prazo venceria em <strong>. O relatório foi apresentado exatamente no último dia, mas a defesa (10 dias) já ultrapassaria o prazo. Se houve prorrogação, deveria ter sido publicada. Caso contrário, o PAD está <strong>."
+}
+];    // Dados do Quiz
+    const quizQuestions = [
+        {
+            question: "A posse no cargo público pode ser realizada por procuração?",
+            options: ["Sim, desde que com poderes especiais", "Não, é ato personalíssimo", "Sim, mas apenas para cargos em comissão", "Não, apenas o exercício pode ser por procuração"],
+            correct: 0,
+            explanation: "Correto! Art. 13, § 1º da Lei 8.112/90: a posse pode ser por procuração com poderes especiais. O exercício, sim, é personalíssimo."
+        },
+        {
+            question: "Qual o prazo do estágio probatório atualmente?",
+            options: ["24 meses", "36 meses", "12 meses", "48 meses"],
+            correct: 1,
+            explanation: "Correto! EC 19/1998 alterou o art. 20 da Lei 8.112/90, estabelecendo 36 meses (3 anos) de estágio probatório."
+        },
+        {
+            question: "A estabilidade do servidor é adquirida:",
+            options: ["Automaticamente após o estágio probatório", "Somente após aprovação expressa na avaliação de desempenho", "Após 5 anos de efetivo exercício", "Após 10 anos de contribuição"],
+            correct: 1,
+            explanation: "Correto! A estabilidade não é automática. Requer aprovação expressa na avaliação de desempenho do estágio probatório (art. 20, § 2º da Lei 8.112/90)."
+        },
+        {
+            question: "A licença maternidade para servidora pública federal é de:",
+            options: ["90 dias", "120 dias", "180 dias", "240 dias"],
+            correct: 2,
+            explanation: "Correto! Art. 81 da Lei 8.112/90: 180 dias (6 meses). Não confundir com a trabalhadora CLT/INSS (120 dias)!"
+        },
+        {
+            question: "O prazo do Processo Administrativo Disciplinar (PAD) é de:",
+            options: ["30 dias, prorrogáveis por mais 30", "60 dias, prorrogáveis por mais 60", "90 dias, improrrogáveis", "120 dias, prorrogáveis indefinidamente"],
+            correct: 1,
+            explanation: "Correto! Art. 150 da Lei 8.112/90: 60 dias, prorrogáveis por mais 60 dias (uma única vez)."
+        },
+        {
+            question: "A remoção para acompanhar cônjuge exige que ambos sejam servidores federais?",
+            options: ["Sim, ambos devem ser federais", "Não, basta um ser federal e o outro ser de qualquer ente", "Sim, e ambos devem estar sujeitos à Lei 8.112/90", "Não, desde que o cônjuge removido seja federal"],
+            correct: 1,
+            explanation: "Correto! Tema 1.179 TNU: basta que um seja removido no interesse da administração (qualquer ente) e o outro seja servidor federal (para ter direito à remoção)."
+        },
+        {
+            question: "A licença para trato de interesse particular (Art. 91) é remunerada?",
+            options: ["Sim, integralmente", "Sim, parcialmente (50%)", "Não, é sem remuneração", "Sim, apenas para servidor com mais de 10 anos"],
+            correct: 2,
+            explanation: "Correto! Art. 91 da Lei 8.112/90: licença para trato de interesse particular é SEM remuneração, por até 3 anos (prorrogável por mais 3)."
+        },
+        {
+            question: "O salário mínimo pode ser usado como indexador de vantagens do servidor público?",
+            options: ["Sim, para todos os fins", "Sim, apenas como piso", "Não, é vedado pela Súmula Vinculante 4", "Sim, desde que não ultrapasse o teto"],
+            correct: 2,
+            explanation: "Correto! Súmula Vinculante 4 do STF: é inconstitucional a vinculação do salário mínimo para qualquer fim, ressalvado o disposto no art. 7º, IV da CF (piso)."
+        },
+        {
+            question: "A acumulação de dois cargos de professor é permitida?",
+            options: ["Sim, sempre", "Sim, desde que haja compatibilidade de horários", "Não, é vedada constitucionalmente", "Sim, mas apenas em cidades diferentes"],
+            correct: 1,
+            explanation: "Correto! Art. 37, XVI, 'a' da CF permite dois cargos de professor, mas é necessária a compatibilidade de horários (Súmula Vinculante 11)."
+        },
+        {
+            question: "A demissão é penalidade aplicável:",
+            options: ["A qualquer servidor", "Apenas a servidor estável", "A servidor em estágio probatório", "A servidor comissionado"],
+            correct: 1,
+            explanation: "Correto! A demissão (art. 138, II da Lei 8.112/90) é penalidade máxima aplicável ao servidor <strong>estável</strong>. Servidor em estágio probatório é exonerado, não demitido."
+        }
+    ];
+
+    // Variáveis de estado
+    let currentCase = 0;
+    let currentQuiz = 0;
+    let quizScore = 0;
+
+    // Funções do Simulador de Casos
+    function loadCase(index) {
+        const c = cases[index];
+        document.getElementById('caseTitle').textContent = c.title;
+        document.getElementById('caseSubtitle').textContent = c.subtitle;
+        document.getElementById('caseIcon').textContent = c.icon;
+        document.getElementById('caseQuestion').textContent = c.question;
+        document.getElementById('caseCounter').textContent = `Caso ${index + 1} de ${cases.length}`;
+        
+        const factsHtml = c.facts.map(f => `<li>${f}</li>`).join('');
+        document.getElementById('caseFacts').innerHTML = factsHtml;
+        
+        const optionsHtml = c.options.map((opt, i) => `
+            <button onclick="checkCaseAnswer(${i})" class="case-option w-full p-4 bg-slate-100 hover:bg-slate-200 rounded-xl text-left transition border-2 border-transparent hover:border-blue-300 font-medium text-slate-700">
+                <span class="inline-block w-8 h-8 bg-white rounded-full text-center leading-8 mr-3 text-sm font-bold text-slate-600">${String.fromCharCode(65 + i)})</span>
+                ${opt.text}
+            </button>
+        `).join('');
+        document.getElementById('caseOptions').innerHTML = optionsHtml;
+        
+        document.getElementById('caseFeedback').classList.add('hidden');
+        
+        document.getElementById('btnPrev').disabled = index === 0;
+        document.getElementById('btnNext').disabled = index === cases.length - 1;
+    }
+
+    function checkCaseAnswer(optionIndex) {
+        const c = cases[currentCase];
+        const buttons = document.querySelectorAll('.case-option');
+        
+        buttons.forEach((btn, i) => {
+            btn.disabled = true;
+            btn.classList.remove('hover:bg-slate-200', 'border-transparent');
+            if (i === c.options.findIndex(o => o.correct)) {
+                btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+            } else if (i === optionIndex && !c.options[optionIndex].correct) {
+                btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+            }
+        });
+        
+        const feedback = document.getElementById('caseFeedback');
+        const isCorrect = c.options[optionIndex].correct;
+        
+        feedback.innerHTML = `
+            <div class="${isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'} border-2 rounded-xl p-6">
+                <h4 class="font-bold ${isCorrect ? 'text-green-900' : 'text-red-900'} mb-2 text-lg">
+                    ${isCorrect ? '✓ Resposta Correta!' : '✗ Resposta Incorreta'}
+                </h4>
+                <p class="${isCorrect ? 'text-green-800' : 'text-red-800'} mb-4">${c.explanation}</p>
+                <div class="bg-white/50 p-4 rounded-lg">
+                    <p class="text-sm font-semibold text-slate-700 mb-2">Base Legal:</p>
+                    <p class="text-sm text-slate-600">Lei 8.112/1990; Jurisprudência STF/STJ/TNU</p>
+                </div>
+            </div>
+        `;
+        feedback.classList.remove('hidden');
+    }
+
+    function nextCase() {
+        if (currentCase < cases.length - 1) {
+            currentCase++;
+            loadCase(currentCase);
+        }
+    }
+
+    function prevCase() {
+        if (currentCase > 0) {
+            currentCase--;
+            loadCase(currentCase);
+        }
+    }
+
+    // Funções do Quiz
+    function loadQuiz() {
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = quizQuestions.map((q, i) => `
+            <div class="quiz-item bg-white rounded-2xl shadow-lg p-6 ${i === 0 ? '' : 'hidden'}" data-index="${i}">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-bold">Questão ${i + 1} de ${quizQuestions.length}</span>
+                    <span class="text-slate-400 text-sm">${Math.round((i / quizQuestions.length) * 100)}% completo</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-6">${q.question}</h3>
+                <div class="space-y-3">
+                    ${q.options.map((opt, j) => `
+                        <button onclick="checkQuizAnswer(${i}, ${j})" class="quiz-option w-full p-4 bg-slate-50 hover:bg-blue-50 rounded-xl text-left transition border-2 border-slate-200 hover:border-blue-300 font-medium text-slate-700">
+                            <span class="inline-block w-8 h-8 bg-white rounded-full text-center leading-8 mr-3 text-sm font-bold text-slate-600 shadow-sm">${String.fromCharCode(65 + j)})</span>
+                            ${opt}
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="quiz-feedback hidden mt-6 p-4 rounded-xl"></div>
+            </div>
+        `).join('');
+    }
+
+    function checkQuizAnswer(questionIndex, optionIndex) {
+        const q = quizQuestions[questionIndex];
+        const item = document.querySelector(`.quiz-item[data-index="${questionIndex}"]`);
+        const buttons = item.querySelectorAll('.quiz-option');
+        const feedback = item.querySelector('.quiz-feedback');
+        
+        buttons.forEach((btn, i) => {
+            btn.disabled = true;
+            btn.classList.remove('hover:bg-blue-50', 'border-slate-200');
+            if (i === q.correct) {
+                btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+            } else if (i === optionIndex && i !== q.correct) {
+                btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+            }
+        });
+        
+        const isCorrect = optionIndex === q.correct;
+        if (isCorrect) quizScore++;
+        
+        feedback.innerHTML = `
+            <div class="${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'} border rounded-lg p-4">
+                <p class="${isCorrect ? 'text-green-800' : 'text-red-800'} font-semibold mb-2">
+                    ${isCorrect ? '✓ Correto!' : '✗ Incorreto'}
+                </p>
+                <p class="text-slate-600 text-sm">${q.explanation}</p>
+            </div>
+            <button onclick="nextQuiz()" class="mt-4 w-full py-3 gradient-blue text-white rounded-lg font-bold hover:opacity-90 transition">
+                ${questionIndex < quizQuestions.length - 1 ? 'Próxima Questão →' : 'Ver Resultado'}
+            </button>
+        `;
+        feedback.classList.remove('hidden');
+    }
+
+    function nextQuiz() {
+        const current = document.querySelector(`.quiz-item[data-index="${currentQuiz}"]`);
+        current.classList.add('hidden');
+        
+        currentQuiz++;
+        
+        if (currentQuiz < quizQuestions.length) {
+            const next = document.querySelector(`.quiz-item[data-index="${currentQuiz}"]`);
+            next.classList.remove('hidden');
+        } else {
+            showQuizResult();
+        }
+    }
+
+    function showQuizResult() {
+        const percentage = (quizScore / quizQuestions.length) * 100;
+        const resultDiv = document.getElementById('quizResult');
+        const resultBar = document.getElementById('resultBar');
+        const resultIcon = document.getElementById('resultIcon');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultText = document.getElementById('resultText');
+        
+        resultDiv.classList.remove('hidden');
+        
+        setTimeout(() => {
+            resultBar.style.width = `${percentage}%`;
+        }, 100);
+        
+        if (percentage >= 80) {
+            resultIcon.textContent = '🏆';
+            resultTitle.textContent = 'Excelente!';
+            resultText.textContent = `Você acertou ${quizScore} de ${quizQuestions.length} questões (${percentage}%). Está pronto para a prova!`;
+            resultBar.className = 'bg-gradient-to-r from-green-500 to-emerald-600 h-4 rounded-full transition-all duration-1000';
+        } else if (percentage >= 60) {
+            resultIcon.textContent = '👍';
+            resultTitle.textContent = 'Bom!';
+            resultText.textContent = `Você acertou ${quizScore} de ${quizQuestions.length} questões (${percentage}%). Revise os pontos mais fracos.`;
+            resultBar.className = 'bg-gradient-to-r from-yellow-400 to-orange-500 h-4 rounded-full transition-all duration-1000';
+        } else {
+            resultIcon.textContent = '📚';
+            resultTitle.textContent = 'Precisa Estudar Mais';
+            resultText.textContent = `Você acertou ${quizScore} de ${quizQuestions.length} questões (${percentage}%). Releia o conteúdo com atenção.`;
+            resultBar.className = 'bg-gradient-to-r from-red-500 to-pink-600 h-4 rounded-full transition-all duration-1000';
+        }
+    }
+
+    function restartQuiz() {
+        currentQuiz = 0;
+        quizScore = 0;
+        document.getElementById('quizResult').classList.add('hidden');
+        loadQuiz();
+    }
+
+    // Scroll suave
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Progresso de leitura
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('readingProgress').style.width = scrolled + '%';
+    });
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCase(0);
+        loadQuiz();
+    });
+</script>
+</body>
+</html>
