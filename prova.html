@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado INSS 2025 - Língua Portuguesa: Pontuação - Prova 1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .alternatives {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .alternative {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alternative:hover:not(.disabled) {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateX(5px);
+        }
+        
+        .alternative.selected-correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            cursor: default;
+        }
+        
+        .alternative.selected-wrong {
+            background: #fed7d7;
+            border-color: #f56565;
+            cursor: default;
+        }
+        
+        .alternative.correct-answer {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+            cursor: default;
+        }
+        
+        .alternative.disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .alternative-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            font-weight: 700;
+            color: #667eea;
+            margin-right: 15px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .alternative.selected-correct .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative.selected-wrong .alternative-letter {
+            background: #f56565;
+            color: white;
+            border-color: #f56565;
+        }
+        
+        .alternative.correct-answer .alternative-letter {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+        
+        .alternative-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+        
+        .result-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .alternative.selected-correct .result-icon,
+        .alternative.selected-wrong .result-icon,
+        .alternative.correct-answer .result-icon {
+            display: block;
+        }
+        
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-radius: 15px;
+            border-left: 5px solid #48bb78;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation.wrong {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left-color: #f56565;
+        }
+        
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #22543d;
+            font-size: 1.1rem;
+        }
+        
+        .explanation.wrong .explanation-header {
+            color: #c53030;
+        }
+        
+        .explanation-header::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #48bb78;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .explanation.wrong .explanation-header::before {
+            content: '✗';
+            background: #f56565;
+        }
+        
+        .explanation-text {
+            color: #2d3748;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .explanation-text strong {
+            color: #2b6cb0;
+        }
+        
+        .comparison-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px dashed #cbd5e0;
+        }
+        
+        .comparison-title {
+            font-weight: 700;
+            color: #744210;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .gemini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .gemini-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-submit:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 calc(var(--score) * 1%), #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .score-text {
+            position: relative;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2d3748;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+        
+        .btn-restart {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-restart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            font-weight: 700;
+            color: #2d3748;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 1.2rem;
+        }
+        
+        .timer.warning {
+            color: #c53030;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-badge.correct {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-badge.wrong {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .gemini-help-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            border: 2px solid #a78bfa;
+        }
+        
+        .gemini-help-box.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gemini-help-text {
+            color: #5b21b6;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .question-card {
+                padding: 20px;
+            }
+            .timer {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+        
+        .example-box {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #667eea;
+            font-style: italic;
+        }
+        
+        .rule-highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-notification" id="copyNotification">
+        <span>📋</span>
+        <span>Texto copiado! Cole no Gemini quando quiser.</span>
+    </div>
+
+    <div class="timer" id="timer">
+        <span class="timer-icon">⏱️</span>
+        <span id="time">40:00</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📚 Simulado INSS 2025 - Prova 1</h1>
+            <p>Língua Portuguesa: Pontuação - 20 Questões Inéditas (Estilo CEBRASPE)</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questão 1 -->
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="A" data-question="Uso da Vírgula - Separação de Vocativo">
+                <span class="question-number">Questão 1</span>
+                <p class="question-text">
+                    (CEBRASPE - Estilo INSS) Analise a seguinte afirmação sobre o uso da vírgula: "Na frase 'Carlos, venha aqui agora', a vírgula foi empregada para separar o vocativo do restante da oração."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 1, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-1">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Regra da Vírgula com Vocativo:</strong><br><br>
+                        
+                        O <strong>vocativo</strong> é o termo que serve para chamar, invocar ou interpelar o ouvinte. Deve ser separado por vírgula(s) do restante da oração, pois não possui função sintática dentro da estrutura gramatical da frase.<br><br>
+                        
+                        <strong>Características:</strong><br>
+                        • Pode aparecer no início, no meio ou no fim da frase<br>
+                        • Quando no início: vírgula após o vocativo<br>
+                        • Quando no meio: vírgula antes e depois do vocativo<br>
+                        • Quando no fim: vírgula antes do vocativo<br><br>
+                        
+                        <strong>Exemplos:</strong><br>
+                        <div class="example-box">"Maria, traga o documento." (início)</div>
+                        <div class="example-box">"O documento, Maria, deve ser entregue hoje." (meio)</div>
+                        <div class="example-box">"Traga o documento, Maria." (fim)</div><br>
+                        
+                        <strong>Erro comum:</strong> Esquecer a segunda vírgula quando o vocativo está intercalado.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Atenção:</div>
+                            A vírgula com vocativo é <strong>obrigatória</strong>, pois isola um termo que está fora da estrutura sintática da oração. Não confundir com aposto, que também usa vírgulas mas tem função de explicar ou especificar.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-1">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="B" data-question="Uso da Vírgula - Separação de Sujeito e Predicado">
+                <span class="question-number">Questão 2</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: É correto empregar a vírgula para separar o sujeito do predicado em uma oração, como em "O candidato, estudou muito para o concurso."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 2, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-2">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> A vírgula <strong>nunca</strong> deve separar o sujeito do predicado.<br><br>
+                        
+                        <strong>Regra fundamental:</strong><br>
+                        A vírgula é <strong>proibida</strong> entre o sujeito e o verbo (núcleo do predicado), pois essa separação quebra a unidade sintática da oração.<br><br>
+                        
+                        <strong>Exemplo incorreto:</strong><br>
+                        <div class="example-box" style="border-left-color: #f56565;">❌ "O candidato, estudou muito para o concurso."</div><br>
+                        
+                        <strong>Forma correta:</strong><br>
+                        <div class="example-box" style="border-left-color: #48bb78;">✓ "O candidato estudou muito para o concurso."</div><br>
+                        
+                        <strong>Exceção:</strong> Quando há um <strong>vocativo</strong> ou <strong>aposto</strong> intercalado entre o sujeito e o verbo:<br>
+                        <div class="example-box">✓ "O candidato, meu filho, estudou muito." (aposto)</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            A vírgula entre sujeito e verbo é um dos erros mais comuns e é sempre considerado incorreto na norma-padrão. O sujeito e o predicado devem manter-se unidos, sem pausa gráfica entre eles.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-2">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(2)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="C" data-question="Uso da Vírgula - Aposto Explicativo">
+                <span class="question-number">Questão 3</span>
+                <p class="question-text">
+                    (CEBRASPE) Considere as seguintes afirmações sobre o aposto explicativo:<br><br>
+                    I. O aposto explicativo é um termo que explica ou especifica outro termo da oração<br>
+                    II. O aposto explicativo deve ser separado por vírgulas quando vem intercalado na frase<br>
+                    III. O aposto explicativo pode ser retirado da frase sem prejudicar a compreensão do sentido geral<br>
+                    IV. O aposto explicativo sempre vem antes do termo a que se refere<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I, II, III e IV</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 3, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas estão incorretas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-3">
+                    <div class="explanation-header">Resposta Correta: Letra B</div>
+                    <div class="explanation-text">
+                        <strong>Aposto Explicativo:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> O aposto explicativo é um termo que <strong>explica, especifica ou identifica</strong> melhor um substantivo ou pronome.<br><br>
+                        
+                        <strong>II. CORRETO:</strong> Quando <strong>intercalado</strong>, o aposto é isolado por vírgulas (uma antes e uma depois).<br>
+                        <div class="example-box">"João, o gerente da empresa, chegou cedo."</div><br>
+                        
+                        <strong>III. CORRETO:</strong> Por ser um termo <strong>acessório</strong> (não essencial), pode ser retirado sem prejudicar a compreensão.<br><br>
+                        
+                        <strong>IV. ERRADO:</strong> O aposto pode vir <strong>antes</strong>, <strong>depois</strong> ou <strong>intercalado</strong> ao termo a que se refere:<br>
+                        <div class="example-box">"O gerente da empresa, João, chegou cedo." (aposto depois)</div>
+                        <div class="example-box">"João, o gerente da empresa, chegou cedo." (aposto intercalado)</div><br>
+                        
+                        <strong>Diferença entre Aposto e Vocativo:</strong><br>
+                        • <strong>Aposto:</strong> Explica um termo (pode ser retirado, mas mantém relação sintática)<br>
+                        • <strong>Vocativo:</strong> Chama alguém (não tem função sintática)<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aposto Explicativo:</div>
+                            <strong>Função:</strong> Explicar/especificar<br>
+                            <strong>Pontuação:</strong> Vírgulas quando intercalado<br>
+                            <strong>Posição:</strong> Antes, depois ou intercalado<br>
+                            <strong>Natureza:</strong> Termo acessório (omitível)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-3">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(3)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="A" data-question="Uso da Vírgula - Adjunto Adverbial Deslocado">
+                <span class="question-number">Questão 4</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: Na frase "Na próxima semana, o INSS divulgará o edital do concurso", a vírgula foi corretamente empregada para separar o adjunto adverbial de tempo deslocado para o início da oração.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 4, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-4">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Vírgula com Adjunto Adverbial Deslocado:</strong><br><br>
+                        
+                        Quando o <strong>adjunto adverbial</strong> (termo que indica circunstâncias de tempo, lugar, modo, causa, etc.) é <strong>deslocado</strong> de sua posição habitual (geralmente no final da frase) para o <strong>início</strong> ou <strong>meio</strong> da oração, deve ser separado por vírgula.<br><br>
+                        
+                        <strong>Regra de ouro:</strong><br>
+                        • Adjunto adverbial no <strong>final</strong>: vírgula é <strong>proibida</strong><br>
+                        • Adjunto adverbial no <strong>início</strong>: vírgula é <strong>obrigatória</strong> (se for longo) ou <strong>facultativa</strong> (se for curto - até 3 palavras)<br>
+                        • Adjunto adverbial no <strong>meio</strong>: vírgulas <strong>obrigatórias</strong> (isolação)<br><br>
+                        
+                        <strong>Exemplos:</strong><br>
+                        <div class="example-box">"O INSS divulgará o edital na próxima semana." (final - sem vírgula)</div>
+                        <div class="example-box">"Na próxima semana, o INSS divulgará o edital." (início - com vírgula)</div>
+                        <div class="example-box">"O INSS, na próxima semana, divulgará o edital." (meio - com vírgulas)</div><br>
+                        
+                        <strong>Observação:</strong> Adjuntos adverbiais curtos (até 3 palavras) no início podem ou não levar vírgula, mas é recomendável usar para evitar ambiguidade.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Adjunto Adverbial:</div>
+                            <strong>Final:</strong> Sem vírgula<br>
+                            <strong>Início (até 3 palavras):</strong> Vírgula facultativa<br>
+                            <strong>Início (mais de 3 palavras):</strong> Vírgula obrigatória<br>
+                            <strong>Meio:</strong> Vírgulas obrigatórias (isolação)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-4">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(4)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="E" data-question="Uso dos Dois-Pontos">
+                <span class="question-number">Questão 5</span>
+                <p class="question-text">
+                    (CEBRASPE) Sobre o uso dos dois-pontos, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Os dois-pontos são usados apenas para introduzir uma citação direta</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Os dois-pontos indicam uma pausa mais forte que o ponto final</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Os dois-pontos são obrigatórios após todas as conjunções</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Os dois-pontos substituem a vírgula em qualquer enumeração</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 5, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Os dois-pontos introduzem uma explicação, enumeração, citação ou discurso direto</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-5">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Uso dos Dois-Pontos:</strong><br><br>
+                        
+                        Os dois-pontos (:) são usados para:<br><br>
+                        
+                        <strong>1. Introduzir explicação ou esclarecimento:</strong><br>
+                        <div class="example-box">"Não consegui estudar: estava muito cansado."</div><br>
+                        
+                        <strong>2. Introduzir enumeração:</strong><br>
+                        <div class="example-box">"Estudei os seguintes temas: ortografia, pontuação e sintaxe."</div><br>
+                        
+                        <strong>3. Introduzir citação ou discurso direto:</strong><br>
+                        <div class="example-box">Ele disse: "Vou passar no concurso do INSS."</div><br>
+                        
+                        <strong>4. Em correspondências oficiais (após o vocativo):</strong><br>
+                        <div class="example-box">"Senhor Diretor:"</div><br>
+                        
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Não é apenas para citação; também explicação e enumeração<br>
+                        <strong>B)</strong> A pausa dos dois-pontos é <strong>menor</strong> que o ponto final<br>
+                        <strong>C)</strong> Conjunções não exigem dois-pontos<br>
+                        <strong>D)</strong> Não substituem a vírgula; têm funções diferentes<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Dois-Pontos:</div>
+                            <strong>Funções:</strong> Explicar, enumerar, citar<br>
+                            <strong>Pausa:</strong> Intermediária (vírgula < dois-pontos < ponto final)<br>
+                            <strong>Uso oficial:</strong> Após vocativo em correspondências<br>
+                            <strong>Diferença da vírgula:</strong> Anuncia algo que virá a seguir
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-5">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(5)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="B" data-question="Ponto e Vírgula">
+                <span class="question-number">Questão 6</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: O ponto e vírgula é usado para separar orações coordenadas que apresentam certa oposição de sentido, mas que mantêm relação entre si, como em "Estudei muito para o concurso; não fui aprovado."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 6, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-6">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na justificativa!</strong> Embora o uso do ponto e vírgula na frase esteja <strong>correto</strong>, a explicação dada está <strong>errada</strong>.<br><br>
+                        
+                        <strong>Uso correto do ponto e vírgula:</strong><br>
+                        O ponto e vírgula separa <strong>orações coordenadas assindéticas</strong> (sem conjunção) que possuem certa <strong>relação de sentido</strong> entre si, mantendo uma unidade maior que o período.<br><br>
+                        
+                        <strong>O erro na afirmação:</strong><br>
+                        A frase "Estudei muito para o concurso; não fui aprovado" apresenta <strong>oposição</strong> (antítese), mas o ponto e vírgula não é específico para oposição. Ele é usado para orações coordenadas assindéticas em geral, independentemente do sentido ser de oposição, adição, conclusão etc.<br><br>
+                        
+                        <strong>Exemplos corretos de ponto e vírgula:</strong><br>
+                        <div class="example-box">"O tempo passa; a vida continua." (assindética - sequência)</div>
+                        <div class="example-box">"Queria estudar; estava cansado." (assindética - oposição)</div><br>
+                        
+                        <strong>Alternativa correta seria:</strong><br>
+                        O ponto e vírgula separa orações coordenadas assindéticas que mantêm relação de sentido entre si.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            O ponto e vírgula não é específico para oposição. Ele separa orações coordenadas assindéticas (sem conjunção) que possuem relação de sentido. A oposição é apenas uma das possíveis relações semânticas.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-6">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(6)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="C" data-question="Aspas">
+                <span class="question-number">Questão 7</span>
+                <p class="question-text">
+                    (CEBRASPE) Analise as assertivas sobre o uso das aspas:<br><br>
+                    I. As aspas são usadas para destacar citações textuais<br>
+                    II. As aspas podem indicar sentido irônico ou especial de uma palavra<br>
+                    III. As aspas são obrigatórias para indicar títulos de obras artísticas<br>
+                    IV. As aspas são usadas para isolar palavras ou expressões estrangeiras não assimiladas<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">I, II e IV apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 7, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-7">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Uso das Aspas:</strong><br><br>
+                        
+                        <strong>I. CORRETO:</strong> As aspas são usadas para destacar <strong>citações textuais</strong> (discurso direto).<br>
+                        <div class="example-box">Como disse o professor: "Estude sempre."</div><br>
+                        
+                        <strong>II. CORRETO:</strong> As aspas indicam <strong>sentido irônico, especial ou duvidoso</strong> de uma palavra.<br>
+                        <div class="example-box">Ele é muito "inteligente" (ironia - na verdade é burro)</div><br>
+                        
+                        <strong>III. ERRADO:</strong> Títulos de obras artísticas (livros, filmes, músicas) devem ser destacados em <strong>itálico</strong> ou <strong>sublinhado</strong>, não em aspas. Aspas são usadas apenas quando não há possibilidade de itálico.<br><br>
+                        
+                        <strong>IV. CORRETO:</strong> Palavras ou expressões estrangeiras <strong>não assimiladas</strong> ao português são colocadas entre aspas.<br>
+                        <div class="example-box">O "software" foi instalado. (software já está assimilado, mas exemplificando)</div><br>
+                        
+                        <strong>Outros usos das aspas:</strong><br>
+                        • Apelidos e alcunhas: Pedro "o Grande"<br>
+                        • Transcrição de trechos de documentos<br>
+                        • Destaque de neologismos ou arcaísmos<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Aspas:</div>
+                            <strong>Citações:</strong> Textuais/discurso direto<br>
+                            <strong>Sentido especial:</strong> Ironia, dúvida, neologismo<br>
+                            <strong>Estrangeirismos:</strong> Não assimilados<br>
+                            <strong>Obras:</strong> Itálico/sublinhado (não aspas)<br>
+                            <strong>Tipos:</strong> Duplas (" ") ou simples (' ')
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-7">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(7)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="A" data-question="Parênteses">
+                <span class="question-number">Questão 8</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: Os parênteses são usados para intercalar informações explicativas, complementares ou de natureza incidental, sem prejuízo da compreensão do texto, como em "O candidato (o melhor da turma) foi aprovado em primeiro lugar."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-8">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Uso dos Parênteses:</strong><br><br>
+                        
+                        Os parênteses são usados para:<br><br>
+                        
+                        <strong>1. Informações explicativas ou complementares:</strong><br>
+                        <div class="example-box">"O candidato (o melhor da turma) foi aprovado."</div><br>
+                        
+                        <strong>2. Datas, siglas, abreviaturas:</strong><br>
+                        <div class="example-box">"O INSS (Instituto Nacional do Seguro Social) divulgou o edital."</div><br>
+                        
+                        <strong>3. Indicação de variantes ou traduções:</strong><br>
+                        <div class="example-box">"O livro (The Book) foi publicado."</div><br>
+                        
+                        <strong>4. Acréscimos do próprio autor:</strong><br>
+                        <div class="example-box">"Ele chegou cedo (ênfase minha)."</div><br>
+                        
+                        <strong>Diferença entre parênteses e vírgulas:</strong><br>
+                        • <strong>Vírgulas:</strong> Isolam termos que mantêm relação mais íntima com a oração<br>
+                        • <strong>Parênteses:</strong> Isolam informações mais externas, acessórias, que podem ser suprimidas sem danos maiores<br><br>
+                        
+                        <strong>Observação:</strong> O texto entre parênteses é considerado <strong>incidental</strong> - pode ser retirado sem prejudicar a estrutura gramatical básica da frase.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Parênteses:</div>
+                            <strong>Função:</strong> Isolar informações acessórias<br>
+                            <strong>Relação com o texto:</strong> Externa/incidental<br>
+                            <strong>Uso comum:</strong> Siglas, datas, explicações<br>
+                            <strong>Diferença das vírgulas:</strong> Informação mais separada do núcleo
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-8">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(8)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="B" data-question="Reticências">
+                <span class="question-number">Questão 9</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: As reticências são usadas apenas para indicar omissão de palavras em uma citação.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 9, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-9">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> As reticências têm <strong>várias funções</strong>, não apenas indicar omissão.<br><br>
+                        
+                        <strong>Usos das reticências:</strong><br><br>
+                        
+                        <strong>1. Indicar omissão de palavras:</strong><br>
+                        <div class="example-box">"O importante não é vencer... é competir." (omissão de palavras)</div><br>
+                        
+                        <strong>2. Indicar interrupção da fala:</strong><br>
+                        <div class="example-box">"Eu queria dizer que... ah, deixa pra lá."</div><br>
+                        
+                        <strong>3. Indicar hesitação ou dúvida:</strong><br>
+                        <div class="example-box">"Acho que... não sei se devo aceitar."</div><br>
+                        
+                        <strong>4. Indicar suspense ou continuidade:</strong><br>
+                        <div class="example-box">"E no fim... tudo deu certo."</div><br>
+                        
+                        <strong>5. Indicar efeito de sentido (pausa longa):</strong><br>
+                        <div class="example-box">"Finalmente... aprovado!"</div><br>
+                        
+                        <strong>Regra importante:</strong> As reticências são sempre <strong>três pontos</strong> (...), nunca dois ou quatro.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            As reticências servem para: omissão, interrupção, hesitação, suspense e efeito de sentido. São sempre três pontos seguidos, sem espaço antes e com espaço depois quando indicam pausa no final da frase.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-9">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(9)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Vírgula em Orações Coordenadas">
+                <span class="question-number">Questão 10</span>
+                <p class="question-text">
+                    (CEBRASPE) Sobre o uso da vírgula em orações coordenadas, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A vírgula é obrigatória antes de todas as conjunções coordenativas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A vírgula é proibida entre orações coordenadas sindéticas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A vírgula é facultativa apenas nas coordenadas adversativas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A vírgula é obrigatória antes das conjunções adversativas (mas, porém, contudo, todavia) e conclusivas (logo, portanto, assim)</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A vírgula nunca é usada em orações coordenadas assindéticas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-10">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Vírgula em Orações Coordenadas:</strong><br><br>
+                        
+                        <strong>Regras principais:</strong><br><br>
+                        
+                        <strong>1. Coordenadas sindéticas:</strong><br>
+                        • <strong>Aditivas (e, nem, não só...mas também):</strong> vírgula <strong>facultativa</strong><br>
+                        • <strong>Adversativas (mas, porém, contudo, todavia, no entanto):</strong> vírgula <strong>obrigatória</strong><br>
+                        • <strong>Alternativas (ou, ou...ou, já...já):</strong> vírgula <strong>facultativa</strong><br>
+                        • <strong>Conclusivas (logo, portanto, assim, por isso, consequentemente):</strong> vírgula <strong>obrigatória</strong><br>
+                        • <strong>Explicativas (pois, porque):</strong> vírgula <strong>obrigatória</strong> (mas atenção: "porque" explicativo, não causal)<br><br>
+                        
+                        <strong>2. Coordenadas assindéticas:</strong><br>
+                        • Separadas por <strong>vírgula</strong> ou <strong>ponto e vírgula</strong><br>
+                        <div class="example-box">"Cheguei, vi, venci." (vírgula)</div><br>
+                        
+                        <strong>Análise das alternativas:</strong><br>
+                        <strong>A)</strong> Errado - não é obrigatória antes de todas<br>
+                        <strong>B)</strong> Errado - sindéticas podem ter vírgula<br>
+                        <strong>C)</strong> Errado - também é obrigatória nas conclusivas<br>
+                        <strong>E)</strong> Errado - assindéticas usam vírgula<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Vírgula em Coordenadas:</div>
+                            <strong>Obrigatória:</strong> Adversativas e conclusivas<br>
+                            <strong>Facultativa:</strong> Aditivas e alternativas<br>
+                            <strong>Assindéticas:</strong> Vírgula ou ponto e vírgula<br>
+                            <strong>Explicativas:</strong> Vírgula obrigatória (pois, porque)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-10">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(10)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 11 -->
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="A" data-question="Travessão">
+                <span class="question-number">Questão 11</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: O travessão pode ser usado para isolar um aposto, substituindo as vírgulas, como em "João — o melhor aluno da turma — foi aprovado no concurso."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 11, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-11">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Uso do Travessão:</strong><br><br>
+                        
+                        O travessão (—) é um sinal de pontuação versátil que pode substituir outras pontuações em determinados contextos:<br><br>
+                        
+                        <strong>1. Isolar aposto (substituindo vírgulas):</strong><br>
+                        <div class="example-box">"João — o melhor aluno da turma — foi aprovado."</div>
+                        <div class="example-box">Equivalente: "João, o melhor aluno da turma, foi aprovado."</div><br>
+                        
+                        <strong>2. Isolar vocativo (substituindo vírgula):</strong><br>
+                                                <div class="example-box">"Carlos — venha aqui agora."</div><br>
+                        
+                        <strong>3. Indicar mudança de interlocutor no diálogo:</strong><br>
+                        <div class="example-box">— Bom dia! — disse o candidato.<br>— Bom dia! — respondeu o examinador.</div><br>
+                        
+                        <strong>4. Isolar oração intercalada (substituindo vírgulas):</strong><br>
+                        <div class="example-box">"O concurso — todos sabem — será difícil."</div><br>
+                        
+                        <strong>5. Destacar uma ideia ou conclusão:</strong><br>
+                        <div class="example-box">"Estudou muito — e foi aprovado."</div><br>
+                        
+                        <strong>Diferença entre travessão e vírgulas:</strong><br>
+                        • O travessão cria uma <strong>pausa mais forte</strong> e maior destaque<br>
+                        • É mais usado em textos jornalísticos e literários<br>
+                        • Nas provas de concurso, aceita-se o uso do travessão no lugar das vírgulas para isolamento<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Travessão:</div>
+                            <strong>Funções:</strong> Isolar aposto, vocativo, oração intercalada<br>
+                            <strong>Diálogo:</strong> Indicar mudança de interlocutor<br>
+                            <strong>Substitui:</strong> Vírgulas (com pausa mais forte)<br>
+                            <strong>Uso:</strong> Jornalístico, literário, publicitário
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-11">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(11)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 12 -->
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="C" data-question="Vírgula em Orações Subordinadas">
+                <span class="question-number">Questão 12</span>
+                <p class="question-text">
+                    (CEBRASPE) Analise as assertivas sobre o uso da vírgula em orações subordinadas:<br><br>
+                    I. A vírgula é obrigatória antes das conjunções subordinativas quando iniciam a oração<br>
+                    II. A vírgula é proibida entre a oração principal e a subordinada quando a subordinada vem depois<br>
+                    III. A vírgula é obrigatória quando a oração subordinada está intercalada na oração principal<br>
+                    IV. A vírgula é facultativa quando a oração subordinada é adjetiva explicativa<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">III e IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 12, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-12">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Vírgula em Orações Subordinadas:</strong><br><br>
+                        
+                        <strong>I. ERRADO:</strong> Quando a oração subordinada vem <strong>antes</strong> da principal, a vírgula é <strong>obrigatória</strong> após a subordinada (não antes da conjunção). A conjunção inicia a oração, então não há vírgula antes dela.<br>
+                        <div class="example-box">"Quando cheguei, ele saiu." (vírgula após a subordinada, não antes de "Quando")</div><br>
+                        
+                        <strong>II. CORRETO:</strong> Quando a subordinada vem <strong>depois</strong> da principal, a vírgula é <strong>proibida</strong> (exceto em casos específicos de adjetivas explicativas).<br>
+                        <div class="example-box">"Ele saiu quando cheguei." (sem vírgula)</div><br>
+                        
+                        <strong>III. CORRETO:</strong> Quando a subordinada está <strong>intercalada</strong> na principal, usa-se vírgula <strong>antes e depois</strong>.<br>
+                        <div class="example-box">"O candidato, quando estudou, aprendeu muito."</div><br>
+                        
+                        <strong>IV. ERRADO:</strong> A adjetiva explicativa é <strong>sempre</strong> separada por vírgulas (obrigatório, não facultativo).<br>
+                        <div class="example-box">"O livro, que estava na mesa, era meu."</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Vírgula em Subordinadas:</div>
+                            <strong>Subordinada antes:</strong> Vírgula após (obrigatória)<br>
+                            <strong>Subordinada depois:</strong> Vírgula proibida<br>
+                            <strong>Subordinada intercalada:</strong> Vírgulas obrigatórias<br>
+                            <strong>Adjetiva explicativa:</strong> Vírgulas obrigatórias<br>
+                            <strong>Adjetiva restritiva:</strong> Vírgula proibida
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-12">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(12)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 13 -->
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="A" data-question="Vírgula com 'Que'">
+                <span class="question-number">Questão 13</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: Na frase "O candidato que estudou foi aprovado", a ausência da vírgula antes de "que" indica que a oração subordinada adjetiva é restritiva, ou seja, limita o sentido do substantivo "candidato".
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 13, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-13">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Adjetivas Restritivas vs. Explicativas:</strong><br><br>
+                        
+                        Esta é uma das regras <strong>mais cobradas</strong> em provas de concurso!<br><br>
+                        
+                        <strong>Adjetiva RESTRITIVA (sem vírgula):</strong><br>
+                        • <strong>Restringe</strong> o sentido do substantivo<br>
+                        • Distingue o elemento de outros da mesma espécie<br>
+                        • É <strong>essencial</strong> para a compreensão<br>
+                        <div class="example-box">"O candidato que estudou foi aprovado." (apenas aquele que estudou, não todos)</div><br>
+                        
+                        <strong>Adjetiva EXPLICATIVA (com vírgula):</strong><br>
+                        • <strong>Explica</strong> ou acrescenta informação ao substantivo<br>
+                        • Não restringe, apenas completa<br>
+                        • É <strong>acessória</strong> (pode ser retirada)<br>
+                        <div class="example-box">"O candidato, que estudou muito, foi aprovado." (informação adicional)</div><br>
+                        
+                        <strong>Macete para provas:</strong><br>
+                        • Sem vírgula = restritiva = limita, especifica<br>
+                        • Com vírgula = explicativa = explica, acrescenta<br><br>
+                        
+                        <strong>Outros exemplos:</strong><br>
+                        <div class="example-box">"O livro que está na mesa é meu." (restritiva - sem vírgula)</div>
+                        <div class="example-box">"O livro, que está na mesa, é meu." (explicativa - com vírgula)</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Adjetivas com 'Que':</div>
+                            <strong>Sem vírgula:</strong> Restritiva (especifica, limita)<br>
+                            <strong>Com vírgula:</strong> Explicativa (acrescenta, explica)<br>
+                            <strong>Teste:</strong> Se retirar a oração e o sentido mudar = restritiva<br>
+                            <strong>Teste:</strong> Se retirar e o sentido não mudar = explicativa
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-13">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(13)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 14 -->
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="B" data-question="Ponto Final">
+                <span class="question-number">Questão 14</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: O ponto final é usado para indicar uma pausa mais forte que o ponto e vírgula, mas menos forte que o ponto de exclamação.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-14">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro na comparação!</strong> O ponto final é o sinal de <strong>maior força</strong> entre todos os sinais de pontuação de finalização.<br><br>
+                        
+                        <strong>Hierarquia de força dos sinais de finalização:</strong><br><br>
+                        
+                        <strong>1. Vírgula (,)</strong> - pausa breve<br>
+                        <strong>2. Ponto e vírgula (;)</strong> - pausa intermediária<br>
+                        <strong>3. Dois-pontos (:)</strong> - pausa intermediária (anuncia continuidade)<br>
+                        <strong>4. Ponto final (.)</strong> - pausa forte (encerra o período)<br>
+                        <strong>5. Reticências (...)</strong> - pausa indefinida/interrupção<br>
+                        <strong>6. Ponto de exclamação (!)</strong> - encerra com ênfase/emoção<br>
+                        <strong>7. Ponto de interrogação (?)</strong> - encerra com pergunta<br><br>
+                        
+                        <strong>Correção da afirmação:</strong><br>
+                        O ponto final indica uma <strong>pausa forte</strong> que encerra o período. Ele é <strong>mais forte</strong> que o ponto e vírgula, não menos forte.<br><br>
+                        
+                        <strong>Observação:</strong> O ponto de exclamação e o ponto de interrogação têm funções específicas (emoção/pergunta), mas o ponto final é o sinal de <strong>encerramento padrão</strong> com maior neutralidade e força de fechamento.<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            Ponto final > Ponto e vírgula > Vírgula (em força de pausa). O ponto final é o sinal de encerramento mais forte e neutro.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-14">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(14)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 15 -->
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Colchetes e Chaves">
+                <span class="question-number">Questão 15</span>
+                <p class="question-text">
+                    (CEBRASPE) Sobre o uso de colchetes e chaves, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Os colchetes são usados apenas em fórmulas matemáticas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">As chaves são usadas apenas em textos científicos</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">Os colchetes e chaves são sinônimos e podem ser usados indistintamente</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">Os colchetes são usados para intercalar explicações em citações, enquanto as chaves são usadas para agrupar elementos ou em fórmulas matemáticas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Os colchetes substituem as aspas em qualquer contexto</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-15">
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-text">
+                        <strong>Uso de Colchetes [ ] e Chaves { }:</strong><br><br>
+                        
+                        <strong>Colchetes [ ]:</strong><br>
+                        • Intercalar explicações do autor em <strong>citações textuais</strong><br>
+                        • Inserir comentários ou retificações em textos transcritos<br>
+                        • Substituir parênteses dentro de parênteses<br>
+                        <div class="example-box">"Como afirmou o autor [grifo nosso], a questão é complexa."</div>
+                        <div class="example-box">"Ele disse que 'o concurso [do INSS] será difícil'."</div><br>
+                        
+                        <strong>Chaves { }:</strong><br>
+                        • Agrupar elementos em <strong>fórmulas matemáticas</strong><br>
+                        • Agrupar dados em <strong>tabelas estatísticas</strong><br>
+                        • Indicar união de conjuntos na matemática<br>
+                        • Em linguagem de programação<br>
+                        <div class="example-box">{x | x é número natural}</div><br>
+                        
+                        <strong>Análise das alternativas:</strong><br>
+                        <strong>A)</strong> Errado - colchetes têm uso linguístico importante<br>
+                        <strong>B)</strong> Errado - chaves não são exclusivas de textos científicos<br>
+                        <strong>C)</strong> Errado - têm funções distintas<br>
+                        <strong>E)</strong> Errado - não substituem aspas, têm função específica<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Colchetes e Chaves:</div>
+                            <strong>Colchetes:</strong> Explicações em citações, comentários do autor<br>
+                            <strong>Chaves:</strong> Agrupamento matemático, tabelas, programação<br>
+                            <strong>Ordem de uso:</strong> Parênteses → Colchetes → Chaves (quando necessário)<br>
+                            <strong>Exemplo:</strong> (… [… {…} …] …)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-15">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(15)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 16 -->
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="A" data-question="Vírgula em Enumeração">
+                <span class="question-number">Questão 16</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: Na enumeração de três ou mais elementos, a vírgula é usada para separar os itens, e a conjunção "e" pode vir precedida ou não de vírgula, conforme a preferência do autor, como em "Comprei livros, canetas, e cadernos."
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 16, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-16">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Vírgula na Enumeração (Vírgula de Oxford):</strong><br><br>
+                        
+                        A <strong>vírgula antes do "e"</strong> em enumerações é <strong>facultativa</strong> na língua portuguesa. Ambas as formas são aceitas:<br><br>
+                        
+                        <strong>Sem vírgula antes do "e" (mais comum no português):</strong><br>
+                        <div class="example-box">"Comprei livros, canetas e cadernos."</div><br>
+                        
+                        <strong>Com vírgula antes do "e" (vírgula de Oxford):</strong><br>
+                        <div class="example-box">"Comprei livros, canetas, e cadernos."</div><br>
+                        
+                        <strong>Quando a vírgula antes do "e" é recomendada:</strong><br>
+                        • Para evitar ambiguidade<br>
+                        • Quando os itens são longos ou complexos<br>
+                        • Quando o último item inclui uma conjunção<br>
+                        <div class="example-box">"Agradeço aos meus pais, Deus, e minha namorada." (sem vírgula parece que "Deus e minha namorada" são os pais)</div><br>
+                        
+                        <strong>Regra geral:</strong><br>
+                        • Dois elementos: sem vírgula ("livros e canetas")<br>
+                        • Três ou mais: vírgula entre eles, vírgula antes do "e" é facultativa<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Enumeração:</div>
+                            <strong>Dois itens:</strong> Apenas "e", sem vírgula<br>
+                            <strong>Três+ itens:</strong> Vírgula entre os itens<br>
+                            <strong>Vírgula antes do "e":</strong> Facultativa (vírgula de Oxford)<br>
+                            <strong>Dica:</strong> Use a vírgula de Oxford para evitar ambiguidade
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-16">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(16)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 17 -->
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="B" data-question="Vírgula com Expressões Expletivas">
+                <span class="question-number">Questão 17</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: As expressões expletivas como "é que", "quem", "o que" exigem sempre o uso da vírgula antes e depois, independentemente de sua posição na oração.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-17">
+                    <div class="explanation-header">Resposta Correta: Errado</div>
+                    <div class="explanation-text">
+                        <strong>Erro grave!</strong> As expressões expletivas <strong>não exigem vírgula obrigatória</strong> antes e depois.<br><br>
+                        
+                        <strong>Expressões Expletivas (ou de realce):</strong><br>
+                        São termos que não exercem função sintática, apenas dão <strong>ênfase</strong> à frase. Exemplos: <strong>é que, quem, o que, só, já, próprio, mesmo, tal, qual</strong>.<br><br>
+                        
+                        <strong>Uso da vírgula com expletivas:</strong><br>
+                        • A vírgula é <strong>facultativa</strong> e depende da <strong>posição</strong> e <strong>ênfase</strong><br>
+                        • Geralmente usam-se vírgulas quando a expressão está <strong>intercalada</strong> ou no <strong>início</strong> com pausa<br><br>
+                        
+                        <strong>Exemplos:</strong><br>
+                        <div class="example-box">"Quem diria, ele foi aprovado." (vírgula facultativa)</div>
+                        <div class="example-box">"Quem diria ele foi aprovado." (também correto, sem vírgula)</div>
+                        <div class="example-box">"Ele, quem diria, foi aprovado." (intercalado - vírgulas obrigatórias)</div><br>
+                        
+                        <strong>Erro comum:</strong><br>
+                        Achar que "é que" sempre precisa de vírgula. Na verdade, "é que" geralmente <strong>não</strong> leva vírgula:<br>
+                        <div class="example-box">"O problema é que ele não estudou." (sem vírgula)</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            As expressões expletivas não têm vírgula obrigatória. A pontuação depende da posição na frase e da intenção de ênfase. Quando intercaladas, usam vírgulas; quando no início ou fim, a vírgula é facultativa.
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-17">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(17)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 18 -->
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="C" data-question="Vírgula em Locuções Prepositivas">
+                <span class="question-number">Questão 18</span>
+                <p class="question-text">
+                    (CEBRASPE) Analise as assertivas sobre vírgula em locuções prepositivas:<br><br>
+                    I. A locução prepositiva "a fim de" exige vírgula sempre que inicia a oração<br>
+                    II. A locução "por exemplo" deve ser separada por vírgulas quando intercalada<br>
+                    III. A locução "além de" não exige vírgula quando inicia a oração<br>
+                    IV. A locução "de acordo com" deve ser separada por vírgula antes e depois<br><br>
+                    Estão corretas:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">I e II apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">I, II e III apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">II e III apenas</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">II, III و IV apenas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 18, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">Todas as assertivas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-18">
+                    <div class="explanation-header">Resposta Correta: Letra C</div>
+                    <div class="explanation-text">
+                        <strong>Vírgula em Locuções Prepositivas:</strong><br><br>
+                        
+                        <strong>I. ERRADO:</strong> "A fim de" é uma <strong>locução prepositiva</strong> (equivalente a "para"). Como adjunto adverbial de finalidade no início da frase, a vírgula é <strong>facultativa</strong> (se curta) ou <strong>obrigatória</strong> (se longa), mas não é "sempre" obrigatória.<br>
+                        <div class="example-box">"A fim de ser aprovado, estudou muito." (vírgula facultativa, pois é curta)</div><br>
+                        
+                        <strong>II. CORRETO:</strong> "Por exemplo" é uma <strong>locução explicativa</strong> e, quando intercalada, deve ser separada por vírgulas.<br>
+                        <div class="example-box">"Estudei, por exemplo, todos os dias."</div><br>
+                        
+                        <strong>III. CORRETO:</strong> "Além de" é uma <strong>locução prepositiva</strong> que funciona como adjunto adverbial. No início da oração, se for curta, não exige vírgula obrigatória.<br>
+                        <div class="example-box">"Além de estudar, ele trabalhava." (sem vírgula após, pois forma uma unidade)</div><br>
+                        
+                        <strong>IV. ERRADO:</strong> "De acordo com" é uma locução prepositiva que <strong>não</strong> exige vírgulas antes e depois quando usada normalmente. Ela introduz um complemento.<br>
+                        <div class="example-box">"De acordo com o edital, a prova será difícil." (apenas vírgula após, pois é adjunto adverbial deslocado)</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Locuções Prepositivas:</div>
+                            <strong>Regra geral:</strong> Seguem a regra do adjunto adverbial<br>
+                            <strong>Início curto:</strong> Vírgula facultativa<br>
+                            <strong>Início longo:</strong> Vírgula obrigatória<br>
+                            <strong>Intercaladas:</strong> Vírgulas obrigatórias<br>
+                            <strong>Exceções:</strong> Locuções explicativas ("por exemplo") sempre entre vírgulas quando intercaladas
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-18">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(18)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 19 -->
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="A" data-question="Ponto de Exclamação e Interrogação">
+                <span class="question-number">Questão 19</span>
+                <p class="question-text">
+                    (CEBRASPE) Julgue o item: O ponto de exclamação é usado para indicar ênfase, emoção ou surpresa, enquanto o ponto de interrogação é usado para indicar pergunta direta.
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 19, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">Errado</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-19">
+                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-text">
+                        <strong>Ponto de Exclamação (!) e Interrogação (?):</strong><br><br>
+                        
+                        <strong>Ponto de Exclamação (!):</strong><br>
+                        Indica:<br>
+                        • <strong>Ênfase</strong> ou intensidade<br>
+                        • <strong>Emoção</strong> (alegria, tristeza, medo, raiva)<br>
+                        • <strong>Surpresa</strong> ou espanto<br>
+                        • <strong>Vocativo</strong> com ênfase (às vezes)<br>
+                        • <strong>Imperativo</strong> forte (ordens)<br>
+                        <div class="example-box">"Parabéns!" (alegria)</div>
+                        <div class="example-box">"Cuidado!" (advertência)</div>
+                        <div class="example-box">"Nossa!" (surpresa)</div><br>
+                        
+                        <strong>Ponto de Interrogação (?):</strong><br>
+                        Indica:<br>
+                        • <strong>Pergunta direta</strong> (na oralidade ou escrita)<br>
+                        • <strong>Dúvida</strong><br>
+                        • <strong>Interrogação retórica</strong><br>
+                        <div class="example-box">"Você vai estudar para o concurso?"</div>
+                        <div class="example-box">"Quem diria que seria tão difícil?"</div><br>
+                        
+                        <strong>Uso combinado (!?):</strong><br>
+                        Pode-se usar interro-exclamação para indicar pergunta com emoção:<br>
+                        <div class="example-box">"Você passou no concurso!?" ou "Você passou no concurso?!"</div><br>
+                        
+                        <strong>Observação:</strong> Não use ponto de interrogação em <strong>perguntas indiretas</strong>:<br>
+                        <div class="example-box">❌ "Ele perguntou se eu iria estudar?"</div>
+                        <div class="example-box">✓ "Ele perguntou se eu iria estudar."</div><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Exclamação e Interrogação:</div>
+                            <strong>Exclamação:</strong> Ênfase, emoção, surpresa, ordem forte<br>
+                            <strong>Interrogação:</strong> Pergunta direta, dúvida<br>
+                            <strong>Indireta:</strong> Não usa ponto de interrogação<br>
+                            <strong>Combinação:</strong> Interro-exclamação (!? ou ?!)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-19">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(19)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questão 20 -->
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="E" data-question="Revisão Geral - Vírgula">
+                <span class="question-number">Questão 20</span>
+                <p class="question-text">
+                    (CEBRASPE) Sobre o uso da vírgula, assinale a alternativa correta:
+                </p>
+                <div class="alternatives">
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
+                        <span class="alternative-letter">A</span>
+                        <span class="alternative-text">A vírgula é obrigatória entre o verbo e seu objeto direto</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
+                        <span class="alternative-letter">B</span>
+                        <span class="alternative-text">A vírgula é proibida antes da conjunção "e" em qualquer situação</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A vírgula é facultativa apenas em orações coordenadas adversativas</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A vírgula nunca pode ser usada para indicar pausa enfática</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A vírgula pode ser usada para indicar pausa enfática, desde que não prejudique a clareza do texto</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                </div>
+                <div class="explanation" id="exp-20">
+                    <div class="explanation-header">Resposta Correta: Letra E</div>
+                    <div class="explanation-text">
+                        <strong>Revisão Geral do Uso da Vírgula:</strong><br><br>
+                        
+                        <strong>Análise das alternativas:</strong><br><br>
+                        
+                        <strong>A) Errado:</strong> A vírgula é <strong>proibida</strong> entre verbo e objeto direto. Isso quebra a unidade sintática do predicado.<br>
+                        <div class="example-box">❌ "Ele comprou, o livro."</div><br>
+                        
+                        <strong>B) Errado:</strong> A vírgula <strong>pode</strong> ser usada antes do "e" em enumerações (vírgula de Oxford) e é <strong>obrigatória</strong> antes de "e" quando há sujeitos diferentes:<br>
+                        <div class="example-box">"O aluno estudou, e o professor corrigiu." (sujeitos diferentes)</div><br>
+                        
+                        <strong>C) Errado:</strong> Nas coordenadas <strong>adversativas</strong>, a vírgula é <strong>obrigatória</strong>, não facultativa. É facultativa nas aditivas e alternativas.<br><br>
+                        
+                        <strong>D) Errado:</strong> A vírgula <strong>pode</strong> sim ser usada para pausa enfática (efeito estilístico), desde que não prejudique a clareza:<br>
+                        <div class="example-box">"Ele chegou, finalmente, aprovado."</div><br>
+                        
+                        <strong>E) CORRETO:</strong> A vírgula tem função <strong>estilística</strong> de indicar pausa enfática, mas deve ser usada com moderação para não tornar o texto confuso.<br><br>
+                        
+                        <strong>Resumo das proibições da vírgula:</strong><br>
+                        • Entre sujeito e verbo<br>
+                        • Entre verbo e objeto<br>
+                        • Entre preposição e seu complemento<br>
+                        • Entre nome e adjunto adnominal restritivo<br><br>
+                        
+                        <div class="comparison-box">
+                            <div class="comparison-title">📊 Revisão da Vírgula:</div>
+                            <strong>Proibida:</strong> Separar termos sintaticamente unidos<br>
+                            <strong>Obrigatória:</strong> Isolar termos deslocados, vocativos, apostos<br>
+                            <strong>Facultativa:</strong> Coordenadas aditivas, vírgula de Oxford<br>
+                            <strong>Estilística:</strong> Pausa enfática (uso moderado)
+                        </div>
+                    </div>
+                    <div class="gemini-help-box" id="gemini-help-20">
+                        <div class="gemini-help-text">🤔 Não entendeu essa questão? Clique abaixo para copiar o texto e colar no Gemini quando quiser:</div>
+                        <button class="gemini-btn" onclick="copyToClipboard(20)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copiar texto para o Gemini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="finishQuiz()" id="submit-btn">Finalizar Prova e Ver Resultado Geral</button>
+        </div>
+
+        <div class="results" id="results">
+            <div class="score-circle" id="score-circle">
+                <span class="score-text" id="score-text">0/20</span>
+            </div>
+            <div class="score-message" id="score-message"></div>
+            <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
+                <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
+                • Questões sobre vírgula: Dominar separação de vocativo, aposto e adjunto adverbial<br>
+                • Questões sobre vírgula proibida: Nunca separar sujeito/verbo nem verbo/objeto<br>
+                • Questões sobre coordenadas: Memorizar onde é obrigatória (adversativas/conclusivas)<br>
+                • Questões sobre subordinadas: Diferenciar restritiva (sem vírgula) de explicativa (com vírgula)<br>
+                • Questões sobre outros sinais: Dois-pontos, travessão, aspas, reticências<br>
+                • Questões sobre hierarquia: Ponto final > ponto e vírgula > vírgula<br>
+                • Pratique identificando orações adjetivas com "que" - com ou sem vírgula
+            </p>
+            <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
+        </div>
+    </div>
+
+    <script>
+        let answers = {};
+        let timeLeft = 2400; // 40 minutos em segundos
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 300) { // 5 minutos
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function selectAlternative(element, questionNum, letter) {
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const alternatives = card.querySelectorAll('.alternative');
+            const explanation = document.getElementById(`exp-${questionNum}`);
+            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
+            
+            // Desabilita todas as alternativas da questão
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                alt.onclick = null;
+            });
+            
+            // Marca a alternativa selecionada
+            if (letter === correctAnswer) {
+                element.classList.add('selected-correct');
+                answers[questionNum] = { selected: letter, correct: true };
+            } else {
+                element.classList.add('selected-wrong');
+                // Destaca a resposta correta
+                alternatives.forEach(alt => {
+                    const altLetter = alt.querySelector('.alternative-letter').textContent;
+                    if (altLetter === correctAnswer) {
+                        alt.classList.add('correct-answer');
+                    }
+                });
+                answers[questionNum] = { selected: letter, correct: false };
+                explanation.classList.add('wrong');
+            }
+            
+            // Mostra a explicação e o botão do Gemini imediatamente
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+            
+            // Adiciona badge de status
+            const questionNumber = card.querySelector('.question-number');
+            const statusBadge = document.createElement('span');
+            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
+            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
+            questionNumber.appendChild(statusBadge);
+            
+            updateProgress();
+            
+            // Scroll suave para a explicação
+            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
+        function copyToClipboard(questionNum) {
+            const card = document.querySelectorAll('.question-card')[questionNum - 1];
+            const questionText = card.querySelector('.question-text').textContent;
+            const correctAnswer = card.getAttribute('data-correct');
+            const questionTheme = card.getAttribute('data-question');
+            
+            // Encontra o texto da resposta correta
+            const alternatives = card.querySelectorAll('.alternative');
+            let correctAnswerText = '';
+            alternatives.forEach(alt => {
+                const letter = alt.querySelector('.alternative-letter').textContent;
+                if (letter === correctAnswer) {
+                    correctAnswerText = alt.querySelector('.alternative-text').textContent;
+                }
+            });
+            
+            // Cria a mensagem para o Gemini
+            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Língua Portuguesa - Pontuação. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
+
+TEMA: ${questionTheme}
+
+QUESTÃO: ${questionText}
+
+RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
+
+Por favor, explique:
+1. Por que essa é a resposta correta
+2. Por que as outras estão erradas
+3. Dê exemplos práticos para eu entender melhor
+4. Alguma dica de memorização se aplicável
+5. Qual regra gramatical de pontuação se aplica aqui
+
+Obrigado!`;
+            
+            // Copia o prompt para a área de transferência
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Mostra notificação de sucesso
+                showCopyNotification();
+            }).catch(err => {
+                // Fallback se a clipboard API falhar
+                console.error('Erro ao copiar:', err);
+                
+                // Cria um textarea temporário para copiar manualmente
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyNotification();
+                } catch (e) {
+                    // Se tudo falhar, mostra o prompt para copiar manualmente
+                    prompt('Copie este texto manualmente:', prompt);
+                }
+                
+                document.body.removeChild(textarea);
+            });
+        }
+
+        // Função para mostrar notificação de cópia
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            // Esconde após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateProgress() {
+            const total = 20;
+            const answered = Object.keys(answers).length;
+            const percent = (answered / total) * 100;
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correct = 0;
+            
+            for (let i = 1; i <= 20; i++) {
+                if (answers[i] && answers[i].correct) {
+                    correct++;
+                }
+            }
+            
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const percentage = (correct / 20) * 100;
+            document.getElementById('score-circle').style.setProperty('--score', percentage);
+            document.getElementById('score-text').textContent = `${correct}/20`;
+            
+            let message = '';
+            if (correct >= 16) {
+                message = '🎉 Excelente! Você domina a pontuação e está pronto para o INSS!';
+            } else if (correct >= 12) {
+                message = '👍 Bom desempenho! Revise as regras de vírgula em coordenadas e subordinadas.';
+            } else if (correct >= 8) {
+                message = '📚 Desempenho regular. Foque nas regras básicas de vírgula proibida e vocativo.';
+            } else {
+                message = '⚠️ É preciso estudar mais. A pontuação é fundamental para o concurso do INSS!';
+            }
+            document.getElementById('score-message').textContent = message;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            location.reload();
+        }
+
+        // Iniciar timer quando a página carregar
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
