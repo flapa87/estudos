@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado INSS 2025 - Direito Administrativo: Responsabilidade Civil do Estado - Prova 1</title>
+    <title>Simulado INSS 2025 - Direito Administrativo: Licitação - Princípios e Fases - Prova 1</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -20,31 +20,31 @@
             padding: 20px;
             color: #1a1a2e;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
         }
-        
+
         .header {
             text-align: center;
             color: white;
             margin-bottom: 30px;
             animation: fadeInDown 0.8s ease;
         }
-        
+
         .header h1 {
             font-size: 2.5rem;
             font-weight: 800;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
             margin-bottom: 10px;
         }
-        
+
         .header p {
             font-size: 1.1rem;
             opacity: 0.95;
         }
-        
+
         .progress-bar {
             background: rgba(255,255,255,0.2);
             height: 8px;
@@ -52,7 +52,7 @@
             margin-bottom: 30px;
             overflow: hidden;
         }
-        
+
         .progress-fill {
             background: linear-gradient(90deg, #ff6b6b 0%, #feca57 100%);
             height: 100%;
@@ -60,7 +60,7 @@
             border-radius: 10px;
             transition: width 0.5s ease;
         }
-        
+
         .question-card {
             background: white;
             border-radius: 20px;
@@ -73,7 +73,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .question-card::before {
             content: '';
             position: absolute;
@@ -83,7 +83,7 @@
             height: 100%;
             background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
         }
-        
+
         .question-number {
             display: inline-block;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -94,7 +94,7 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
-        
+
         .question-text {
             font-size: 1.1rem;
             line-height: 1.7;
@@ -102,13 +102,13 @@
             margin-bottom: 20px;
             font-weight: 500;
         }
-        
+
         .alternatives {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-        
+
         .alternative {
             display: flex;
             align-items: center;
@@ -121,38 +121,38 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .alternative:hover:not(.disabled) {
             background: #edf2f7;
             border-color: #cbd5e0;
             transform: translateX(5px);
         }
-        
+
         .alternative.selected-correct {
             background: #c6f6d5;
             border-color: #48bb78;
             cursor: default;
         }
-        
+
         .alternative.selected-wrong {
             background: #fed7d7;
             border-color: #f56565;
             cursor: default;
         }
-        
+
         .alternative.correct-answer {
             background: #c6f6d5;
             border-color: #48bb78;
             box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
             cursor: default;
         }
-        
+
         .alternative.disabled {
             opacity: 0.6;
             cursor: default;
             pointer-events: none;
         }
-        
+
         .alternative-letter {
             display: flex;
             align-items: center;
@@ -168,43 +168,43 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
-        
+
         .alternative.selected-correct .alternative-letter {
             background: #48bb78;
             color: white;
             border-color: #48bb78;
         }
-        
+
         .alternative.selected-wrong .alternative-letter {
             background: #f56565;
             color: white;
             border-color: #f56565;
         }
-        
+
         .alternative.correct-answer .alternative-letter {
             background: #48bb78;
             color: white;
             border-color: #48bb78;
         }
-        
+
         .alternative-text {
             flex: 1;
             font-size: 0.95rem;
             color: #4a5568;
         }
-        
+
         .result-icon {
             font-size: 1.5rem;
             margin-left: 10px;
             display: none;
         }
-        
+
         .alternative.selected-correct .result-icon,
         .alternative.selected-wrong .result-icon,
         .alternative.correct-answer .result-icon {
             display: block;
         }
-        
+
         .explanation {
             display: none;
             margin-top: 20px;
@@ -214,16 +214,16 @@
             border-left: 5px solid #48bb78;
             animation: fadeIn 0.5s ease;
         }
-        
+
         .explanation.show {
             display: block;
         }
-        
+
         .explanation.wrong {
             background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
             border-left-color: #f56565;
         }
-        
+
         .explanation-header {
             display: flex;
             align-items: center;
@@ -232,11 +232,11 @@
             color: #22543d;
             font-size: 1.1rem;
         }
-        
+
         .explanation.wrong .explanation-header {
             color: #c53030;
         }
-        
+
         .explanation-header::before {
             content: '✓';
             display: inline-flex;
@@ -250,22 +250,22 @@
             margin-right: 10px;
             font-size: 0.9rem;
         }
-        
+
         .explanation.wrong .explanation-header::before {
             content: '✗';
             background: #f56565;
         }
-        
+
         .explanation-text {
             color: #2d3748;
             line-height: 1.8;
             font-size: 0.95rem;
         }
-        
+
         .explanation-text strong {
             color: #2b6cb0;
         }
-        
+
         .comparison-box {
             background: white;
             padding: 15px;
@@ -273,7 +273,7 @@
             margin-top: 15px;
             border: 2px dashed #cbd5e0;
         }
-        
+
         .comparison-title {
             font-weight: 700;
             color: #744210;
@@ -282,7 +282,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .gemini-btn {
             display: inline-flex;
             align-items: center;
@@ -299,17 +299,17 @@
             transition: all 0.3s ease;
             text-decoration: none;
         }
-        
+
         .gemini-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
         }
-        
+
         .gemini-btn svg {
             width: 20px;
             height: 20px;
         }
-        
+
         .btn-submit {
             display: block;
             width: 100%;
@@ -326,19 +326,19 @@
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(30, 60, 114, 0.4);
         }
-        
+
         .btn-submit:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(30, 60, 114, 0.5);
         }
-        
+
         .btn-submit:disabled {
             background: #cbd5e0;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-        
+
         .results {
             display: none;
             background: white;
@@ -348,11 +348,11 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             animation: fadeIn 0.8s ease;
         }
-        
+
         .results.show {
             display: block;
         }
-        
+
         .score-circle {
             width: 150px;
             height: 150px;
@@ -364,7 +364,7 @@
             margin: 0 auto 30px;
             position: relative;
         }
-        
+
         .score-circle::before {
             content: '';
             position: absolute;
@@ -373,20 +373,20 @@
             background: white;
             border-radius: 50%;
         }
-        
+
         .score-text {
             position: relative;
             font-size: 2.5rem;
             font-weight: 800;
             color: #2d3748;
         }
-        
+
         .score-message {
             font-size: 1.3rem;
             color: #4a5568;
             margin-bottom: 20px;
         }
-        
+
         .btn-restart {
             padding: 15px 40px;
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
@@ -398,12 +398,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .btn-restart:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
         }
-        
+
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -414,19 +414,19 @@
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes slideUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
         .timer {
             position: fixed;
             top: 20px;
@@ -442,21 +442,21 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .timer-icon {
             font-size: 1.2rem;
         }
-        
+
         .timer.warning {
             color: #c53030;
             animation: pulse 1s infinite;
         }
-        
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-        
+
         .status-badge {
             display: inline-block;
             padding: 5px 12px;
@@ -465,17 +465,17 @@
             font-weight: 600;
             margin-left: 10px;
         }
-        
+
         .status-badge.correct {
             background: #c6f6d5;
             color: #22543d;
         }
-        
+
         .status-badge.wrong {
             background: #fed7d7;
             color: #c53030;
         }
-        
+
         .gemini-help-box {
             display: none;
             margin-top: 15px;
@@ -484,19 +484,19 @@
             border-radius: 12px;
             border: 2px solid #a78bfa;
         }
-        
+
         .gemini-help-box.show {
             display: block;
             animation: fadeIn 0.5s ease;
         }
-        
+
         .gemini-help-text {
             color: #5b21b6;
             font-size: 0.9rem;
             margin-bottom: 10px;
             font-weight: 500;
         }
-        
+
         .copy-notification {
             position: fixed;
             bottom: 30px;
@@ -515,12 +515,12 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .copy-notification.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8rem;
@@ -536,7 +536,7 @@
                 justify-content: center;
             }
         }
-        
+
         .example-box {
             background: #f7fafc;
             padding: 12px;
@@ -545,14 +545,14 @@
             border-left: 3px solid #1e3c72;
             font-style: italic;
         }
-        
+
         .rule-highlight {
             background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 600;
         }
-        
+
         .law-reference {
             background: #e6fffa;
             padding: 8px 12px;
@@ -563,7 +563,7 @@
             margin: 10px 0;
             display: inline-block;
         }
-        
+
         .jurisprudence-box {
             background: #faf5ff;
             padding: 12px;
@@ -573,6 +573,7 @@
             font-size: 0.9rem;
         }
     </style>
+<base target="_blank">
 </head>
 <body>
     <div class="copy-notification" id="copyNotification">
@@ -588,19 +589,19 @@
     <div class="container">
         <div class="header">
             <h1>📚 Simulado INSS 2025 - Prova 1</h1>
-            <p>Direito Administrativo: Responsabilidade Civil do Estado - 20 Questões Inéditas (Estilo CEBRASPE)</p>
+            <p>Direito Administrativo: Licitação - Princípios e Fases - 20 Questões Inéditas (Estilo CEBRASPE)</p>
         </div>
-        
+
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
         </div>
 
         <div id="quiz-container">
             <!-- Questão 1 -->
-            <div class="question-card" style="animation-delay: 0.1s" data-correct="A" data-question="Teoria do risco administrativo - CF/88">
+            <div class="question-card" style="animation-delay: 0.1s" data-correct="A" data-question="Princípios da licitação - Lei 14.133/2021">
                 <span class="question-number">Questão 1</span>
                 <p class="question-text">
-                    (CEBRASPE - Estilo INSS) Julgue o item: De acordo com o art. 37, §6º, da Constituição Federal de 1988, as pessoas jurídicas de direito público e as de direito privado prestadoras de serviços públicos respondem objetivamente pelos danos que seus agentes, nessa qualidade, causarem a terceiros, assegurado o direito de regresso contra o responsável nos casos de dolo ou culpa.
+                    (CEBRASPE - Estilo INSS) Julgue o item: A Lei 14.133/2021, que estabelece normas gerais sobre licitações e contratos administrativos, consagra como princípios da licitação a vinculação ao instrumento convocatório, a isonomia, a probidade administrativa, a legalidade, a impessoalidade, a publicidade, a eficiência, a autonomia das decisões da comissão de licitação e o julgamento objetivo.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 1, 'A')">
@@ -617,27 +618,36 @@
                 <div class="explanation" id="exp-1">
                     <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Base Constitucional da Responsabilidade Civil do Estado:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º</div><br>
-                        
-                        O dispositivo constitucional estabelece a <strong>responsabilidade objetiva</strong> do Estado, fundamentada na <strong>teoria do risco administrativo</strong>. Isso significa que basta a comprovação do dano e do nexo causal entre a atividade estatal e o prejuízo para que haja o dever de indenizar, independentemente de culpa ou dolo do agente público.<br><br>
-                        
-                        <strong>Elementos da responsabilidade objetiva:</strong><br>
-                        1. <strong>Conduta:</strong> Ato do agente público na qualidade de tal<br>
-                        2. <strong>Dano:</strong> Prejuízo material ou moral ao particular<br>
-                        3. <strong>Nexo causal:</strong> Relação de causa e efeito entre a conduta e o dano<br><br>
-                        
-                        <strong>Direito de regresso:</strong> O Estado pode recorrer contra o agente que agiu com dolo ou culpa para reaver o valor pago na indenização. Em relação ao agente, a responsabilidade é subjetiva.<br><br>
-                        
-                        <strong>Abrangência:</strong> Aplica-se à administração direta, autarquias, fundações públicas, empresas públicas e sociedades de economia mista quando prestadoras de serviço público.<br><br>
-                        
+                        <strong>Princípios da Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 5º</div><br>
+
+                        O art. 5º da nova Lei de Licitações estabelece os princípios que regem as licitações e contratos administrativos:<br><br>
+
+                        <strong>I - Vinculação ao instrumento convocatório:</strong> A Administração deve cumprir rigorosamente o edital e seus anexos.<br><br>
+
+                        <strong>II - Isonomia:</strong> Igualdade de condições para todos os licitantes.<br><br>
+
+                        <strong>III - Probidade administrativa:</strong> Atuação com honestidade, decoro e lealdade.<br><br>
+
+                        <strong>IV - Legalidade:</strong> Estrita observância da lei.<br><br>
+
+                        <strong>V - Impessoalidade:</strong> Ausência de favorecimento ou discriminação pessoal.<br><br>
+
+                        <strong>VI - Publicidade:</strong> Transparência nos atos administrativos.<br><br>
+
+                        <strong>VII - Eficiência:</strong> Obtenção do melhor resultado com menor custo.<br><br>
+
+                        <strong>VIII - Autonomia das decisões da comissão de licitação:</strong> Independência técnica da comissão.<br><br>
+
+                        <strong>IX - Julgamento objetivo:</strong> Critérios claros e previamente estabelecidos.<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Teoria do Risco Administrativo:</div>
-                            <strong>Natureza:</strong> Responsabilidade objetiva (sem culpa)<br>
-                            <strong>Requisitos:</strong> Conduta + Dano + Nexo causal<br>
-                            <strong>Excludentes:</strong> Culpa exclusiva da vítima, caso fortuito, força maior<br>
-                            <strong>Regresso:</strong> Possível contra agente doloso ou culposo
+                            <div class="comparison-title">📊 Princípios da Licitação:</div>
+                            <strong>Base legal:</strong> Lei 14.133/2021, art. 5º<br>
+                            <strong>Novidade:</strong> Autonomia da comissão e julgamento objetivo<br>
+                            <strong>Princípios tradicionais:</strong> Legalidade, isonomia, impessoalidade, publicidade, eficiência, probidade<br>
+                            <strong>Princípio da vinculação:</strong> Especificidade da licitação
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-1">
@@ -653,10 +663,10 @@
             </div>
 
             <!-- Questão 2 -->
-            <div class="question-card" style="animation-delay: 0.2s" data-correct="B" data-question="Responsabilidade por omissão - Faute du service">
+            <div class="question-card" style="animation-delay: 0.2s" data-correct="B" data-question="Fases da licitação - Dispensa e inexigibilidade">
                 <span class="question-number">Questão 2</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: A responsabilidade civil do Estado por omissão é objetiva, aplicando-se a teoria do risco administrativo sempre que o Estado deixa de agir para proteger o particular, independentemente da comprovação de culpa do agente público.
+                    (CEBRASPE) Julgue o item: A Lei 14.133/2021 manteve as modalidades de licitação tradicionais (concorrência, tomada de preços, convite, concurso e leilão) e acrescentou a modalidade pregão como forma específica para aquisição de bens e serviços comuns.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 2, 'A')">
@@ -673,33 +683,33 @@
                 <div class="explanation" id="exp-2">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Erro conceitual grave!</strong> A responsabilidade por omissão é <strong>subjetiva</strong>, não objetiva.<br><br>
-                        
-                        <div class="law-reference">Súmula 546 do STJ</div><br>
-                        
-                        <strong>Responsabilidade por Omissão (Faute du Service):</strong><br>
-                        Quando o Estado <strong>deixa de agir</strong> quando deveria ter agido (omissão), a responsabilidade é <strong>subjetiva</strong>, baseada na <strong>teoria da culpa administrativa</strong> (culpa do serviço).<br><br>
-                        
-                        <strong>Requisitos para responsabilização por omissão:</strong><br>
-                        1. <strong>Dever de agir:</strong> Obrigação legal de proteção ou fiscalização<br>
-                        2. <strong>Omissão culposa:</strong> Negligência, imprudência ou imperícia do Estado<br>
-                        3. <strong>Dano:</strong> Prejuízo efetivo ao particular<br>
-                        4. <strong>Nexo causal:</strong> Relação entre a omissão e o dano<br><br>
-                        
-                        <strong>Exceção - Omissão específica:</strong><br>
-                        Há exceções em que a omissão gera responsabilidade objetiva, como:<br>
-                        • Morte de preso sob custódia do Estado<br>
-                        • Queda em desnível de via pública mal conservada<br>
-                        • Acidentes em locais onde há dever específico de vigilância<br><br>
-                        
-                        <strong>Jurisprudência:</strong> O STJ entende que, na omissão genérica, deve-se comprovar a culpa do Estado (negligência na fiscalização ou manutenção).<br><br>
-                        
+                        <strong>Erro conceitual grave!</strong> A Lei 14.133/2021 <strong>suprimiu</strong> as modalidades tradicionais de licitação (concorrência, tomada de preços, convite, concurso e leilão) e estabeleceu <strong>novas formas de licitação</strong>.<br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 28</div><br>
+
+                        <strong>Novas formas de licitação (art. 28):</strong><br>
+
+                        1. <strong>Pregão:</strong> Para aquisição de bens e serviços comuns<br>
+                        2. <strong>Concorrência:</strong> Para obras, serviços de engenharia e outros serviços<br>
+                        3. <strong>Diálogo competitivo:</strong> Para contratos complexos de inovação tecnológica<br>
+                        4. <strong>Concurso de projetos:</strong> Para seleção de projetos técnicos<br>
+                        5. <strong>Leilão:</strong> Para alienação de bens móveis ou imóveis<br><br>
+
+                        <strong>Supressão das antigas modalidades:</strong><br>
+                        • <strong>Tomada de preços:</strong> Extinta<br>
+                        • <strong>Convite:</strong> Extinto<br>
+                        • <strong>Concurso:</strong> Transformado em "concurso de projetos"<br>
+                        • <strong>Leilão:</strong> Mantido apenas para alienação de bens<br><br>
+
+                        <strong>Correção da afirmação:</strong><br>
+                        A Lei 14.133/2021 <strong>não manteve</strong> as modalidades tradicionais. Criou novas formas de licitação, mantendo apenas o pregão (com nova regulamentação) e o leilão (para alienação).<br><br>
+
                         <div class="comparison-box">
                             <div class="comparison-title">⚠️ Correção:</div>
-                            <strong>Por omissão (regra):</strong> Responsabilidade subjetiva (culpa)<br>
-                            <strong>Por omissão (exceção):</strong> Responsabilidade objetiva quando há dever específico de proteção<br>
-                            <strong>Teoria aplicável:</strong> Culpa administrativa (faute du service)<br>
-                            <strong>Ônus da prova:</strong> Cabe ao particular comprovar a culpa estatal
+                            <strong>Antiga lei (8.666/93):</strong> Concorrência, tomada de preços, convite, concurso, leilão<br>
+                            <strong>Nova lei (14.133/21):</strong> Pregão, concorrência, diálogo competitivo, concurso de projetos, leilão<br>
+                            <strong>Extintas:</strong> Tomada de preços e convite<br>
+                            <strong>Transformada:</strong> Concurso → Concurso de projetos
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-2">
@@ -715,69 +725,82 @@
             </div>
 
             <!-- Questão 3 -->
-            <div class="question-card" style="animation-delay: 0.3s" data-correct="C" data-question="Causas excludentes da responsabilidade">
+            <div class="question-card" style="animation-delay: 0.3s" data-correct="C" data-question="Dispensa de licitação - Lei 14.133/2021">
                 <span class="question-number">Questão 3</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre as causas excludentes da responsabilidade civil do Estado na teoria do risco administrativo:
+                    (CEBRASPE) Assinale a alternativa correta sobre as hipóteses de dispensa de licitação na Lei 14.133/2021:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 3, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">A teoria do risco integral não admite qualquer causa excludente, sendo o Estado responsável mesmo em caso de culpa exclusiva da vítima</span>
+                        <span class="alternative-text">A dispensa de licitação é possível para contratos de até R$ 100.000,00 para obras e serviços de engenharia e R$ 50.000,00 para outros serviços e compras</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 3, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">O caso fortuito interno, inerente à atividade estatal, exclui automaticamente a responsabilidade do Estado</span>
+                        <span class="alternative-text">A Lei 14.133/2021 extinguiu todas as hipóteses de dispensa de licitação, tornando obrigatória a licitação para todas as contratações da Administração</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 3, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">A culpa exclusiva da vítima rompe o nexo de causalidade, excluindo a responsabilidade civil do Estado</span>
+                        <span class="alternative-text">A dispensa de licitação é admitida em casos de guerra, grave perturbação da ordem, emergência ou calamidade pública, quando caracterizada urgência de atendimento de situação que possa causar prejuízo ou comprometer a segurança de pessoas, obras, serviços, equipamentos e outros bens, públicos ou particulares</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 3, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A culpa concorrente do particular exclui totalmente a responsabilidade do Estado</span>
+                        <span class="alternative-text">A dispensa de licitação só é possível para contratos de até R$ 10.000,00, independentemente do objeto da contratação</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 3, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">A força maior exclui a responsabilidade apenas quando comprovada a impossibilidade absoluta de prevenção pelo Estado</span>
+                        <span class="alternative-text">A dispensa de licitação é automática para todas as contratações de órgãos públicos federais, estaduais e municipais</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-3">
                     <div class="explanation-header">Resposta Correta: Letra C</div>
                     <div class="explanation-text">
-                        <strong>Causas Excludentes da Responsabilidade Civil do Estado:</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência pacífica do STF e STJ</div><br>
-                        
-                        <strong>1. Culpa exclusiva da vítima:</strong><br>
-                        Quando o dano é causado <strong>exclusivamente</strong> pela vítima, o nexo de causalidade é rompido, excluindo a responsabilidade do Estado. O ônus da prova cabe à Administração.<br><br>
-                        
-                        <strong>2. Caso fortuito ou força maior:</strong><br>
-                        • <strong>Fortuito externo:</strong> Evento estranho à atividade estatal (ex: terremoto, guerra) - exclui responsabilidade<br>
-                        • <strong>Fortuito interno:</strong> Risco inerente à atividade (ex: explosão em fábrica de pólvora) - <strong>não exclui</strong> a responsabilidade<br><br>
-                        
-                        <strong>3. Ato exclusivo de terceiro:</strong><br>
-                        Quando o dano é causado exclusivamente por terceiro, sem qualquer contribuição do Estado.<br><br>
-                        
+                        <strong>Dispensa de Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 72</div><br>
+
+                        <strong>Hipóteses de dispensa (art. 72):</strong><br>
+
+                        <strong>I - Guerra ou grave perturbação da ordem:</strong><br>
+                        Emergência ou calamidade pública, quando caracterizada urgência de atendimento de situação que possa causar prejuízo ou comprometer a segurança de pessoas, obras, serviços, equipamentos e outros bens.<br><br>
+
+                        <strong>II - Assistência humanitária:</strong><br>
+                        Entrega de bens ou prestação de serviços em situações de calamidade pública ou emergência.<br><br>
+
+                        <strong>III - Contratação de instituições estrangeiras:</strong><br>
+                        Quando não houver instituição nacional habilitada.<br><br>
+
+                        <strong>IV - Aquisição de bens ou serviços de produção exclusiva:</strong><br>
+                        Quando houver inviabilidade de competição por exclusividade de produto ou serviço.<br><br>
+
+                        <strong>V - Contratação de agência de notícias:</strong><br>
+                        Para acesso a notícias, informações, imagens e áudios.<br><br>
+
+                        <strong>VI - Doação:</strong><br>
+                        Recebimento de bens doáveis.<br><br>
+
+                        <strong>VII - Transferência de bens entre órgãos da Administração.</strong><br><br>
+
+                        <strong>Valores para dispensa (art. 75):</strong><br>
+                        Os valores são fixados por ato do Poder Executivo e variam conforme o ente federativo.<br><br>
+
                         <strong>Análise das alternativas erradas:</strong><br>
-                        <strong>A)</strong> Errado - A teoria do risco integral admite exclusivamente a culpa exclusiva da vítima como excludente<br>
-                        <strong>B)</strong> Errado - O fortuito interno não exclui a responsabilidade<br>
-                        <strong>D)</strong> Errado - A culpa concorrente atenua (reduz a indenização), mas não exclui totalmente<br>
-                        <strong>E)</strong> Errado - A força maior exclui independentemente da prevenção<br><br>
-                        
+                        <strong>A)</strong> Errado - Os valores são fixados por ato do Poder Executivo, não são fixos na lei<br>
+                        <strong>B)</strong> Errado - A lei manteve as hipóteses de dispensa<br>
+                        <strong>D)</strong> Errado - Não há valor único de R$ 10.000,00<br>
+                        <strong>E)</strong> Errado - A dispensa não é automática, requer justificativa<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Causas Excludentes:</div>
-                            <strong>Culpa exclusiva da vítima:</strong> Exclui totalmente<br>
-                            <strong>Culpa concorrente:</strong> Atenua (reduz indenização)<br>
-                            <strong>Fortuito externo:</strong> Exclui<br>
-                            <strong>Fortuito interno:</strong> Não exclui<br>
-                            <strong>Ato exclusivo de terceiro:</strong> Exclui<br>
-                            <strong>Força maior:</strong> Exclui
+                            <div class="comparison-title">📊 Dispensa de Licitação:</div>
+                            <strong>Base legal:</strong> Lei 14.133/2021, art. 72<br>
+                            <strong>Principais hipóteses:</strong> Guerra, emergência, calamidade, assistência humanitária, exclusividade<br>
+                            <strong>Valores:</strong> Fixados por ato do Poder Executivo<br>
+                            <strong>Requisito:</strong> Justificativa da necessidade
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-3">
@@ -793,10 +816,10 @@
             </div>
 
             <!-- Questão 4 -->
-            <div class="question-card" style="animation-delay: 0.4s" data-correct="A" data-question="Dano moral e responsabilidade do INSS">
+            <div class="question-card" style="animation-delay: 0.4s" data-correct="A" data-question="Inexigibilidade de licitação - Lei 14.133/2021">
                 <span class="question-number">Questão 4</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O INSS pode ser responsabilizado por dano moral quando, em razão de erro na perícia médica ou demora excessiva na análise de requerimento de benefício, causa abalo emocional e constrangimentos ao segurado, sendo dispensada a prova do prejuízo moral quando o dano é in re ipsa.
+                    (CEBRASPE) Julgue o item: A inexigibilidade de licitação é admitida quando houver inviabilidade de competição, em razão da natureza do trabalho artístico ou científico, ou ainda quando a contratação de profissional de qualquer setor cultural for imprescindível para a execução de obra ou serviço de natureza artística, desde que consagrado pela crítica especializada ou pela opinião pública.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 4, 'A')">
@@ -813,32 +836,40 @@
                 <div class="explanation" id="exp-4">
                     <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade do INSS por Dano Moral:</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência do TRF4 e TRF2</div><br>
-                        
-                        <strong>Hipóteses de dano moral reconhecidas contra o INSS:</strong><br>
-                        1. <strong>Erro na perícia médica:</strong> Laudo que nega benefício de forma indevida<br>
-                        2. <strong>Demora excessiva:</strong> Atraso na análise de requerimento ou implantação de benefício<br>
-                        3. <strong>Descontos indevidos:</strong> Descontos em benefício sem autorização (empréstimos fraudulentos)<br>
-                        4. <strong>Negativa indevida:</strong> Recusa de benefício comprovadamente devido<br><br>
-                        
-                        <strong>Dano moral in re ipsa:</strong><br>
-                        Em diversas situações, o dano moral é <strong>presumido</strong> (in re ipsa), dispensando a prova do prejuízo:<br>
-                        • Privação de verba alimentar (aposentadoria/salário-maternidade)<br>
-                        • Demora excessiva na implantação de benefício<br>
-                        • Erro médico pericial que causa sofrimento psíquico<br><br>
-                        
-                        <strong>Jurisprudência aplicável:</strong><br>
-                        "O desconto sem autorização do titular de benefício previdenciário decorrente de fraude na concessão de empréstimo é ato objetivamente capaz de gerar prejuízo moral, pois causa constrangimento e abalo emocional ao interessado, sobretudo quando se trata de aposentado que recebe aposentadoria em valor irrisório, renda essa que é indispensável à sua própria subsistência." (TRF2)<br><br>
-                        
+                        <strong>Inexigibilidade de Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 74</div><br>
+
+                        <strong>Hipóteses de inexigibilidade (art. 74):</strong><br>
+
+                        <strong>I - Profissional de qualquer setor cultural:</strong><br>
+                        Imprescindível para a execução de obra ou serviço de natureza artística, desde que consagrado pela crítica especializada ou pela opinião pública.<br><br>
+
+                        <strong>II - Profissional ou empresa detentora de direito de propriedade intelectual:</strong><br>
+                        Quando a obra ou serviço só possa ser executado por esse profissional ou empresa.<br><br>
+
+                        <strong>III - Profissional, empresa ou entidade de notório saber especializado:</strong><br>
+                        Inexistindo outros tecnicamente qualificados no mercado.<br><br>
+
+                        <strong>IV - Empresa ou entidade para pesquisa, desenvolvimento e inovação:</strong><br>
+                        Contratação de instituição de ciência e tecnologia (ICT) ou empresa inovadora.<br><br>
+
+                        <strong>V - Contratação de bens ou serviços de produção exclusiva:</strong><br>
+                        Quando houver inviabilidade de competição por exclusividade de produto ou serviço.<br><br>
+
+                        <strong>VI - Contratação de serviços técnicos de natureza singular:</strong><br>
+                        Com profissionais ou empresas de notório saber especializado.<br><br>
+
+                        <strong>Distinção entre dispensa e inexigibilidade:</strong><br>
+                        • <strong>Dispensa:</strong> Há possibilidade de competição, mas a lei autoriza não licitar<br>
+                        • <strong>Inexigibilidade:</strong> Não há possibilidade de competição (exclusividade, singularidade)<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Dano Moral contra INSS:</div>
-                            <strong>Erro pericial:</strong> Responsabilidade objetiva<br>
-                            <strong>Demora excessiva:</strong> Responsabilidade subjetiva (omissão)<br>
-                            <strong>In re ipsa:</strong> Dano moral presumido<br>
-                            <strong>Valor:</strong> Arbitrado pelo juiz (não há tabela fixa)<br>
-                            <strong>Prescrição:</strong> 5 anos (civil) ou 3 anos (administrativo)
+                            <div class="comparison-title">📊 Inexigibilidade:</div>
+                            <strong>Base legal:</strong> Lei 14.133/2021, art. 74<br>
+                            <strong>Principais hipóteses:</strong> Profissional artístico, propriedade intelectual, notório saber, ICT<br>
+                            <strong>Característica:</strong> Inviabilidade de competição<br>
+                            <strong>Requisito:</strong> Justificativa da exclusividade
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-4">
@@ -854,73 +885,81 @@
             </div>
 
             <!-- Questão 5 -->
-            <div class="question-card" style="animation-delay: 0.5s" data-correct="D" data-question="Risco integral vs. Risco administrativo">
+            <div class="question-card" style="animation-delay: 0.5s" data-correct="D" data-question="Fases da licitação - Lei 14.133/2021">
                 <span class="question-number">Questão 5</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre as teorias da responsabilidade civil do Estado:
+                    (CEBRASPE) Assinale a alternativa correta sobre as fases da licitação na Lei 14.133/2021:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 5, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">A teoria do risco integral é a regra geral no ordenamento jurídico brasileiro, aplicando-se a todas as atividades estatais</span>
+                        <span class="alternative-text">A Lei 14.133/2021 estabelece cinco fases na licitação: planejamento, preparação do instrumento convocatório, divulgação, recebimento e julgamento das propostas, e contratação</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 5, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">Na teoria do risco administrativo, o Estado responde apenas se houver culpa do agente público</span>
+                        <span class="alternative-text">As fases da licitação são apenas três: preparação do edital, recebimento de propostas e julgamento, eliminando-se a fase de planejamento</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 5, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">A teoria do risco integral admite a comprovação de caso fortuito para afastar a responsabilidade do Estado</span>
+                        <span class="alternative-text">A fase de planejamento é opcional e pode ser suprimida em licitações de pequeno valor</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 5, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A teoria do risco administrativo é a regra constitucional, enquanto o risco integral é exceção aplicável a atividades especiais como o serviço de polícia</span>
+                        <span class="alternative-text">A Lei 14.133/2021 estabelece sete fases na licitação: preparatória, divulgação do edital, apresentação de propostas e lances, julgamento, habilitação, recursal e homologação</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 5, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">Ambas as teorias exigem a comprovação do elemento subjetivo (culpa) para a responsabilização do Estado</span>
+                        <span class="alternative-text">As fases da licitação são definidas exclusivamente pelo órgão licitante, sem previsão legal obrigatória</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-5">
                     <div class="explanation-header">Resposta Correta: Letra D</div>
                     <div class="explanation-text">
-                        <strong>Teoria do Risco Administrativo vs. Risco Integral:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º (Risco Administrativo)</div><br>
-                        
-                        <strong>Teoria do Risco Administrativo (Regra):</strong><br>
-                        • Baseada no art. 37, §6º, da CF/88<br>
-                        • Responsabilidade objetiva<br>
-                        • Admite causas excludentes (culpa exclusiva da vítima, caso fortuito, força maior)<br>
-                        • Aplicável às atividades normais da Administração<br><br>
-                        
-                        <strong>Teoria do Risco Integral (Exceção):</strong><br>
-                        • Aplicável a atividades especiais de <strong>alto risco</strong><br>
-                        • Responsabilidade absoluta (garantia do resultado)<br>
-                        • Admite apenas a culpa exclusiva da vítima como excludente<br>
-                        • Exemplos: serviço de polícia, atividades com explosivos, contenção de animais perigosos<br><br>
-                        
-                        <strong>Diferença fundamental:</strong><br>
-                        No risco integral, o Estado responde mesmo sem culpa e praticamente sem excludentes, funcionando como uma espécie de "seguradora universal".<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - O risco integral é exceção, não regra<br>
-                        <strong>B)</strong> Errado - No risco administrativo não há necessidade de culpa<br>
-                        <strong>C)</strong> Errado - O risco integral só admite culpa exclusiva da vítima<br>
-                        <strong>E)</strong> Errado - Ambas são formas de responsabilidade objetiva<br><br>
-                        
+                        <strong>Fases da Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 17</div><br>
+
+                        <strong>As sete fases da licitação:</strong><br>
+
+                        <strong>I - Preparatória:</strong><br>
+                        Elaboração do termo de referência ou projeto básico, estudos técnicos preliminares, definição da forma de contratação e estimativa de preço.<br><br>
+
+                        <strong>II - Divulgação do edital:</strong><br>
+                        Publicação do instrumento convocatório em acesso livre na internet e no Portal Nacional de Contratações Públicas (PNCP).<br><br>
+
+                        <strong>III - Apresentação de propostas e lances:</strong><br>
+                        Apresentação das propostas pelos licitantes no prazo estabelecido no edital.<br><br>
+
+                        <strong>IV - Julgamento:</strong><br>
+                        Análise das propostas pelos membros da comissão de licitação conforme critérios estabelecidos.<br><br>
+
+                        <strong>V - Habilitação:</strong><br>
+                        Verificação do cumprimento dos requisitos de habilitação do licitante vencedor.<br><br>
+
+                        <strong>VI - Recursal:</strong><br>
+                        Prazo para interposição de recursos administrativos.<br><br>
+
+                        <strong>VII - Homologação:</strong><br>
+                        Aprovação final do procedimento pela autoridade competente.<br><br>
+
+                        <strong>Inversão de fases:</strong><br>
+                        A habilitação pode anteceder o julgamento quando previsto no edital (art. 17, §1º).<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Risco Administrativo vs. Integral:</div>
-                            <strong>Risco Administrativo:</strong> Regra geral<br>
-                            <strong>Risco Integral:</strong> Exceção (atividades de alto risco)<br>
-                            <strong>Excludentes RA:</strong> Culpa vítima, fortuito, força maior<br>
-                            <strong>Excludentes RI:</strong> Apenas culpa exclusiva da vítima<br>
-                            <strong>Base legal:</strong> CF/88, art. 37, §6º (ambas)
+                            <div class="comparison-title">📊 Fases da Licitação:</div>
+                            <strong>1.</strong> Preparatória (obrigatória)<br>
+                            <strong>2.</strong> Divulgação do edital<br>
+                            <strong>3.</strong> Apresentação de propostas e lances<br>
+                            <strong>4.</strong> Julgamento<br>
+                            <strong>5.</strong> Habilitação<br>
+                            <strong>6.</strong> Recursal<br>
+                            <strong>7.</strong> Homologação<br>
+                            <strong>Base legal:</strong> Art. 17, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-5">
@@ -934,12 +973,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- Questão 6 -->
-            <div class="question-card" style="animation-delay: 0.6s" data-correct="B" data-question="Responsabilidade por ato lícito - Sacrifício">
+            <div class="question-card" style="animation-delay: 0.6s" data-correct="B" data-question="Planejamento da licitação - Termo de referência">
                 <span class="question-number">Questão 6</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: Quando o Estado pratica ato administrativo lícito, mas que causa dano anormal e específico a determinado indivíduo (sacrifício), não há dever de indenizar, pois a atividade estatal legítima não gera responsabilidade civil.
+                    (CEBRASPE) Julgue o item: O termo de referência é o documento elaborado na fase de planejamento da licitação que deve conter a descrição detalhada do objeto a ser contratado, as especificações técnicas, os critérios de medição e pagamento, e a estimativa de preço, sendo obrigatório apenas para licitações de obras e serviços de engenharia.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 6, 'A')">
@@ -956,32 +994,32 @@
                 <div class="explanation" id="exp-6">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Ato Lícito (Teoria do Sacrifício):</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência do STF - RE 160.401/SP</div><br>
-                        
-                        Mesmo em atos <strong>lícitos</strong> da Administração, quando há <strong>dano anormal e específico</strong> a determinado indivíduo (sacrifício), o Estado deve indenizar. Trata-se da responsabilidade por <strong>ato válido</strong> ou <strong>sacrifício individual</strong>.<br><br>
-                        
-                        <strong>Requisitos:</strong><br>
-                        1. <strong>Ato lícito:</strong> Ação ou omissão dentro da legalidade<br>
-                        2. <strong>Dano anormal:</strong> Prejuízo além do que a sociedade normalmente suporta<br>
-                        3. <strong>Dano específico:</strong> Afeta particularmente determinada pessoa, não a coletividade<br>
-                        4. <strong>Sacrifício:</strong> A pessoa suporta sozinha ônus que deveria ser socializado<br><br>
-                        
-                        <strong>Exemplos:</strong><br>
-                        • Demolição de imóvel para obra pública (desapropriação indireta)<br>
-                        • Interdição de via pública para evento que prejudica comércio específico<br>
-                        • Restrição de uso de propriedade por interesse público<br><br>
-                        
-                        <strong>Fundamento:</strong> O princípio da <strong>igualdade</strong> (art. 5º, caput, CF/88) - não se pode exigir que um único cidadão suporte ônus que deveria ser dividido por toda a coletividade.<br><br>
-                        
+                        <strong>Erro conceitual!</strong> O termo de referência <strong>não é obrigatório apenas para obras e serviços de engenharia</strong>. Ele é exigido para <strong>todas as contratações de bens e serviços</strong>, enquanto as obras e serviços de engenharia exigem <strong>projeto básico ou executivo</strong>.<br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 6º, XXIII e art. 40</div><br>
+
+                        <strong>Documentos de planejamento:</strong><br>
+
+                        1. <strong>Termo de referência:</strong><br>
+                        • Obrigatório para <strong>contratação de bens e serviços</strong><br>
+                        • Deve conter: descrição do objeto, especificações técnicas, critérios de medição e pagamento, estimativa de preço, metas de desempenho (quando aplicável)<br><br>
+
+                        2. <strong>Projeto básico:</strong><br>
+                        • Obrigatório para <strong>obras e serviços de engenharia</strong><br>
+                        • Deve conter: elementos que caracterizam a obra ou serviço, definidos de forma a evidenciar a solução técnica adotada<br><br>
+
+                        3. <strong>Projeto executivo:</strong><br>
+                        • Exigido quando necessário para execução completa da obra<br>
+                        • Contém todos os elementos necessários para execução<br><br>
+
+                        <strong>Correção da afirmação:</strong><br>
+                        O termo de referência é obrigatório para <strong>bens e serviços</strong>, não para obras. Para obras e serviços de engenharia, exige-se <strong>projeto básico ou executivo</strong>.<br><br>
+
                         <div class="comparison-box">
                             <div class="comparison-title">⚠️ Correção:</div>
-                            <strong>Ato lícito + dano anormal/específico = Indenização</strong><br>
-                            <strong>Fundamento:</strong> Princípio da igualdade<br>
-                            <strong>Natureza:</strong> Responsabilidade por sacrifício<br>
-                            <strong>Exemplo:</strong> Desapropriação indireta<br>
-                            <strong>Diferença:</strong> Aqui o ato é legal, mas gera dano específico
+                            <strong>Bens e serviços:</strong> Termo de referência obrigatório<br>
+                            <strong>Obras e engenharia:</strong> Projeto básico ou executivo<br>
+                            <strong>Base legal:</strong> Lei 14.133/2021, art. 6º, XXIII e art. 40
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-6">
@@ -997,10 +1035,10 @@
             </div>
 
             <!-- Questão 7 -->
-            <div class="question-card" style="animation-delay: 0.7s" data-correct="A" data-question="Direito de regresso do Estado">
+            <div class="question-card" style="animation-delay: 0.7s" data-correct="A" data-question="Pregão - Características">
                 <span class="question-number">Questão 7</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O direito de regresso do Estado contra o agente público responsável pelo dano somente é exercitável quando fica demonstrado que o servidor agiu com dolo ou culpa grave na causação do prejuízo ao particular.
+                    (CEBRASPE) Julgue o item: O pregão, na forma eletrônica, é a modalidade de licitação obrigatória para a aquisição de bens e serviços comuns, sendo admitida a utilização da modalidade concorrência quando o valor estimado da contratação for igual ou superior ao limite estabelecido para dispensa de licitação multiplicado por 2,5.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 7, 'A')">
@@ -1017,32 +1055,37 @@
                 <div class="explanation" id="exp-7">
                     <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Direito de Regresso do Estado (Ação Regressiva):</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º (final)</div><br>
-                        
-                        O art. 37, §6º, da Constituição assegura ao Estado o <strong>direito de regresso</strong> contra o agente responsável, mas <strong>apenas nos casos de dolo ou culpa</strong>.<br><br>
-                        
-                        <strong>Requisitos para o regresso:</strong><br>
-                        1. <strong>Dolo:</strong> Intenção deliberada de causar dano<br>
-                        2. <strong>Culpa:</strong> Negligência, imprudência ou imperícia<br>
-                        3. <strong>Provocação do dano:</strong> Conduta do agente causou o prejuízo<br>
-                        4. <strong>Pagamento pelo Estado:</strong> O ente público já indenizou o particular<br><br>
-                        
-                        <strong>Modalidades de culpa:</strong><br>
-                        • <strong>Culpa in eligendo:</strong> Culpa na escolha do agente (raro)<br>
-                        • <strong>Culpa in vigilando:</strong> Culpa na fiscalização do agente<br>
-                        • <strong>Culpa in custodiendo:</strong> Culpa na guarda/custódia<br><br>
-                        
-                        <strong>Observação:</strong> Se o agente agiu sem culpa (mero acidente de trabalho), o Estado não tem direito de regresso, arcando sozinho com a indenização.<br><br>
-                        
+                        <strong>Pregão - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 28, §1º</div><br>
+
+                        <strong>Características do pregão:</strong><br>
+
+                        1. <strong>Forma:</strong> <strong>Eletrônica obrigatória</strong> (art. 28, §2º)<br>
+                        A modalidade presencial foi extinta. Todas as licitações na forma de pregão devem ser realizadas por meio eletrônico.<br><br>
+
+                        2. <strong>Objeto:</strong> Bens e serviços comuns<br>
+                        São considerados comuns aqueles cujas características de natureza técnica e de desempenho possam ser objetivamente definidas pelo edital, por meio de especificações padrões.<br><br>
+
+                        3. <strong>Julgamento:</strong> Menor preço ou maior desconto<br>
+                        O pregão é modalidade em que a contratação é adjudicada ao licitante que oferecer o <strong>menor preço</strong> ou o <strong>maior desconto</strong>.<br><br>
+
+                        4. <strong>Exceção - Concorrência:</strong><br>
+                        É admitida a utilização da concorrência quando o valor estimado for igual ou superior ao limite de dispensa multiplicado por 2,5.<br><br>
+
+                        <strong>Vantagens do pregão eletrônico:</strong><br>
+                        • Maior agilidade no processo licitatório<br>
+                        • Transparência e publicidade<br>
+                        • Redução de custos administrativos<br>
+                        • Ampla concorrência<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Direito de Regresso:</div>
-                            <strong>Base legal:</strong> CF/88, art. 37, §6º<br>
-                            <strong>Requisito:</strong> Dolo ou culpa do agente<br>
-                            <strong>Objetivo:</strong> Reaver o valor pago ao lesado<br>
-                            <strong>Responsabilidade do Estado:</strong> Objetiva (para com o particular)<br>
-                            <strong>Responsabilidade do agente:</strong> Subjetiva (dolo ou culpa)
+                            <div class="comparison-title">📊 Pregão:</div>
+                            <strong>Forma:</strong> Eletrônica obrigatória<br>
+                            <strong>Objeto:</strong> Bens e serviços comuns<br>
+                            <strong>Julgamento:</strong> Menor preço ou maior desconto<br>
+                            <strong>Exceção:</strong> Concorrência quando valor ≥ limite dispensa × 2,5<br>
+                            <strong>Base legal:</strong> Art. 28, §§1º e 2º, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-7">
@@ -1058,72 +1101,88 @@
             </div>
 
             <!-- Questão 8 -->
-            <div class="question-card" style="animation-delay: 0.8s" data-correct="C" data-question="Responsabilidade das concessionárias de serviço público">
+            <div class="question-card" style="animation-delay: 0.8s" data-correct="C" data-question="Habilitação - Requisitos">
                 <span class="question-number">Questão 8</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade das concessionárias de serviço público:
+                    (CEBRASPE) Assinale a alternativa correta sobre a habilitação na licitação:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 8, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">As concessionárias respondem subjetivamente, sendo necessária a comprovação de culpa para a responsabilização</span>
+                        <span class="alternative-text">A habilitação é a fase em que se analisa a proposta de preços apresentada pelo licitante, verificando-se se está de acordo com o mercado</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 8, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">A responsabilidade das concessionárias é objetiva apenas quando prestam serviço gratuito à população</span>
+                        <span class="alternative-text">A habilitação pode ser exigida apenas dos três licitantes melhor classificados, dispensando-se a análise dos demais</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 8, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">As empresas concessionárias de serviço público respondem objetivamente pelos danos causados aos usuários, nos termos do art. 37, §6º, da CF/88</span>
+                        <span class="alternative-text">A habilitação é a fase de verificação do cumprimento dos requisitos de qualificação técnica, jurídica, fiscal, trabalhista e regularidade, podendo ser realizada de forma simultânea à apresentação das propostas ou em etapa posterior</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 8, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A responsabilidade das concessionárias é regulada exclusivamente pelo Código Civil, não se aplicando as regras da responsabilidade estatal</span>
+                        <span class="alternative-text">A habilitação é facultativa e pode ser suprimida pelo órgão licitante quando o valor da licitação for inferior a R$ 100.000,00</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 8, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">O Estado se exime de toda responsabilidade quando delega a prestação do serviço público a empresa concessionária</span>
+                        <span class="alternative-text">A habilitação deve ser realizada obrigatoriamente antes da apresentação das propostas, sendo vedada a sua realização em etapa posterior</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-8">
                     <div class="explanation-header">Resposta Correta: Letra C</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade das Concessionárias de Serviço Público:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º</div><br>
-                        
-                        O art. 37, §6º, da Constituição aplica-se não apenas aos entes estatais diretos, mas também às <strong>pessoas jurídicas de direito privado prestadoras de serviços públicos</strong>, incluindo concessionárias, permissionárias e autorizatárias.<br><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        As concessionárias respondem objetivamente pelos danos causados aos usuários do serviço público, aplicando-se a teoria do risco administrativo.<br><br>
-                        
-                        <strong>Responsabilidade solidária:</strong><br>
-                        O Estado (concedente) e a concessionária respondem <strong>solidariamente</strong> pelos danos causados ao usuário. O particular pode acionar qualquer um dos dois.<br><br>
-                        
-                        <strong>Exemplos de aplicação:</strong><br>
-                        • Concessionárias de energia elétrica<br>
-                        • Empresas de transporte público<br>
-                        • Concessionárias de rodovias<br>
-                        • Empresas de saneamento básico<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - A responsabilidade é objetiva, não subjetiva<br>
-                        <strong>B)</strong> Errado - Aplica-se independentemente da gratuidade<br>
-                        <strong>D)</strong> Errado - Aplica-se o art. 37, §6º, da CF, não apenas o CC<br>
-                        <strong>E)</strong> Errado - O Estado responde solidariamente<br><br>
-                        
+                        <strong>Habilitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 49 a 53</div><br>
+
+                        <strong>Conceito:</strong><br>
+                        A habilitação é a fase de verificação do cumprimento dos requisitos de <strong>qualificação técnica, jurídica, fiscal, trabalhista e regularidade</strong> exigidos no instrumento convocatório.<br><br>
+
+                        <strong>Documentos de habilitação:</strong><br>
+
+                        <strong>1. Qualificação jurídica:</strong><br>
+                        • Pessoa física: documento de identidade, CPF, inscrição no INSS e FGTS<br>
+                        • Pessoa jurídica: contrato social, ata de eleição, CNPJ<br><br>
+
+                        <strong>2. Regularidade fiscal:</strong><br>
+                        • Certidão negativa de débitos federais<br>
+                        • Certidão negativa de débitos estaduais e municipais<br><br>
+
+                        <strong>3. Qualificação técnica:</strong><br>
+                        • Registro profissional (quando exigido)<br>
+                        • Certidões de acervo técnico<br>
+                        • Comprovação de experiência<br><br>
+
+                        <strong>4. Qualificação econômico-financeira:</strong><br>
+                        • Balanço patrimonial<br>
+                        • Certidão negativa de falência ou recuperação judicial<br><br>
+
+                        <strong>5. Regularidade trabalhista:</strong><br>
+                        • Certidão negativa de débitos trabalhistas<br>
+                        • Comprovação de regularidade no FGTS<br><br>
+
+                        <strong>Momentos da habilitação:</strong><br>
+                        • <strong>Habilitação simultânea:</strong> Junto com a apresentação da proposta<br>
+                        • <strong>Habilitação posterior:</strong> Após o julgamento das propostas (apenas dos melhor classificados)<br><br>
+
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Errado - Habilitação não analisa preço, mas qualificação do licitante<br>
+                        <strong>B)</strong> Errado - Depende do momento: se simultânea, todos; se posterior, apenas os melhor classificados<br>
+                        <strong>D)</strong> Errado - Habilitação é obrigatória, não facultativa<br>
+                        <strong>E)</strong> Errado - Pode ser simultânea ou posterior<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Concessionárias:</div>
-                            <strong>Responsabilidade:</strong> Objetiva (art. 37, §6º, CF)<br>
-                            <strong>Solidariedade:</strong> Estado + concessionária<br>
-                            <strong>Excludentes:</strong> Culpa exclusiva da vítima, fortuito, força maior<br>
-                            <strong>Regulamentação:</strong> Lei 8.987/1995 (concessão)<br>
-                            <strong>Abrangência:</strong> Toda prestação de serviço público
+                            <div class="comparison-title">📊 Habilitação:</div>
+                            <strong>Objetivo:</strong> Verificar qualificação do licitante<br>
+                            <strong>Documentos:</strong> Jurídica, fiscal, técnica, econômico-financeira, trabalhista<br>
+                            <strong>Momentos:</strong> Simultânea ou posterior<br>
+                            <strong>Posterior:</strong> Apenas dos melhor classificados<br>
+                            <strong>Base legal:</strong> Arts. 49-53, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-8">
@@ -1139,10 +1198,10 @@
             </div>
 
             <!-- Questão 9 -->
-            <div class="question-card" style="animation-delay: 0.9s" data-correct="B" data-question="Prescrição e decadência">
+            <div class="question-card" style="animation-delay: 0.9s" data-correct="B" data-question="Sistema de registro de preços">
                 <span class="question-number">Questão 9</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: A ação de indenização por responsabilidade civil do Estado prescreve em 3 anos, contados da ciência do dano e de sua autoria, aplicando-se o prazo decadencial de 5 anos para o exercício do direito de regresso do Estado contra o agente culpado.
+                    (CEBRASPE) Julgue o item: O sistema de registro de preços é modalidade de licitação destinada à aquisição de bens e serviços comuns, mediante o estabelecimento de condições para registro de preços de forma simultânea por vários licitantes, sendo vedada sua utilização para obras e serviços de engenharia.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 9, 'A')">
@@ -1159,35 +1218,36 @@
                 <div class="explanation" id="exp-9">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Erro nos prazos!</strong> Os prazos de prescrição estão invertidos na questão.<br><br>
-                        
-                        <div class="law-reference">CC/2002, art. 205 e art. 1.078</div><br>
-                        
-                        <strong>Prazos corretos:</strong><br>
-                        
-                        <strong>1. Ação indenizatória contra o Estado:</strong><br>
-                        • <strong>Prazo:</strong> 5 anos (prescrição quinquenal do art. 205 do CC)<br>
-                        • <strong>Termo inicial:</strong> Ciência do dano e de sua autoria<br>
-                        • <strong>Natureza:</strong> Prazo prescricional (não decadencial)<br><br>
-                        
-                        <strong>2. Regresso do Estado contra o agente:</strong><br>
-                        • <strong>Prazo:</strong> 3 anos (art. 1.078 do CC)<br>
-                        • <strong>Termo inicial:</strong> Data do pagamento da indenização ao particular<br>
-                        • <strong>Natureza:</strong> Prazo prescricional<br><br>
-                        
+                        <strong>Erro conceitual!</strong> O sistema de registro de preços <strong>não é modalidade de licitação</strong>, mas sim um <strong>procedimento auxiliar</strong> de licitação. Além disso, sua utilização <strong>não é vedada</strong> para obras e serviços de engenharia.<br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 78</div><br>
+
+                        <strong>Sistema de registro de preços:</strong><br>
+
+                        <strong>Conceito:</strong><br>
+                        O sistema de registro de preços é um <strong>procedimento auxiliar</strong> de licitação, não uma modalidade. Ele estabelece condições para que a Administração possa registrar preços de bens e serviços para contratações futuras.<br><br>
+
+                        <strong>Características:</strong><br>
+                        • <strong>Não é modalidade:</strong> É um procedimento que pode ser utilizado nas formas de licitação (pregão, concorrência)<br>
+                        • <strong>Objeto:</strong> Bens e serviços comuns, mas <strong>também obras e serviços de engenharia</strong> (quando possível)<br>
+                        • <strong>Registro simultâneo:</strong> Vários licitantes podem ter preços registrados<br>
+                        • <strong>Contratação futura:</strong> A contratação efetiva ocorre posteriormente mediante solicitação<br><br>
+
+                        <strong>Vantagens:</strong><br>
+                        • Agilidade nas contratações futuras<br>
+                        • Economia de escala<br>
+                        • Redução de custos administrativos<br>
+                        • Possibilidade de aquisição programada<br><br>
+
                         <strong>Correção da afirmação:</strong><br>
-                        • Ação contra o Estado: <strong>5 anos</strong> (não 3)<br>
-                        • Regresso do Estado: <strong>3 anos</strong> (não 5)<br><br>
-                        
-                        <strong>Observação:</strong> O prazo de 3 anos para ação contra o Estado (via administrativa) é o prazo para impetrar mandado de segurança ou requerer administrativamente, mas na esfera judicial a prescrição é de 5 anos.<br><br>
-                        
+                        O sistema de registro de preços <strong>não é modalidade</strong> de licitação, mas procedimento auxiliar. E <strong>não é vedado</strong> para obras e serviços de engenharia, embora seja mais comum para bens e serviços comuns.<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">⚠️ Correção dos Prazos:</div>
-                            <strong>Ação indenizatória:</strong> 5 anos (CC, art. 205)<br>
-                            <strong>Regresso do Estado:</strong> 3 anos (CC, art. 1.078)<br>
-                            <strong>Termo inicial ação:</strong> Ciência do dano<br>
-                            <strong>Termo inicial regresso:</strong> Data do pagamento<br>
-                            <strong>Natureza:</strong> Ambos prescricionais
+                            <div class="comparison-title">⚠️ Correção:</div>
+                            <strong>Natureza:</strong> Procedimento auxiliar, não modalidade<br>
+                            <strong>Objeto:</strong> Bens, serviços e também obras/engenharia (quando possível)<br>
+                            <strong>Finalidade:</strong> Registro de preços para contratações futuras<br>
+                            <strong>Base legal:</strong> Art. 78, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-9">
@@ -1203,70 +1263,77 @@
             </div>
 
             <!-- Questão 10 -->
-            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Responsabilidade por omissão específica">
+            <div class="question-card" style="animation-delay: 1.0s" data-correct="D" data-question="Comissão de licitação">
                 <span class="question-number">Questão 10</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade do Estado por omissão específica:
+                    (CEBRASPE) Assinale a alternativa correta sobre a comissão de licitação na Lei 14.133/2021:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 10, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">A omissão específica sempre gera responsabilidade subjetiva, exigindo a comprovação de culpa do Estado</span>
+                        <span class="alternative-text">A comissão de licitação é obrigatória em todas as licitações e deve ser composta por no mínimo 5 membros efetivos e 2 suplentes</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 10, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">A responsabilidade por omissão específica é uma modalidade de responsabilidade contratual do Estado</span>
+                        <span class="alternative-text">A comissão de licitação é proibida na nova lei, sendo substituída por pregoeiro único em todas as modalidades de licitação</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 10, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">A omissão específica configura excludente de responsabilidade do Estado quando há dever legal de proteção</span>
+                        <span class="alternative-text">A comissão de licitação é facultativa e só pode ser constituída para licitações de obras e serviços de engenharia de grande vulto</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 10, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">Quando há dever jurídico específico de agir para impedir o resultado danoso, a omissão estatal gera responsabilidade objetiva</span>
+                        <span class="alternative-text">A comissão de licitação é facultativa, podendo ser constituída para auxiliar o pregoeiro ou autoridade competente nas licitações, sendo que seu número de membros é definido pelo órgão licitante, observada a necessidade de paridade entre membros indicados pelos órgãos ou entidades participantes, quando for o caso</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 10, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">A omissão específica somente gera responsabilidade quando o Estado possui o monopólio da atividade</span>
+                        <span class="alternative-text">A comissão de licitação é obrigatória apenas para licitações na modalidade concorrência, sendo dispensada para o pregão</span>
                         <span class="result-icon">❌</span>
-                                            </div>
+                    </div>
                 </div>
                 <div class="explanation" id="exp-10">
                     <div class="explanation-header">Resposta Correta: Letra D</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Omissão Específica:</strong><br><br>
-                        
-                        <div class="law-reference">Súmula 546 do STJ e jurisprudência do STF</div><br>
-                        
-                        <strong>Distinção fundamental:</strong><br>
-                        • <strong>Omissão genérica:</strong> Dever geral de proteção (ex: fiscalizar trânsito) → Responsabilidade <strong>subjetiva</strong> (culpa)<br>
-                        • <strong>Omissão específica:</strong> Dever específico de agir em relação à vítima → Responsabilidade <strong>objetiva</strong><br><br>
-                        
-                        <strong>Exemplos de omissão específica (responsabilidade objetiva):</strong><br>
-                        • Morte de preso sob custódia do Estado<br>
-                        • Queda em desnível de via pública mal conservada<br>
-                        • Acidente em local onde há dever específico de vigilância (escola, hospital)<br>
-                        • Demora na prestação de socorro médico em hospital público<br>
-                        • Não remoção de árvore em risco de queda em via pública<br><br>
-                        
-                        <strong>Fundamento:</strong> Quando o Estado assume o dever de proteção específica, cria uma relação de garantia, assumindo o risco de falha do serviço.<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - A omissão específica gera responsabilidade objetiva<br>
-                        <strong>B)</strong> Errado - É responsabilidade extracontratual, não contratual<br>
-                        <strong>C)</strong> Errado - A omissão específica gera responsabilidade, não a exclui<br>
-                        <strong>E)</strong> Errado - Não depende de monopólio estatal<br><br>
-                        
+                        <strong>Comissão de Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 21</div><br>
+
+                        <strong>Natureza:</strong><br>
+                        A comissão de licitação é <strong>facultativa</strong>, não obrigatória. A nova lei deu maior flexibilidade à estrutura das licitações.<br><br>
+
+                        <strong>Composição:</strong><br>
+                        • O número de membros é definido pelo <strong>órgão licitante</strong><br>
+                        • Deve observar a <strong>paridade</strong> entre membros indicados pelos órgãos ou entidades participantes (quando houver)<br>
+                        • Não há número mínimo ou máximo fixado na lei<br><br>
+
+                        <strong>Funções:</strong><br>
+                        Auxiliar o <strong>pregoeiro</strong> ou a <strong>autoridade competente</strong> nas licitações, podendo:<br>
+                        • Elaborar o instrumento convocatório<br>
+                        • Receber e julgar propostas<br>
+                        • Verificar habilitação<br>
+                        • Proceder à classificação de propostas<br><br>
+
+                        <strong>Pregoeiro:</strong><br>
+                        Na modalidade pregão, o <strong>pregoeiro</strong> é o responsável pela condução da licitação, podendo ser auxiliado por equipe de apoio.<br><br>
+
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Errado - Não é obrigatória e não há número fixo de membros<br>
+                        <strong>B)</strong> Errado - Não foi proibida, tornou-se facultativa<br>
+                        <strong>C)</strong> Errado - Não é apenas para obras de grande vulto<br>
+                        <strong>E)</strong> Errado - Não é obrigatória para concorrência<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Omissão Específica vs. Genérica:</div>
-                            <strong>Específica:</strong> Dever de proteção individualizado → Responsabilidade objetiva<br>
-                            <strong>Genérica:</strong> Dever geral de fiscalização → Responsabilidade subjetiva<br>
-                            <strong>Exemplo específica:</strong> Preso sob custódia, paciente em hospital<br>
-                            <strong>Exemplo genérica:</strong> Fiscalização de trânsito, policiamento ostensivo
+                            <div class="comparison-title">📊 Comissão de Licitação:</div>
+                            <strong>Natureza:</strong> Facultativa<br>
+                            <strong>Composição:</strong> Definida pelo órgão licitante<br>
+                            <strong>Paridade:</strong> Entre órgãos participantes<br>
+                            <strong>Função:</strong> Auxiliar pregoeiro ou autoridade<br>
+                            <strong>Pregoeiro:</strong> Responsável no pregão<br>
+                            <strong>Base legal:</strong> Art. 21, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-10">
@@ -1280,12 +1347,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- Questão 11 -->
-            <div class="question-card" style="animation-delay: 1.1s" data-correct="A" data-question="Responsabilidade do INSS - Demora em pagamento">
+            <div class="question-card" style="animation-delay: 1.1s" data-correct="A" data-question="Parcerias público-privadas - Lei 14.133/2021">
                 <span class="question-number">Questão 11</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O INSS responde objetivamente pelos danos causados em razão de atraso no pagamento de benefícios previdenciários devidos, sendo desnecessária a comprovação de culpa de seus agentes para a caracterização do dever de indenizar.
+                    (CEBRASPE) Julgue o item: A Lei 14.133/2021 estabelece regras específicas para as parcerias público-privadas (PPPs), mantendo a exigência de licitação para a seleção do parceiro privado, com adaptações necessárias à natureza dessas contratações de longo prazo.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 11, 'A')">
@@ -1302,32 +1368,38 @@
                 <div class="explanation" id="exp-11">
                     <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade do INSS por Demora no Pagamento:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º e jurisprudência dos TRFs</div><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        O INSS, como autarquia federal prestadora de serviço público previdenciário, responde <strong>objetivamente</strong> pelos danos causados por atraso no pagamento de benefícios devidos.<br><br>
-                        
-                        <strong>Fundamentação:</strong><br>
-                        • O atraso caracteriza <strong>ato de comissão</strong> (quando há erro de cálculo) ou <strong>ato de omissão</strong> (quando há mera demora)<br>
-                        • Na omissão genérica (demora administrativa), a responsabilidade seria subjetiva<br>
-                        • Porém, a jurisprudência majoritária entende que o INSS responde objetivamente por <strong>falha no serviço</strong><br><br>
-                        
-                        <strong>Danos indenizáveis:</strong><br>
-                        • <strong>Dano material:</strong> Perdas e danos efetivamente comprovados (juros, correção monetária)<br>
-                        • <strong>Dano moral:</strong> In re ipsa, pela privação de verba alimentar<br><br>
-                        
-                        <strong>Jurisprudência:</strong><br>
-                        "A demora na implantação de benefício previdenciário gera dano moral in re ipsa, pois o segurado fica privado de meios de subsistência, caracterizando-se o abalo psíquico decorrente da insegurança e angústia." (TRF4)<br><br>
-                        
+                        <strong>Parcerias Público-Privadas - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 80 a 84</div><br>
+
+                        <strong>Regulamentação das PPPs:</strong><br>
+                        A Lei 14.133/2021 manteve a exigência de <strong>licitação</strong> para a seleção do parceiro privado nas PPPs, com adaptações específicas.<br><br>
+
+                        <strong>Características das PPPs:</strong><br>
+
+                        1. <strong>Objeto:</strong> Contratação de longo prazo entre ente público e privado<br>
+                        2. <strong>Finalidade:</strong> Execução de obra ou prestação de serviço de grande vulto<br>
+                        3. <strong>Remuneração:</strong> Baseada em desempenho e resultados<br>
+                        4. <strong>Participação privada:</strong> No financiamento, construção e operação<br><br>
+
+                        <strong>Formas de licitação para PPPs:</strong><br>
+                        • <strong>Concorrência:</strong> Modalidade usual<br>
+                        • <strong>Diálogo competitivo:</strong> Para projetos complexos de inovação<br>
+                        • <strong>Leilão de projeto:</strong> Quando o parceiro privado apresenta projeto<br><br>
+
+                        <strong>Adaptações na licitação:</strong><br>
+                        • Maior flexibilidade na definição de critérios técnicos<br>
+                        • Possibilidade de negociação em etapas<br>
+                        • Ênfase na análise de viabilidade econômico-financeira<br>
+                        • Contratação baseada em desempenho<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Demora do INSS:</div>
-                            <strong>Natureza:</strong> Responsabilidade objetiva<br>
-                            <strong>Dano material:</strong> Correção monetária + juros<br>
-                            <strong>Dano moral:</strong> Presumido (in re ipsa)<br>
-                            <strong>Excludentes:</strong> Culpa exclusiva da vítima, caso fortuito<br>
-                            <strong>Regresso:</strong> Possível contra agente culposo
+                            <div class="comparison-title">📊 PPPs na Lei 14.133/2021:</div>
+                            <strong>Exigência:</strong> Licitação obrigatória<br>
+                            <strong>Modalidades:</strong> Concorrência, diálogo competitivo, leilão de projeto<br>
+                            <strong>Características:</strong> Longo prazo, remuneração por desempenho<br>
+                            <strong>Base legal:</strong> Arts. 80-84, Lei 14.133/2021<br>
+                            <strong>Lei específica:</strong> Lei 11.079/2004 (mantida)
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-11">
@@ -1343,72 +1415,74 @@
             </div>
 
             <!-- Questão 12 -->
-            <div class="question-card" style="animation-delay: 1.2s" data-correct="C" data-question="Responsabilidade por ato de agente público">
+            <div class="question-card" style="animation-delay: 1.2s" data-correct="C" data-question="Contratação direta - Emergência">
                 <span class="question-number">Questão 12</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade do Estado por atos de seus agentes:
+                    (CEBRASPE) Assinale a alternativa correta sobre a contratação direta em caso de emergência:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 12, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">O Estado só responde por atos praticados por servidores efetivos, não se estendendo a empregados públicos ou terceirizados</span>
+                        <span class="alternative-text">A contratação direta em emergência é permitida para qualquer valor, desde que haja justificativa do responsável pelo órgão ou entidade</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 12, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">A responsabilidade do Estado exige que o agente público tenha agido no exercício de cargo em comissão, não se aplicando a servidores de carreira</span>
+                        <span class="alternative-text">A contratação direta em emergência é vedada pela Lei 14.133/2021, sendo obrigatória a realização de licitação mesmo em situações de calamidade pública</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 12, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">O Estado responde por danos causados por seus agentes quando estes agem no exercício de suas funções, independentemente do vínculo empregatício</span>
+                        <span class="alternative-text">A contratação direta em emergência é admitida para atender a situação de grave e iminente risco para a segurança de pessoas, obras, serviços, equipamentos e outros bens, públicos ou particulares, e seu valor não pode exceder o limite estabelecido para dispensa de licitação, salvo em caso de guerra</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 12, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A responsabilidade do Estado é subjetiva quando o agente é servidor público efetivo, e objetiva quando se trata de empregado público</span>
+                        <span class="alternative-text">A contratação direta em emergência é automática e não requer qualquer formalidade ou justificativa prévia</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 12, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">O Estado se exime de responsabilidade quando o dano é causado por terceirizados, respondendo apenas a empresa contratada</span>
+                        <span class="alternative-text">A contratação direta em emergência só é possível quando autorizada pelo Tribunal de Contas da União ou do Estado</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-12">
                     <div class="explanation-header">Resposta Correta: Letra C</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Atos de Agentes Públicos:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º</div><br>
-                        
-                        <strong>Conceito de agente público:</strong><br>
-                        O Estado responde por danos causados por qualquer pessoa que aja em seu nome, independentemente do vínculo empregatício:<br>
-                        • Servidores públicos efetivos (concurso)<br>
-                        • Servidores comissionados<br>
-                        • Empregados públicos (CLT)<br>
-                        • Terceirizados (prestadores de serviço)<br>
-                        • Colaboradores eventuais<br><br>
-                        
-                        <strong>Requisito essencial:</strong><br>
-                        O agente deve estar agindo <strong>"nessa qualidade"</strong>, ou seja, no exercício da função pública, ainda que extrapole suas atribuições ou abuse do poder.<br><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        A natureza da responsabilidade é sempre <strong>objetiva</strong>, independentemente do tipo de vínculo do agente com o Estado.<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - Aplica-se a todos os agentes, inclusive terceirizados<br>
-                        <strong>B)</strong> Errado - Aplica-se a todos os servidores, não apenas comissionados<br>
-                        <strong>D)</strong> Errado - A responsabilidade é sempre objetiva<br>
-                        <strong>E)</strong> Errado - O Estado responde solidariamente com a empresa terceirizada<br><br>
-                        
+                        <strong>Contratação Direta em Emergência - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 75, VIII e art. 72</div><br>
+
+                        <strong>Hipótese de dispensa:</strong><br>
+                        Emergência ou calamidade pública, quando caracterizada <strong>urgência de atendimento</strong> de situação que possa causar prejuízo ou comprometer a segurança de pessoas, obras, serviços, equipamentos e outros bens.<br><br>
+
+                        <strong>Limites de valor:</strong><br>
+                        • <strong>Regra geral:</strong> Não pode exceder o limite estabelecido para dispensa de licitação<br>
+                        • <strong>Exceção - Guerra:</strong> Não há limite de valor quando se tratar de guerra<br><br>
+
+                        <strong>Procedimentos obrigatórios:</strong><br>
+                        1. <strong>Justificativa:</strong> Do responsável pelo órgão ou entidade<br>
+                        2. <strong>Ratificação:</strong> Do chefe do Poder Executivo<br>
+                        3. <strong>Publicação:</strong> No diário oficial (quando possível)<br>
+                        4. <strong>Comprovação:</strong> Da situação de emergência<br><br>
+
+                        <strong>Prazo:</strong><br>
+                        A contratação deve ocorrer de forma imediata, não podendo ser protelada.<br><br>
+
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Errado - Há limite de valor (exceto em guerra)<br>
+                        <strong>B)</strong> Errado - É admitida, não vedada<br>
+                        <strong>D)</strong> Errado - Requer justificativa e ratificação<br>
+                        <strong>E)</strong> Errado - Não requer autorização prévia do TCU<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Agentes Públicos:</div>
-                            <strong>Abrangência:</strong> Todos que atuam em nome do Estado<br>
-                            <strong>Vínculos:</strong> Efetivos, comissionados, empregados, terceirizados<br>
-                            <strong>Requisito:</strong> Agir "nessa qualidade" (função pública)<br>
-                            <strong>Natureza:</strong> Sempre responsabilidade objetiva<br>
-                            <strong>Regresso:</strong> Possível contra agente doloso ou culposo
+                            <div class="comparison-title">📊 Contratação Direta Emergencial:</div>
+                            <strong>Hipótese:</strong> Emergência ou calamidade pública<br>
+                            <strong>Requisito:</strong> Urgência de atendimento<br>
+                            <strong>Limite:</strong> Valor de dispensa (exceto guerra)<br>
+                            <strong>Formalidades:</strong> Justificativa e ratificação<br>
+                            <strong>Base legal:</strong> Art. 75, VIII, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-12">
@@ -1424,10 +1498,10 @@
             </div>
 
             <!-- Questão 13 -->
-            <div class="question-card" style="animation-delay: 1.3s" data-correct="B" data-question="Responsabilidade por ato legislativo">
+            <div class="question-card" style="animation-delay: 1.3s" data-correct="B" data-question="Licitação internacional">
                 <span class="question-number">Questão 13</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O Estado responde objetivamente pelos danos causados por atos legislativos inconstitucionais, desde que declarados como tais pelo Poder Judiciário, aplicando-se a teoria do risco administrativo aos atos do Poder Legislativo.
+                    (CEBRASPE) Julgue o item: A licitação internacional é modalidade específica prevista na Lei 14.133/2021 para contratações que envolvam organismos internacionais ou empresas estrangeiras, sendo obrigatória sempre que o valor estimado da contratação ultrapassar US$ 10.000.000,00.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 13, 'A')">
@@ -1444,32 +1518,38 @@
                 <div class="explanation" id="exp-13">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Atos Legislativos:</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência do STF - RE 349.703/RS</div><br>
-                        
-                        <strong>Imunidade do Estado por atos legislativos:</strong><br>
-                        O Estado <strong>não responde</strong> por danos decorrentes de atos legislativos, mesmo que inconstitucionais, salvo em situações excepcionais (responsabilidade política, não civil).<br><br>
-                        
-                        <strong>Fundamento:</strong><br>
-                        • Princípio da <strong>separação dos poderes</strong><br>
-                        • Independência e inviolabilidade dos parlamentares<br>
-                        • Ato legislativo é ato de governo, não de gestão<br>
-                        • Existe remédio constitucional específico: ação direta de inconstitucionalidade<br><br>
-                        
-                        <strong>Exceção - Ato legislativo lesivo a direito individual:</strong><br>
-                        Quando o ato legislativo afeta direito individual e há omissão na regulamentação, pode haver responsabilidade por <strong>omissão legislativa</strong>, mas é tema controverso e restrito.<br><br>
-                        
+                        <strong>Erro conceitual!</strong> A <strong>licitação internacional não é modalidade específica</strong> na Lei 14.133/2021. O que existe é a <strong>possibilidade de participação de licitantes estrangeiros</strong> nas licitações nacionais, com algumas regras especiais.<br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 154 a 158</div><br>
+
+                        <strong>Participação estrangeira:</strong><br>
+
+                        1. <strong>Regra geral:</strong><br>
+                        As licitações são <strong>abertas a participação de empresas estrangeiras</strong>, observadas as condições estabelecidas na lei.<br><br>
+
+                        2. <strong>Condições para empresas estrangeiras:</strong><br>
+                        • Representação legal no Brasil<br>
+                        • Inscrição no CNPJ<br>
+                        • Regularidade fiscal e trabalhista no país de origem<br>
+                        • Comprovação de capacidade técnica e econômico-financeira<br><br>
+
+                        3. <strong>Tratamento diferenciado:</strong><br>
+                        • <strong>Empresas nacionais:</strong> Preferência em caso de empate (art. 157)<br>
+                        • <strong>Produtos nacionais:</strong> Margem de preferência de até 25%<br><br>
+
+                        4. <strong>Limitação:</strong><br>
+                        A participação estrangeira pode ser restrita em casos de <strong>segurança nacional</strong> ou quando exigido por tratados internacionais.<br><br>
+
                         <strong>Correção da afirmação:</strong><br>
-                        O art. 37, §6º, da CF aplica-se a atos da <strong>Administração Pública</strong> (Poder Executivo e atos administrativos do Judiciário e Legislativo), não aos atos legislativos propriamente ditos (lei em sentido formal).<br><br>
-                        
+                        Não existe "licitação internacional" como modalidade. Existe a <strong>participação de estrangeiros</strong> nas formas de licitação nacionais (pregão, concorrência, etc.).<br><br>
+
                         <div class="comparison-box">
                             <div class="comparison-title">⚠️ Correção:</div>
-                            <strong>Atos legislativos:</strong> Imunidade de responsabilidade civil<br>
-                            <strong>Fundamento:</strong> Separação dos poderes<br>
-                            <strong>Remédio:</strong> Controle de constitucionalidade<br>
-                            <strong>Exceção:</strong> Omissão legislativa lesiva a direito individual<br>
-                            <strong>Art. 37, §6º:</strong> Aplica-se à Administração, não ao Legislativo em suas funções típicas
+                            <strong>Modalidades:</strong> Pregão, concorrência, diálogo competitivo, concurso de projetos, leilão<br>
+                            <strong>Participação estrangeira:</strong> Permitida nas modalidades nacionais<br>
+                            <strong>Condições:</strong> Representação no Brasil, inscrição CNPJ, regularidade<br>
+                            <strong>Preferência:</strong> Empresas nacionais em caso de empate<br>
+                            <strong>Base legal:</strong> Arts. 154-158, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-13">
@@ -1485,71 +1565,60 @@
             </div>
 
             <!-- Questão 14 -->
-            <div class="question-card" style="animation-delay: 1.4s" data-correct="D" data-question="Responsabilidade por ato jurisdicional">
+            <div class="question-card" style="animation-delay: 1.4s" data-correct="A" data-question="Recursos na licitação">
                 <span class="question-number">Questão 14</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade do Estado por atos jurisdicionais:
+                    (CEBRASPE) Julgue o item: Na licitação na modalidade pregão, o prazo para interposição de recurso é de 3 dias úteis, contados da divulgação do resultado provisório da licitação no sistema eletrônico, sendo que o recurso deve ser protocolado exclusivamente por meio eletrônico.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 14, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">O Estado responde objetivamente por todos os atos dos magistrados, independentemente de culpa, aplicando-se integralmente o art. 37, §6º, da CF</span>
-                        <span class="result-icon">❌</span>
+                        <span class="alternative-text">Certo</span>
+                        <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 14, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">Os atos jurisdicionais são absolutamente imunes de qualquer responsabilidade, em razão da independência funcional dos magistrados</span>
-                        <span class="result-icon">❌</span>
-                    </div>
-                    <div class="alternative" onclick="selectAlternative(this, 14, 'C')">
-                        <span class="alternative-letter">C</span>
-                        <span class="alternative-text">A responsabilidade do Estado por atos jurisdicionais é subjetiva, exigindo a comprovação de dolo do magistrado</span>
-                        <span class="result-icon">❌</span>
-                    </div>
-                    <div class="alternative" onclick="selectAlternative(this, 14, 'D')">
-                        <span class="alternative-letter">D</span>
-                        <span class="alternative-text">O Estado responde por atos jurisdicionais apenas em caso de dolo ou culpa grave do magistrado, nos termos da Lei Complementar 35/1979 (Lei da Magistratura)</span>
-                        <span class="result-icon">✓</span>
-                    </div>
-                    <div class="alternative" onclick="selectAlternative(this, 14, 'E')">
-                        <span class="alternative-letter">E</span>
-                        <span class="alternative-text">A responsabilidade por atos jurisdicionais é objetiva, mas limitada aos danos materiais, não sendo admitida indenização por dano moral</span>
+                        <span class="alternative-text">Errado</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-14">
-                    <div class="explanation-header">Resposta Correta: Letra D</div>
+                    <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Atos Jurisdicionais:</strong><br><br>
-                        
-                        <div class="law-reference">LC 35/1979, art. 16 (Lei Orgânica da Magistratura Nacional)</div><br>
-                        
-                        <strong>Responsabilidade limitada:</strong><br>
-                        O magistrado só responde por danos causados em razão do exercício da jurisdição quando pratica ato:<br>
-                        • <strong>Doloso</strong> (intencional)<br>
-                        • <strong>Culposo grave</strong> (negligência, imprudência ou imperícia graves)<br><br>
-                        
-                        <strong>Fundamento:</strong><br>
-                        • Princípio da <strong>independência funcional</strong> (art. 95, CF)<br>
-                        • Garantia da <strong>inviolabilidade</strong> por atos praticados no exercício da magistratura<br>
-                        • Necessidade de preservar a autonomia judicial<br><br>
-                        
-                        <strong>Responsabilidade do Estado:</strong><br>
-                        O Estado responde <strong>subjetivamente</strong> (não objetivamente) por atos jurisdicionais, e apenas quando há dolo ou culpa grave do magistrado.<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - Não é responsabilidade objetiva<br>
-                        <strong>B)</strong> Errado - Não é imunidade absoluta<br>
-                        <strong>C)</strong> Errado - A culpa leve não gera responsabilidade, apenas a grave<br>
-                        <strong>E)</strong> Errado - A responsabilidade é subjetiva, não objetiva<br><br>
-                        
+                        <strong>Recursos na Licitação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 165</div><br>
+
+                        <strong>Prazos para recurso:</strong><br>
+
+                        1. <strong>Pregão e Concorrência (padronizado):</strong><br>
+                        • <strong>Prazo:</strong> 3 dias úteis<br>
+                        • <strong>Contagem:</strong> Da intimação ou lavratura da ata<br>
+                        • <strong>Forma:</strong> Exclusivamente por meio eletrônico (pregão)<br><br>
+
+                        <strong>Inovação da Lei 14.133/2021:</strong><br>
+                        A nova lei <strong>padronizou os prazos</strong> para todas as modalidades:<br>
+                        • Impugnação ao edital: 3 dias úteis<br>
+                        • Recurso administrativo: 3 dias úteis<br>
+                        • Pedido de esclarecimento: 3 dias úteis<br><br>
+
+                        <strong>Efeitos do recurso:</strong><br>
+                        • <strong>Efeito suspensivo:</strong> O recurso suspende o ato ou decisão recorrida até decisão final<br>
+                        • <strong>Análise:</strong> Prazo de 3 dias úteis para reconsideração ou encaminhamento<br>
+                        • <strong>Decisão:</strong> Até 10 dias úteis para autoridade superior decidir<br><br>
+
+                        <strong>Requisitos do recurso:</strong><br>
+                        • Deve conter fundamentação jurídica<br>
+                        • Provas documentais<br>
+                        • Pedido específico<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Atos Jurisdicionais:</div>
-                            <strong>Responsabilidade:</strong> Subjetiva (dolo ou culpa grave)<br>
-                            <strong>Base legal:</strong> LC 35/1979, art. 16<br>
-                            <strong>Garantia:</strong> Independência funcional (art. 95, CF)<br>
-                            <strong>Exclusão:</strong> Erros de julgamento (mero erro judicial)<br>
-                            <strong>Responsável:</strong> Estado (responde pelo magistrado)
+                            <div class="comparison-title">📊 Recursos na Licitação:</div>
+                            <strong>Prazo:</strong> 3 dias úteis (todas as modalidades)<br>
+                            <strong>Forma:</strong> Eletrônica (pregão)<br>
+                            <strong>Efeito:</strong> Suspenso até decisão final<br>
+                            <strong>Decisão:</strong> Até 10 dias úteis<br>
+                            <strong>Base legal:</strong> Art. 165, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-14">
@@ -1565,53 +1634,78 @@
             </div>
 
             <!-- Questão 15 -->
-            <div class="question-card" style="animation-delay: 1.5s" data-correct="A" data-question="Responsabilidade em saúde pública">
+            <div class="question-card" style="animation-delay: 1.5s" data-correct="D" data-question="Adjudicação e homologação">
                 <span class="question-number">Questão 15</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O Estado responde objetivamente pelos danos causados em razão de falhas no sistema público de saúde, como demora na prestação de atendimento médico, falta de medicamentos ou erro diagnóstico em hospital público.
+                    (CEBRASPE) Assinale a alternativa correta sobre a adjudicação e homologação na licitação:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 15, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">Certo</span>
-                        <span class="result-icon">✓</span>
+                        <span class="alternative-text">A adjudicação é o ato de autorização para a realização da licitação, enquanto a homologação é a aprovação do edital pelo órgão competente</span>
+                        <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 15, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">Errado</span>
+                        <span class="alternative-text">A adjudicação e a homologação são atos simultâneos e devem ser praticados pelo pregoeiro no mesmo momento</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'C')">
+                        <span class="alternative-letter">C</span>
+                        <span class="alternative-text">A homologação é o ato de atribuir ao vencedor da licitação o objeto licitado, enquanto a adjudicação é a aprovação final do procedimento</span>
+                        <span class="result-icon">❌</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'D')">
+                        <span class="alternative-letter">D</span>
+                        <span class="alternative-text">A adjudicação é o ato de atribuir ao vencedor da licitação o objeto licitado, declarando-o vencedor, enquanto a homologação é o ato de aprovação final do procedimento licitatório pelo autoridade competente, que valida a adjudicação</span>
+                        <span class="result-icon">✓</span>
+                    </div>
+                    <div class="alternative" onclick="selectAlternative(this, 15, 'E')">
+                        <span class="alternative-letter">E</span>
+                        <span class="alternative-text">A adjudicação e a homologação foram suprimidas pela Lei 14.133/2021, sendo substituídas pelo ato único de contratação</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-15">
-                    <div class="explanation-header">Resposta Correta: Certo</div>
+                    <div class="explanation-header">Resposta Correta: Letra D</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade do Estado na Saúde Pública:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º e art. 196</div><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        O Estado responde <strong>objetivamente</strong> pelos danos causados em razão de falhas na prestação de serviços de saúde pública, aplicando-se a teoria do risco administrativo.<br><br>
-                        
-                        <strong>Hipóteses de responsabilização:</strong><br>
-                        • <strong>Demora no atendimento:</strong> Fila de espera excessiva, não atendimento de urgência<br>
-                        • <strong>Falta de medicamentos:</strong> Indisponibilidade de fármacos essenciais<br>
-                        • <strong>Erro médico:</strong> Diagnóstico errado, erro cirúrgico, infecção hospitalar<br>
-                        • <strong>Negativa de internação:</strong> Falta de leitos<br>
-                        • <strong>Demora na realização de exames:</strong> Atraso em diagnóstico<br><br>
-                        
-                        <strong>Natureza da omissão:</strong><br>
-                        A demora no atendimento configura <strong>omissão específica</strong> (hospital assumiu dever de cuidado), gerando responsabilidade objetiva.<br><br>
-                        
-                        <strong>Jurisprudência:</strong><br>
-                        "A negligência médica praticada em hospital público gera responsabilidade objetiva do Estado, que deve indenizar os danos materiais e morais decorrentes." (STJ)<br><br>
-                        
+                        <strong>Adjudicação e Homologação - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 110 e 111</div><br>
+
+                        <strong>Adjudicação (art. 110):</strong><br>
+                        É o ato de <strong>atribuir ao vencedor</strong> da licitação o objeto licitado, declarando-o vencedor.<br>
+                        • <strong>Quem pratica:</strong> Pregoeiro, comissão de licitação ou autoridade competente<br>
+                        • <strong>Momento:</strong> Após o julgamento das propostas e habilitação<br>
+                        • <strong>Efeito:</strong> Declara o vencedor e o obriga a celebrar o contrato<br><br>
+
+                        <strong>Homologação (art. 111):</strong><br>
+                        É o ato de <strong>aprovação final</strong> do procedimento licitatório, que valida a adjudicação.<br>
+                        • <strong>Quem pratica:</strong> Autoridade competente (geralmente superior hierárquico)<br>
+                        • <strong>Momento:</strong> Após a adjudicação e esgotados os recursos<br>
+                        • <strong>Efeito:</strong> Torna definitivo o resultado da licitação<br><br>
+
+                        <strong>Sequência:</strong><br>
+                        1. Julgamento das propostas<br>
+                        2. Habilitação (se posterior)<br>
+                        3. <strong>Adjudicação</strong> (declaração do vencedor)<br>
+                        4. Prazo para recursos<br>
+                        5. <strong>Homologação</strong> (aprovação final)<br>
+                        6. Assinatura do contrato<br><br>
+
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Errado - Inverteu os conceitos<br>
+                        <strong>B)</strong> Errado - Não são simultâneos, há sequência lógica<br>
+                        <strong>C)</strong> Errado - Inverteu os conceitos<br>
+                        <strong>E)</strong> Errado - Não foram suprimidas, mantidas na lei<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Saúde Pública:</div>
-                            <strong>Responsabilidade:</strong> Objetiva<br>
-                            <strong>Fundamento:</strong> Risco administrativo + omissão específica<br>
-                            <strong>Cobertura:</strong> Atos e omissões<br>
-                            <strong>Danos:</strong> Materiais e morais<br>
-                            <strong>Excludentes:</strong> Culpa exclusiva da vítima, caso fortuito
+                            <div class="comparison-title">📊 Adjudicação vs. Homologação:</div>
+                            <strong>Adjudicação:</strong> Atribui objeto ao vencedor<br>
+                            <strong>Homologação:</strong> Aprovação final do procedimento<br>
+                            <strong>Sequência:</strong> Adjudicação → Recursos → Homologação<br>
+                            <strong>Responsáveis:</strong> Pregoeiro/Comissão (adjudicação) / Autoridade (homologação)<br>
+                            <strong>Base legal:</strong> Arts. 110-111, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-15">
@@ -1625,12 +1719,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- Questão 16 -->
-            <div class="question-card" style="animation-delay: 1.6s" data-correct="B" data-question="Responsabilidade por informação incorreta">
+            <div class="question-card" style="animation-delay: 1.6s" data-correct="B" data-question="Contrato administrativo - Forma">
                 <span class="question-number">Questão 16</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O Estado responde subjetivamente quando fornece informação incorreta ao particular, sendo necessária a comprovação de culpa do agente público que prestou a informação errônea.
+                    (CEBRASPE) Julgue o item: O contrato administrativo decorrente de licitação deve ser necessariamente formalizado por escrito, sendo vedada a utilização de contratos verbais, ainda que para valores inferiores ao limite de dispensa de licitação.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 16, 'A')">
@@ -1647,35 +1740,37 @@
                 <div class="explanation" id="exp-16">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Informação Incorreta:</strong><br><br>
-                        
-                        <div class="law-reference">Lei 13.460/2017, art. 10 e jurisprudência do STF</div><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        O Estado responde <strong>objetivamente</strong> pelos danos causados por informação incorreta fornecida por seus agentes, ainda que de boa-fé.<br><br>
-                        
-                        <strong>Fundamento:</strong><br>
-                        • O particular tem <strong>direito à informação correta</strong> (art. 5º, XXXIII, CF)<br>
-                        • O Estado tem <strong>dever de prestar informações claras e precisas</strong><br>
-                        • O erro na informação é risco da atividade administrativa<br>
-                        • O particular não deve arcar com prejuízos decorrentes de informação estatal errônea<br><br>
-                        
-                        <strong>Aplicação no INSS:</strong><br>
-                        • Informação equivocada sobre tempo de contribuição<br>
-                        • Orientação errada sobre requisitos para aposentadoria<br>
-                        • Cálculo incorreto de benefício informado ao segurado<br>
-                        • Informação falsa sobre direitos previdenciários<br><br>
-                        
+                        <strong>Forma do Contrato Administrativo - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 89</div><br>
+
+                        <strong>Regra geral:</strong><br>
+                        O contrato administrativo deve ser <strong>formalizado por escrito</strong>, contendo:<br>
+                        • Objeto, prazo, valor e forma de pagamento<br>
+                        • Direitos e obrigações das partes<br>
+                        • Sanções em caso de inadimplemento<br>
+                        • Condições de rescisão<br><br>
+
+                        <strong>Exceção - Contratos verbais:</strong><br>
+                        A Lei 14.133/2021 <strong>não veda expressamente</strong> contratos verbais para valores muito baixos, embora a prática administrativa recomende a formalização por escrito em todos os casos.<br><br>
+
+                        <strong>Instrumentos equivalentes:</strong><br>
+                        Para contratações de <strong>pequeno valor</strong>, pode ser utilizado:<br>
+                        • Nota de empenho<br>
+                        • Ordem de execução de serviço<br>
+                        • Nota de compra<br>
+                        • Outro instrumento que comprove a contratação<br><br>
+
                         <strong>Correção da afirmação:</strong><br>
-                        A responsabilidade é <strong>objetiva</strong>, não subjetiva. Basta a comprovação de que a informação foi prestada pelo Estado, de que estava incorreta e de que causou dano ao particular.<br><br>
-                        
+                        Embora a forma escrita seja a regra e seja <strong>sempre recomendada</strong>, a lei não estabelece vedação absoluta a contratos verbais para valores insignificantes, desde que haja comprovação da contratação.<br><br>
+
                         <div class="comparison-box">
                             <div class="comparison-title">⚠️ Correção:</div>
-                            <strong>Responsabilidade:</strong> Objetiva (não subjetiva)<br>
-                            <strong>Requisitos:</strong> Informação + erro + dano + nexo causal<br>
-                            <strong>Culpa:</strong> Não necessária<br>
-                            <strong>Fundamento:</strong> Risco da atividade + direito à informação<br>
-                            <strong>Aplicação:</strong> Toda informação prestada pela Administração
+                            <strong>Regra:</strong> Contrato por escrito obrigatório<br>
+                            <strong>Exceção:</strong> Pequenos valores podem usar instrumentos simplificados<br>
+                            <strong>Prática:</strong> Sempre formalizar por escrito<br>
+                            <strong>Instrumentos:</strong> Nota de empenho, ordem de serviço, nota de compra<br>
+                            <strong>Base legal:</strong> Art. 89, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-16">
@@ -1691,73 +1786,85 @@
             </div>
 
             <!-- Questão 17 -->
-            <div class="question-card" style="animation-delay: 1.7s" data-correct="C" data-question="Responsabilidade por dano ambiental">
+            <div class="question-card" style="animation-delay: 1.7s" data-correct="C" data-question="Garantia contratual">
                 <span class="question-number">Questão 17</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade do Estado por danos ambientais:
+                    (CEBRASPE) Assinale a alternativa correta sobre as garantias exigíveis nos contratos administrativos:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 17, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">O Estado responde subjetivamente por danos ambientais, sendo necessária a comprovação de culpa na fiscalização</span>
+                        <span class="alternative-text">A garantia de execução contratual é obrigatória em todos os contratos, independentemente do valor, e deve ser de 10% do valor contratual</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 17, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">A responsabilidade ambiental é exclusivamente do poluidor, excluindo-se a responsabilidade do Estado fiscalizador</span>
+                        <span class="alternative-text">As garantias contratuais foram suprimidas pela Lei 14.133/2021, não sendo mais exigíveis em nenhuma hipótese</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 17, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">O Estado responde objetivamente por omissão na fiscalização ambiental quando há dever legal de proteção ao meio ambiente</span>
+                        <span class="alternative-text">A garantia de execução contratual é exigível nas contratações de obras, serviços e fornecimentos, podendo ser de até 5% do valor inicial do contrato, autorizada a majoração para até 10% quando justificada mediante análise da complexidade técnica e dos riscos envolvidos</span>
                         <span class="result-icon">✓</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 17, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A responsabilidade do Estado ambiental é contratual, decorrente de convênios com órgãos ambientais</span>
+                        <span class="alternative-text">A garantia de execução contratual é obrigatória apenas para contratos de obras e serviços de engenharia, sendo vedada para aquisição de bens e serviços</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 17, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">O Estado só responde por danos ambientais quando age como empreendedor, não na função de fiscalizador</span>
+                        <span class="alternative-text">A garantia de execução contratual deve ser sempre de 30% do valor contratual, podendo ser aumentada em caso de risco elevado</span>
                         <span class="result-icon">❌</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-17">
                     <div class="explanation-header">Resposta Correta: Letra C</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade do Estado por Danos Ambientais:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 225 e Lei 6.938/1981 (Lei da Política Nacional do Meio Ambiente)</div><br>
-                        
-                        <strong>Responsabilidade objetiva do Estado:</strong><br>
-                        O Estado responde <strong>objetivamente</strong> por omissão na fiscalização ambiental quando:<br>
-                        • Existe <strong>dever legal de proteção</strong> ao meio ambiente<br>
-                        • Ocorre dano ambiental por ação de terceiro<br>
-                        • Há nexo causal entre a omissão fiscalizatória e o dano<br><br>
-                        
-                        <strong>Fundamento:</strong><br>
-                        • O meio ambiente é <strong>bem difuso</strong> (art. 225, CF)<br>
-                        • O Estado tem <strong>dever de proteger</strong> o meio ambiente<br>
-                        • A omissão na fiscalização configura <strong>omissão específica</strong><br>
-                        • Aplica-se a teoria do risco administrativo<br><br>
-                        
-                        <strong>Responsabilidade solidária:</strong><br>
-                        O Estado responde <strong>solidariamente</strong> com o poluidor, podendo o particular acionar qualquer deles.<br><br>
-                        
-                        <strong>Análise das alternativas:</strong><br>
-                        <strong>A)</strong> Errado - A responsabilidade é objetiva<br>
-                        <strong>B)</strong> Errado - O Estado também responde por omissão<br>
-                        <strong>D)</strong> Errado - É responsabilidade extracontratual<br>
-                        <strong>E)</strong> Errado - Responde também como fiscalizador<br><br>
-                        
+                        <strong>Garantias Contratuais - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 96 a 102</div><br>
+
+                        <strong>Tipos de garantia:</strong><br>
+
+                        1. <strong>Garantia de execução contratual (art. 96-98):</strong><br>
+                        • <strong>Objetivo:</strong> Assegurar o cumprimento das obrigações contratuais<br>
+                        • <strong>Valor máximo:</strong> 5% do valor inicial do contrato<br>
+                        • <strong>Majoração:</strong> Até 10% quando justificada por complexidade técnica e riscos<br>
+                        • <strong>Formas:</strong> Seguro-garantia, caução em dinheiro, caução em títulos, fiança bancária, título de capitalização<br>
+                        • <strong>Facultativa:</strong> A critério da autoridade competente, mediante previsão no edital<br><br>
+
+                        2. <strong>Garantia de proposta (art. 58):</strong><br>
+                        • Exigível na fase pré-contratual<br>
+                        • Valor máximo: 1% do valor estimado<br><br>
+
+                        3. <strong>Garantia do objeto (art. 140, §6º):</strong><br>
+                        • Garantia mínima de 5 anos para obras de engenharia<br>
+                        • Contra vícios que comprometam solidez e segurança<br><br>
+
+                        <strong>Modalidades de garantia:</strong><br>
+                        • Caução em dinheiro ou títulos da dívida pública<br>
+                        • Seguro-garantia<br>
+                        • Fiança bancária<br>
+                        • Título de capitalização<br><br>
+
+                        <strong>Obras de grande vulto (art. 99):</strong><br>
+                        • Pode ser exigida seguro-garantia com cláusula de retomada<br>
+                        • Percentual de até 30% do valor inicial<br><br>
+
+                        <strong>Análise das alternativas erradas:</strong><br>
+                        <strong>A)</strong> Errado - Máximo é 5% (10% majorado), não é obrigatória<br>
+                        <strong>B)</strong> Errado - As garantias foram mantidas e reorganizadas<br>
+                        <strong>D)</strong> Errado - Aplica-se também a bens e serviços<br>
+                        <strong>E)</strong> Errado - 30% só para obras de grande vulto com seguro-garantia<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Dano Ambiental:</div>
-                            <strong>Responsabilidade:</strong> Objetiva (omissão específica)<br>
-                            <strong>Solidariedade:</strong> Estado + poluidor<br>
-                            <strong>Fundamento:</strong> Dever de proteção ao meio ambiente<br>
-                            <strong>Natureza:</strong> Bem difuso (dano coletivo)<br>
-                            <strong>Excludentes:</strong> Culpa exclusiva da vítima, caso fortuito
+                            <div class="comparison-title">📊 Garantias Contratuais:</div>
+                            <strong>Execução contratual:</strong> Até 5% (10% majorado)<br>
+                            <strong>Facultativa:</strong> Mediante previsão no edital<br>
+                            <strong>Formas:</strong> Seguro-garantia, caução, fiança bancária, título de capitalização<br>
+                            <strong>Grande vulto:</strong> Até 30% com seguro-garantia<br>
+                            <strong>Base legal:</strong> Arts. 96-102, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-17">
@@ -1773,10 +1880,10 @@
             </div>
 
             <!-- Questão 18 -->
-            <div class="question-card" style="animation-delay: 1.8s" data-correct="A" data-question="Responsabilidade em atividades de risco">
+            <div class="question-card" style="animation-delay: 1.8s" data-correct="A" data-question="Rescisão administrativa">
                 <span class="question-number">Questão 18</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: Nas atividades de alto risco, como o serviço de polícia ou a contenção de animais perigosos, aplica-se a teoria do risco integral, que exclui a possibilidade de alegação de caso fortuito interno para afastar a responsabilidade do Estado.
+                    (CEBRASPE) Julgue o item: A Administração Pública pode rescindir o contrato administrativo unilateralmente, por interesse público, mediante pagamento de indenização que compreenda a remuneração do trabalho feito, o lucro que dele provier e as despesas realizadas, desde que o contratado não seja pessoa física, hipótese em que a rescisão é vedada.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 18, 'A')">
@@ -1793,36 +1900,39 @@
                 <div class="explanation" id="exp-18">
                     <div class="explanation-header">Resposta Correta: Certo</div>
                     <div class="explanation-text">
-                        <strong>Teoria do Risco Integral:</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência do STF e STJ</div><br>
-                        
-                        <strong>Conceito:</strong><br>
-                        O risco integral é uma modalidade de responsabilidade objetiva aplicável a atividades de <strong>alto risco</strong>, onde o Estado responde praticamente sem excludentes (exceto culpa exclusiva da vítima).<br><br>
-                        
-                        <strong>Características:</strong><br>
-                        • Responsabilidade <strong>absoluta</strong> (garantia do resultado)<br>
-                        • Não admite a alegação de <strong>caso fortuito interno</strong><br>
-                        • Admite apenas <strong>culpa exclusiva da vítima</strong> como excludente<br>
-                        • Aplica-se a atividades perigosas por natureza<br><br>
-                        
-                        <strong>Exemplos de aplicação:</strong><br>
-                        • <strong>Serviço de polícia:</strong> Tiroteio, perseguição policial<br>
-                        • <strong>Contenção de animais:</strong> Cães policiais, animais silvestres<br>
-                        • <strong>Atividades com explosivos:</strong> Destruição de rochas, desarmamento de bombas<br>
-                        • <strong>Transporte de produtos perigosos:</strong> Materiais radioativos, tóxicos<br><br>
-                        
-                        <strong>Distinção do risco administrativo:</strong><br>
-                        No risco administrativo comum, o <strong>caso fortuito interno</strong> (evento inerente à atividade) não exclui a responsabilidade, mas o <strong>fortuito externo</strong> exclui. No risco integral, praticamente nenhum fortuito exclui.<br><br>
-                        
+                        <strong>Rescisão Administrativa - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, art. 138, I</div><br>
+
+                        <strong>Rescisão unilateral por interesse público:</strong><br>
+
+                        A Administração pode rescindir o contrato <strong>unilateralmente</strong>, por interesse público, desde que:<br>
+                        1. Haja <strong>justificativa</strong> do responsável pelo órgão ou entidade<br>
+                        2. Seja paga <strong>indenização</strong> ao contratado<br><br>
+
+                        <strong>Proibição para pessoa física:</strong><br>
+                        A rescisão unilateral é <strong>vedada</strong> quando o contratado for <strong>pessoa física</strong>, salvo:<br>
+                        • Se a pessoa física atuar como <strong>empresário individual</strong><br>
+                        • Se houver <strong>acordo entre as partes</strong><br><br>
+
+                        <strong>Composição da indenização:</strong><br>
+                        • <strong>Remuneração do trabalho feito:</strong> Pelo efetivamente executado<br>
+                        • <strong>Lucro que dele provier:</strong> Lucro cessante<br>
+                        • <strong>Despesas realizadas:</strong> Gastos efetivamente incorridos<br><br>
+
+                        <strong>Outras hipóteses de rescisão (art. 137):</strong><br>
+                        • Inadimplemento contratual<br>
+                        • Impossibilidade de execução<br>
+                        • Acordo entre as partes<br>
+                        • Resolução de condição suspensiva ou resolutiva<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Risco Integral:</div>
-                            <strong>Aplicação:</strong> Atividades de alto risco<br>
-                            <strong>Natureza:</strong> Responsabilidade absoluta<br>
-                            <strong>Excludente:</strong> Apenas culpa exclusiva da vítima<br>
-                            <strong>Fortuito interno:</strong> Não exclui<br>
-                            <strong>Fortuito externo:</strong> Discutível (pode não excluir)<br>
-                            <strong>Exemplos:</strong> Polícia, animais perigosos, explosivos
+                            <div class="comparison-title">📊 Rescisão Administrativa:</div>
+                            <strong>Unilateral:</strong> Por interesse público (com indenização)<br>
+                            <strong>Vedada:</strong> Quando contratado é pessoa física<br>
+                            <strong>Indenização:</strong> Trabalho feito + lucro + despesas<br>
+                            <strong>Outras formas:</strong> Inadimplemento, impossibilidade, acordo<br>
+                            <strong>Base legal:</strong> Arts. 137-138, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-18">
@@ -1838,10 +1948,10 @@
             </div>
 
             <!-- Questão 19 -->
-            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Responsabilidade por erro na perícia médica">
+            <div class="question-card" style="animation-delay: 1.9s" data-correct="B" data-question="Controle e transparência">
                 <span class="question-number">Questão 19</span>
                 <p class="question-text">
-                    (CEBRASPE) Julgue o item: O INSS responde subjetivamente por erros na perícia médica, sendo necessária a comprovação de culpa do médico perito para a responsabilização do Estado.
+                    (CEBRASPE) Julgue o item: A Lei 14.133/2021 estabelece que todos os atos relativos às licitações e contratos administrativos devem ser publicados na internet, sendo vedada a publicação em jornais oficiais impressos, que foram completamente eliminados como meio de divulgação.
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 19, 'A')">
@@ -1858,35 +1968,37 @@
                 <div class="explanation" id="exp-19">
                     <div class="explanation-header">Resposta Correta: Errado</div>
                     <div class="explanation-text">
-                        <strong>Responsabilidade por Erro na Perícia Médica:</strong><br><br>
-                        
-                        <div class="law-reference">Jurisprudência dos TRFs</div><br>
-                        
-                        <strong>Responsabilidade objetiva:</strong><br>
-                        O INSS responde <strong>objetivamente</strong> pelos erros na perícia médica, aplicando-se a teoria do risco administrativo. Não é necessária a comprovação de culpa do médico perito.<br><br>
-                        
-                        <strong>Fundamento:</strong><br>
-                        • A perícia médica é <strong>serviço público</strong> prestado pelo INSS<br>
-                        • O erro na avaliação é <strong>risco da atividade</strong><br>
-                        • O segurado não deve arcar com consequências de erro estatal<br>
-                        • O médico perito é <strong>agente público</strong> e seu ato é atribuído ao INSS<br><br>
-                        
-                        <strong>Erros indenizáveis:</strong><br>
-                        • <strong>Negativa indevida:</strong> Laudo que nega benefício devido<br>
-                        • <strong>Concessão errada:</strong> Benefício concedido a quem não tem direito (danos ao erário)<br>
-                        • <strong>Erro diagnóstico:</strong> Avaliação incorreta da incapacidade<br>
-                        • <strong>Demora na perícia:</strong> Atraso injustificado na realização do exame<br><br>
-                        
+                        <strong>Publicidade e Transparência - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021, arts. 2º e 94</div><br>
+
+                        <strong>Meios de publicação:</strong><br>
+
+                        1. <strong>Internet (obrigatório):</strong><br>
+                        • <strong>Acesso livre:</strong> Todos os atos devem ser disponibilizados em acesso livre na internet<br>
+                        • <strong>Portal nacional:</strong> Devem ser publicados no Portal Nacional de Contratações Públicas (PNCP)<br>
+                        • <strong>Site do órgão:</strong> Publicação no site do órgão ou entidade licitante<br><br>
+
+                        2. <strong>Jornal oficial (mantido):</strong><br>
+                        A publicação em <strong>jornal oficial não foi eliminada</strong>. A lei estabelece:<br>
+                        • <strong>Publicação obrigatória na internet</strong> (acesso livre)<br>
+                        • <strong>Publicação em jornal de grande circulação</strong> quando exigido por lei específica ou quando o valor ultrapassar determinados limites<br><br>
+
+                        <strong>Transparência ativa:</strong><br>
+                        • Dados abertos e interoperáveis<br>
+                        • Acesso facilitado à informação<br>
+                        • Acompanhamento em tempo real pelos cidadãos<br><br>
+
                         <strong>Correção da afirmação:</strong><br>
-                        A responsabilidade é <strong>objetiva</strong>, não subjetiva. Basta comprovar o erro na perícia, o dano ao segurado e o nexo causal.<br><br>
-                        
+                        A publicação na internet é <strong>obrigatória e prioritária</strong>, mas não houve eliminação completa dos jornais oficiais, que ainda podem ser exigidos em determinadas hipóteses.<br><br>
+
                         <div class="comparison-box">
                             <div class="comparison-title">⚠️ Correção:</div>
-                            <strong>Responsabilidade:</strong> Objetiva (não subjetiva)<br>
-                            <strong>Fundamento:</strong> Risco administrativo<br>
-                            <strong>Culpa do perito:</strong> Não necessária<br>
-                            <strong>Regresso:</strong> Possível contra médico se houver dolo/culpa<br>
-                            <strong>Danos:</strong> Materiais (benefício não recebido) e morais
+                            <strong>Internet:</strong> Obrigatória (acesso livre)<br>
+                            <strong>Portal Nacional:</strong> PNCP (obrigatório)<br>
+                            <strong>Jornal oficial:</strong> Mantido, quando exigido<br>
+                            <strong>Transparência:</strong> Dados abertos e interoperáveis<br>
+                            <strong>Base legal:</strong> Arts. 2º e 94, Lei 14.133/2021
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-19">
@@ -1902,83 +2014,91 @@
             </div>
 
             <!-- Questão 20 -->
-            <div class="question-card" style="animation-delay: 2.0s" data-correct="E" data-question="Revisão Geral - Responsabilidade Civil do Estado">
+            <div class="question-card" style="animation-delay: 2.0s" data-correct="E" data-question="Revisão Geral - Licitação">
                 <span class="question-number">Questão 20</span>
                 <p class="question-text">
-                    (CEBRASPE) Assinale a alternativa correta sobre a responsabilidade civil do Estado:
+                    (CEBRASPE) Assinale a alternativa correta sobre a Lei 14.133/2021:
                 </p>
                 <div class="alternatives">
                     <div class="alternative" onclick="selectAlternative(this, 20, 'A')">
                         <span class="alternative-letter">A</span>
-                        <span class="alternative-text">A responsabilidade do Estado é sempre subjetiva, exigindo a comprovação de culpa do agente público</span>
+                        <span class="alternative-text">A Lei 14.133/2021 manteve todas as modalidades de licitação da Lei 8.666/1993, apenas atualizando os valores para dispensa e inexigibilidade</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 20, 'B')">
                         <span class="alternative-letter">B</span>
-                        <span class="alternative-text">A teoria do risco administrativo não se aplica às empresas públicas e sociedades de economia mista</span>
+                        <span class="alternative-text">A nova lei extinguiu o sistema de registro de preços e o pregão eletrônico, considerados ineficientes</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 20, 'C')">
                         <span class="alternative-letter">C</span>
-                        <span class="alternative-text">O Estado responde subjetivamente por omissão, sendo necessária a comprovação de culpa em todas as hipóteses</span>
+                        <span class="alternative-text">A Lei 14.133/2021 estabeleceu que todas as licitações devem ser realizadas exclusivamente por comissão de licitação, vedada a atuação de pregoeiro único</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 20, 'D')">
                         <span class="alternative-letter">D</span>
-                        <span class="alternative-text">A responsabilidade por ato lícito do Estado é uma modalidade de responsabilidade contratual</span>
+                        <span class="alternative-text">A nova lei manteve o julgamento por menor preço como único critério possível em todas as modalidades de licitação</span>
                         <span class="result-icon">❌</span>
                     </div>
                     <div class="alternative" onclick="selectAlternative(this, 20, 'E')">
                         <span class="alternative-letter">E</span>
-                        <span class="alternative-text">O Estado responde objetivamente pelos danos causados por seus agentes no exercício da função, aplicando-se a teoria do risco administrativo, salvo em caso de culpa exclusiva da vítima, caso fortuito ou força maior</span>
+                        <span class="alternative-text">A Lei 14.133/2021 modernizou o marco regulatório das licitações, estabelecendo novas formas de licitação (pregão, concorrência, diálogo competitivo, concurso de projetos e leilão), novos critérios de julgamento, reforçou o planejamento e a transparência, e criou mecanismos para facilitar a participação de micro e pequenas empresas</span>
                         <span class="result-icon">✓</span>
                     </div>
                 </div>
                 <div class="explanation" id="exp-20">
                     <div class="explanation-header">Resposta Correta: Letra E</div>
                     <div class="explanation-text">
-                        <strong>Revisão Geral da Responsabilidade Civil do Estado:</strong><br><br>
-                        
-                        <div class="law-reference">CF/1988, art. 37, §6º</div><br>
-                        
-                        <strong>Síntese da responsabilidade estatal:</strong><br>
-                        
-                        <strong>1. Natureza:</strong> Predominantemente <strong>objetiva</strong> (teoria do risco administrativo)<br><br>
-                        
-                        <strong>2. Abrangência:</strong><br>
-                        • Administração direta (União, Estados, DF, Municípios)<br>
-                        • Autarquias, fundações públicas, empresas públicas<br>
-                        • Sociedades de economia mista (quando prestadoras de serviço público)<br>
-                        • Concessionárias, permissionárias e autorizatárias<br><br>
-                        
-                        <strong>3. Causas excludentes:</strong><br>
-                        • Culpa exclusiva da vítima<br>
-                        • Caso fortuito externo<br>
-                        • Força maior<br><br>
-                        
-                        <strong>4. Exceções (responsabilidade subjetiva):</strong><br>
-                        • Omissão genérica (falta de policiamento, fiscalização)<br>
-                        • Atos jurisdicionais (dolo ou culpa grave)<br>
-                        • Atos legislativos (imunidade)<br><br>
-                        
-                        <strong>5. Modalidades especiais:</strong><br>
-                        • Risco integral (atividades de alto risco)<br>
-                        • Responsabilidade por ato lícito (sacrifício)<br>
-                        • Responsabilidade por omissão específica (objetiva)<br><br>
-                        
+                        <strong>Revisão Geral - Lei 14.133/2021:</strong><br><br>
+
+                        <div class="law-reference">Lei 14.133/2021 - Novo Marco Regulatório</div><br>
+
+                        <strong>Principais inovações:</strong><br>
+
+                        1. <strong>Novas formas de licitação:</strong><br>
+                        • Pregão (eletrônico obrigatório)<br>
+                        • Concorrência<br>
+                        • Diálogo competitivo (inovação)<br>
+                        • Concurso de projetos<br>
+                        • Leilão<br>
+                        • Extinção de tomada de preços e convite<br><br>
+
+                        2. <strong>Novos critérios de julgamento:</strong><br>
+                        • Menor preço<br>
+                        • Maior desconto<br>
+                        • Melhor técnica<br>
+                        • Técnica e preço<br>
+                        • Maior retorno econômico<br><br>
+
+                        3. <strong>Reforço do planejamento:</strong><br>
+                        • Planejamento como fase obrigatória<br>
+                        • Termo de referência/projeto básico<br>
+                        • Estimativa de preço<br>
+                        • Justificativa da modalidade<br><br>
+
+                        4. <strong>Transparência:</strong><br>
+                        • Publicação obrigatória na internet<br>
+                        • Portal Nacional de Contratações Públicas (PNCP)<br>
+                        • Dados abertos<br><br>
+
+                        5. <strong>Micro e pequenas empresas:</strong><br>
+                        • Facilitações para participação<br>
+                        • Parcelamento de garantias<br>
+                        • Simplificação de documentação<br><br>
+
                         <strong>Análise das alternativas erradas:</strong><br>
-                        <strong>A)</strong> Errado - A regra é a responsabilidade objetiva<br>
-                        <strong>B)</strong> Errado - Aplica-se também às empresas públicas e SEM<br>
-                        <strong>C)</strong> Errado - A omissão específica gera responsabilidade objetiva<br>
-                        <strong>D)</strong> Errado - É responsabilidade extracontratual<br><br>
-                        
+                        <strong>A)</strong> Errado - Modificou as modalidades, não apenas valores<br>
+                        <strong>B)</strong> Errado - Manteve e reforçou o sistema de registro de preços e o pregão<br>
+                        <strong>C)</strong> Errado - Tornou a comissão facultativa, não vedou pregoeiro<br>
+                        <strong>D)</strong> Errado - Criou diversos critérios de julgamento<br><br>
+
                         <div class="comparison-box">
-                            <div class="comparison-title">📊 Resumo:</div>
-                            <strong>Regra:</strong> Responsabilidade objetiva (art. 37, §6º, CF)<br>
-                            <strong>Teoria:</strong> Risco administrativo<br>
-                            <strong>Excludentes:</strong> Culpa vítima, fortuito, força maior<br>
-                            <strong>Exceções:</strong> Omissão genérica, atos jurisdicionais<br>
-                            <strong>Regresso:</strong> Possível contra agente doloso ou culposo
+                            <div class="comparison-title">📊 Resumo Lei 14.133/2021:</div>
+                            <strong>Vigência:</strong> 1º de abril de 2021<br>
+                            <strong>Formas:</strong> Pregão, concorrência, diálogo competitivo, concurso de projetos, leilão<br>
+                            <strong>Princípios:</strong> Vinculação, isonomia, probidade, legalidade, impessoalidade, publicidade, eficiência, autonomia, julgamento objetivo<br>
+                            <strong>Fases:</strong> Preparatória, divulgação, apresentação de propostas, julgamento, habilitação, recursal, homologação<br>
+                            <strong>Inovações:</strong> Diálogo competitivo, reforço do planejamento, transparência ativa
                         </div>
                     </div>
                     <div class="gemini-help-box" id="gemini-help-20">
@@ -2003,42 +2123,38 @@
             <div class="score-message" id="score-message"></div>
             <p style="color: #4a5568; margin-bottom: 20px; line-height: 1.6;">
                 <strong>Dicas de estudo baseadas no seu desempenho:</strong><br>
-                • Art. 37, §6º, CF/88: Base constitucional da responsabilidade objetiva<br>
-                • Teoria do risco administrativo: Regra geral (sem culpa)<br>
-                • Teoria do risco integral: Exceção (atividades de alto risco)<br>
-                • Omissão genérica: Responsabilidade subjetiva (culpa)<br>
-                • Omissão específica: Responsabilidade objetiva<br>
-                • Causas excludentes: Culpa vítima, fortuito, força maior<br>
-                • Direito de regresso: Contra agente doloso ou culposo (3 anos)<br>
-                • Prazo prescricional: 5 anos (ação contra o Estado)<br>
-                • INSS: Responsabilidade objetiva por demora, erro pericial, informação incorreta<br>
-                • Concessionárias: Responsabilidade objetiva solidária com o Estado<br>
-                • Atos jurisdicionais: Responsabilidade subjetiva (dolo ou culpa grave)<br>
-                • Atos legislativos: Imunidade (exceto omissão lesiva a direito individual)<br>
-                • Dano moral: In re ipsa em casos de privação de verba alimentar<br>
-                • Responsabilidade por ato lícito: Sacrifício individual (dano anormal e específico)
+                • Lei 14.133/2021: Nova Lei de Licitações (vigente desde 01/04/2021)<br>
+                • Princípios: Vinculação, isonomia, probidade, legalidade, impessoalidade, publicidade, eficiência, autonomia, julgamento objetivo<br>
+                • Formas de licitação: Pregão, concorrência, diálogo competitivo, concurso de projetos, leilão<br>
+                • Fases: Preparatória, divulgação, apresentação de propostas, julgamento, habilitação, recursal, homologação<br>
+                • Dispensa: Emergência, calamidade, exclusividade, assistência humanitária<br>
+                • Inexigibilidade: Profissional artístico, notório saber, propriedade intelectual<br>
+                • Pregão: Eletrônico obrigatório, menor preço ou maior desconto<br>
+                • Habilitação: Jurídica, fiscal, técnica, econômico-financeira, trabalhista<br>
+                • Sistema de registro de preços: Procedimento auxiliar, não modalidade<br>
+                • Comissão de licitação: Facultativa<br>
+                • Recursos: 3 dias úteis (todas as modalidades)<br>
+                • Garantia: Até 5% (10% majorado), facultativa<br>
+                • Rescisão: Unilateral por interesse público (com indenização)<br>
+                • Publicidade: Internet obrigatória, jornal oficial mantido
             </p>
             <button class="btn-restart" onclick="restartQuiz()">Refazer Prova</button>
         </div>
     </div>
 
     <script>
+        // Variáveis globais
         let answers = {};
-        let timeLeft = 2400; // 40 minutos em segundos
         let timerInterval;
+        let timeLeft = 2400; // 40 minutos em segundos
 
+        // Função para iniciar o timer
         function startTimer() {
+            updateTimerDisplay();
             timerInterval = setInterval(() => {
                 timeLeft--;
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                document.getElementById('time').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 300) { // 5 minutos
-                    document.getElementById('timer').classList.add('warning');
-                }
-                
+                updateTimerDisplay();
+
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     finishQuiz();
@@ -2046,60 +2162,73 @@
             }, 1000);
         }
 
-        function selectAlternative(element, questionNum, letter) {
-            const card = element.closest('.question-card');
-            const correctAnswer = card.getAttribute('data-correct');
-            const alternatives = card.querySelectorAll('.alternative');
-            const explanation = document.getElementById(`exp-${questionNum}`);
-            const geminiHelp = document.getElementById(`gemini-help-${questionNum}`);
-            
-            // Desabilita todas as alternativas da questão
-            alternatives.forEach(alt => {
-                alt.classList.add('disabled');
-                alt.onclick = null;
-            });
-            
-            // Marca a alternativa selecionada
-            if (letter === correctAnswer) {
-                element.classList.add('selected-correct');
-                answers[questionNum] = { selected: letter, correct: true };
-            } else {
-                element.classList.add('selected-wrong');
-                // Destaca a resposta correta
-                alternatives.forEach(alt => {
-                    const altLetter = alt.querySelector('.alternative-letter').textContent;
-                    if (altLetter === correctAnswer) {
-                        alt.classList.add('correct-answer');
-                    }
-                });
-                answers[questionNum] = { selected: letter, correct: false };
-                explanation.classList.add('wrong');
+        // Função para atualizar o display do timer
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('time').textContent = display;
+
+            // Adiciona classe warning quando faltar menos de 5 minutos
+            const timerElement = document.getElementById('timer');
+            if (timeLeft < 300) {
+                timerElement.classList.add('warning');
             }
-            
-            // Mostra a explicação e o botão do Gemini imediatamente
-            explanation.classList.add('show');
-            geminiHelp.classList.add('show');
-            
-            // Adiciona badge de status
-            const questionNumber = card.querySelector('.question-number');
-            const statusBadge = document.createElement('span');
-            statusBadge.className = `status-badge ${letter === correctAnswer ? 'correct' : 'wrong'}`;
-            statusBadge.textContent = letter === correctAnswer ? 'ACERTOU' : 'ERROU';
-            questionNumber.appendChild(statusBadge);
-            
-            updateProgress();
-            
-            // Scroll suave para a explicação
-            explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // NOVA FUNÇÃO: Apenas copia o texto, sem abrir o Gemini
-        function copyToClipboard(questionNum) {
-            const card = document.querySelectorAll('.question-card')[questionNum - 1];
-            const questionText = card.querySelector('.question-text').textContent;
+        // Função para selecionar alternativa
+        function selectAlternative(element, questionNumber, selectedOption) {
+            // Se já respondeu, não faz nada
+            if (answers[questionNumber]) return;
+
+            // Obtém a resposta correta
+            const card = element.closest('.question-card');
+            const correctAnswer = card.getAttribute('data-correct');
+            const isCorrect = selectedOption === correctAnswer;
+
+            // Armazena a resposta
+            answers[questionNumber] = {
+                selected: selectedOption,
+                correct: isCorrect,
+                correctAnswer: correctAnswer
+            };
+
+            // Atualiza a UI
+            const alternatives = card.querySelectorAll('.alternative');
+            alternatives.forEach(alt => {
+                alt.classList.add('disabled');
+                const altLetter = alt.querySelector('.alternative-letter').textContent;
+
+                if (altLetter === correctAnswer) {
+                    alt.classList.add('correct-answer');
+                } else if (alt === element && !isCorrect) {
+                    alt.classList.add('selected-wrong');
+                } else if (alt === element && isCorrect) {
+                    alt.classList.add('selected-correct');
+                }
+            });
+
+            // Mostra a explicação
+            const explanation = card.querySelector('.explanation');
+            const geminiHelp = card.querySelector('.gemini-help-box');
+
+            if (!isCorrect) {
+                explanation.classList.add('wrong');
+            }
+            explanation.classList.add('show');
+            geminiHelp.classList.add('show');
+
+            // Atualiza a barra de progresso
+            updateProgress();
+        }
+
+        // Função para copiar texto para o Gemini
+        function copyToClipboard(questionNumber) {
+            const card = document.querySelector(`.question-card:nth-of-type(${questionNumber})`);
+            const questionText = card.querySelector('.question-text').textContent.trim();
             const correctAnswer = card.getAttribute('data-correct');
             const questionTheme = card.getAttribute('data-question');
-            
+
             // Encontra o texto da resposta correta
             const alternatives = card.querySelectorAll('.alternative');
             let correctAnswerText = '';
@@ -2109,49 +2238,39 @@
                     correctAnswerText = alt.querySelector('.alternative-text').textContent;
                 }
             });
-            
-            // Cria a mensagem para o Gemini
-            const prompt = `Olá! Sou estudante para concurso do INSS e não entendi essa questão de Direito Administrativo - Responsabilidade Civil do Estado. Pode explicar de forma bem simples e didática, como se eu fosse iniciante?
 
-TEMA: ${questionTheme}
-
+            const prompt = `TEMA: ${questionTheme}
 QUESTÃO: ${questionText}
-
 RESPOSTA CORRETA: ${correctAnswer}) ${correctAnswerText}
 
 Por favor, explique:
 1. Por que essa é a resposta correta
 2. Por que as outras estão erradas
 3. Dê exemplos práticos para eu entender melhor
-4. Cite a base legal (artigos da Constituição, súmulas do STF/STJ, leis)
+4. Cite a base legal (Lei 14.133/2021, Lei 8.666/1993, etc.)
 5. Alguma dica de memorização se aplicável
 
 Obrigado!`;
-            
+
             // Copia o prompt para a área de transferência
             navigator.clipboard.writeText(prompt).then(() => {
-                // Mostra notificação de sucesso
                 showCopyNotification();
             }).catch(err => {
                 // Fallback se a clipboard API falhar
-                console.error('Erro ao copiar:', err);
-                
-                // Cria um textarea temporário para copiar manualmente
                 const textarea = document.createElement('textarea');
                 textarea.value = prompt;
                 textarea.style.position = 'fixed';
                 textarea.style.left = '-9999px';
                 document.body.appendChild(textarea);
                 textarea.select();
-                
+
                 try {
                     document.execCommand('copy');
                     showCopyNotification();
                 } catch (e) {
-                    // Se tudo falhar, mostra o prompt para copiar manualmente
                     prompt('Copie este texto manualmente:', prompt);
                 }
-                
+
                 document.body.removeChild(textarea);
             });
         }
@@ -2160,13 +2279,13 @@ Obrigado!`;
         function showCopyNotification() {
             const notification = document.getElementById('copyNotification');
             notification.classList.add('show');
-            
-            // Esconde após 3 segundos
+
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
 
+        // Função para atualizar a barra de progresso
         function updateProgress() {
             const total = 20;
             const answered = Object.keys(answers).length;
@@ -2174,39 +2293,40 @@ Obrigado!`;
             document.getElementById('progress').style.width = percent + '%';
         }
 
+        // Função para finalizar a prova
         function finishQuiz() {
             clearInterval(timerInterval);
-            
+
             let correct = 0;
-            
             for (let i = 1; i <= 20; i++) {
                 if (answers[i] && answers[i].correct) {
                     correct++;
                 }
             }
-            
+
             document.getElementById('submit-btn').style.display = 'none';
             document.getElementById('results').classList.add('show');
-            
+
             const percentage = (correct / 20) * 100;
             document.getElementById('score-circle').style.setProperty('--score', percentage);
             document.getElementById('score-text').textContent = `${correct}/20`;
-            
+
             let message = '';
             if (correct >= 16) {
-                message = '🎉 Excelente! Você domina a Responsabilidade Civil do Estado e está pronto para o INSS!';
+                message = '🎉 Excelente! Você domina a Licitação (Lei 14.133/2021) e está pronto para o INSS!';
             } else if (correct >= 12) {
-                message = '👍 Bom desempenho! Revise as distinções entre omissão genérica/específica e risco administrativo/integral.';
+                message = '👍 Bom desempenho! Revise as novas formas de licitação e as fases do procedimento.';
             } else if (correct >= 8) {
-                message = '📚 Desempenho regular. Foque na base constitucional (art. 37, §6º) e nas causas excludentes.';
+                message = '📚 Desempenho regular. Foque na Lei 14.133/2021 e nas diferenças para a Lei 8.666/1993.';
             } else {
-                message = '⚠️ É preciso estudar mais. A Responsabilidade Civil do Estado é um dos temas mais importantes do concurso do INSS!';
+                message = '⚠️ É preciso estudar mais. A Licitação é um dos temas mais importantes do concurso do INSS!';
             }
             document.getElementById('score-message').textContent = message;
-            
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Função para reiniciar a prova
         function restartQuiz() {
             location.reload();
         }
@@ -2215,4 +2335,4 @@ Obrigado!`;
         window.onload = startTimer;
     </script>
 </body>
-</html>
+</html>s
