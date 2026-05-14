@@ -3,264 +3,541 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Estudos Premium - Técnico Legislativo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Palhoça Pro - Ultra Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.5);
-            --secondary: #a855f7;
-            --success: #22c55e;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
             --bg: #0f172a;
             --card-bg: rgba(30, 41, 59, 0.7);
-            --text-main: #f8fafc;
+            --text: #f8fafc;
             --text-dim: #94a3b8;
+            --success: #10b981;
+            --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: var(--bg);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
-            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            color: var(--text);
+            margin: 0;
             min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; animation: fadeIn 0.8s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Background Decor */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
 
-        header { text-align: center; margin-bottom: 40px; padding: 20px 0; }
-        .logo-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 15px; box-shadow: 0 0 20px var(--primary-glow); }
-        h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Container */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); padding: 20px; border-radius: 20px; display: flex; align-items: center; gap: 15px; }
-        .stat-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .stat-info h3 { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
-        .stat-info p { font-size: 1.4rem; font-weight: 700; }
+        /* Header Section */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
 
-        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 40px; border: 1px solid var(--glass-border); }
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; font-weight: 600; }
-        .progress-track { height: 10px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 1s ease; box-shadow: 0 0 15px var(--primary-glow); }
+        .brand h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
 
-        .week-title { font-size: 1.4rem; font-weight: 700; margin: 40px 0 20px; display: flex; align-items: center; gap: 12px; color: var(--primary); }
-        .week-title::before { content: ''; width: 4px; height: 20px; background: var(--secondary); border-radius: 4px; }
+        .brand p { color: var(--text-dim); font-size: 1.2rem; margin: 10px 0 0; }
 
-        .study-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-        .study-card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px; transition: all 0.3s ease; position: relative; }
-        .study-card.completed { border-color: var(--success); background: rgba(34, 197, 94, 0.05); }
-        
-        .card-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .day-badge { background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; color: var(--primary); }
-        .subject-tag { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; cursor: pointer; }
-        .tag-basica { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
-        .tag-especifica { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+        /* Progress Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
 
-        .topic-title { font-size: 1rem; font-weight: 600; margin-bottom: 20px; cursor: pointer; line-height: 1.4; min-height: 2.8em; }
-        .topic-title:hover { color: var(--primary); }
-        .topic-title i { font-size: 0.8rem; opacity: 0; margin-left: 8px; transition: 0.2s; }
-        .topic-title:hover i { opacity: 0.5; }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
 
-        .card-actions { display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid var(--glass-border); }
-        .btn-check { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .btn-check.active { background: var(--success); border-color: var(--success); }
-        
-        .counter-group { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 12px; }
-        .count-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 0.9rem; }
-        .count-btn:hover { color: white; }
-        .count-val { font-weight: 700; font-size: 0.85rem; min-width: 15px; text-align: center; }
+        .stat-label { color: var(--text-dim); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 2.5rem; font-weight: 800; margin: 15px 0; display: block; }
 
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 12px 25px; border-radius: 12px; font-weight: 600; z-index: 1000; transition: 0.4s; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .progress-track {
+            height: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
 
-        @media (max-width: 600px) { .study-grid { grid-template-columns: 1fr; } h1 { font-size: 1.5rem; } }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #3b82f6);
+            width: 0%;
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+
+        /* Week Navigation */
+        .week-nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 10px;
+            background: var(--glass);
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .week-btn {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .week-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        /* Timeline Content */
+        .timeline {
+            display: grid;
+            gap: 30px;
+        }
+
+        .day-section {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+
+        .day-label {
+            text-align: right;
+            padding-top: 10px;
+        }
+
+        .day-name { font-weight: 800; font-size: 1.2rem; color: var(--accent-light); display: block; }
+        .day-dot { 
+            width: 12px; height: 12px; background: var(--accent); border-radius: 50%; 
+            display: inline-block; margin-top: 10px; box-shadow: 0 0 10px var(--accent);
+        }
+
+        .topics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .topic-card:hover {
+            background: rgba(255,255,255,0.06);
+            transform: scale(1.02);
+            border-color: var(--accent-light);
+        }
+
+        .topic-card.completed {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .topic-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .subject-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .topic-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; display: block; }
+        .topic-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .view-pill {
+            background: rgba(255,255,255,0.05);
+            padding: 6px 12px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .view-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0 5px;
+        }
+
+        .view-btn:hover { color: var(--accent-light); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .day-section { grid-template-columns: 1fr; gap: 10px; }
+            .day-label { text-align: left; }
+            .brand h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="blob" style="top: -100px; right: -100px;"></div>
+<div class="blob" style="bottom: -100px; left: -100px; background: #3b82f6;"></div>
+
+<div class="app-container">
     <header>
-        <div class="logo-icon"><i class="fas fa-rocket"></i></div>
-        <h1>Estudo Legislativo Pro</h1>
-        <p style="color: var(--text-dim); margin-top: 5px;">Cronograma Interativo - Câmara de Palhoça</p>
+        <div class="brand">
+            <h1>Palhoça Pro</h1>
+            <p>Técnico Legislativo • Edital 2026</p>
+        </div>
+        <div style="text-align: right">
+            <span id="dateDisplay" style="font-weight: 600; color: var(--accent-light);"></span>
+        </div>
     </header>
 
-    <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon" style="background:rgba(99,102,241,0.1);color:var(--primary)"><i class="fas fa-check"></i></div><div class="stat-info"><h3>Concluídas</h3><p id="stat-watched">0</p></div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:rgba(168,85,247,0.1);color:var(--secondary)"><i class="fas fa-redo"></i></div><div class="stat-info"><h3>Revisões</h3><p id="stat-revisions">0</p></div></div>
-        <div class="stat-card"><div class="stat-icon" style="background:rgba(34,197,94,0.1);color:var(--success)"><i class="fas fa-chart-line"></i></div><div class="stat-info"><h3>Progresso</h3><p id="stat-percent">0%</p></div></div>
+    <div class="dashboard">
+        <div class="glass-card">
+            <span class="stat-label">Domínio do Edital</span>
+            <span class="stat-value" id="mainPercent">0%</span>
+            <div class="progress-track"><div class="progress-fill" id="mainBar"></div></div>
+        </div>
+        <div class="glass-card">
+            <span class="stat-label">Concluídos</span>
+            <span class="stat-value" id="doneCount">0</span>
+            <span style="color: var(--text-dim)">de <span id="totalCount">0</span> tópicos</span>
+        </div>
+        <div class="glass-card">
+            <span class="stat-label">Nível de Revisão</span>
+            <span class="stat-value" id="totalViews">0</span>
+            <span style="color: var(--text-dim)">Pontos de XP</span>
+        </div>
     </div>
 
-    <div class="progress-container">
-        <div class="progress-header"><span>Progresso do Edital</span><span id="progress-text">0%</span></div>
-        <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
-    </div>
+    <div class="week-nav" id="weekNav"></div>
 
-    <!-- SEMANA 1 -->
-    <h2 class="week-title">Semana 1: A Base Jurídica e Gramatical</h2>
-    <div class="study-grid">
-        <div class="study-card" id="card-s1d1m1"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Interpretação e Tipologia Textual<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d1m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d1m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d1m1">0</span><button class="count-btn" onclick="update('s1d1m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d1m2"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Direitos Individuais (Art. 5º)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d1m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d1m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d1m2">0</span><button class="count-btn" onclick="update('s1d1m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d2m1"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-basica" onclick="copy(this)">RLM</span></div><div class="topic-title" onclick="copy(this)">Estruturas Lógicas e Conectivos<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d2m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d2m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d2m1">0</span><button class="count-btn" onclick="update('s1d2m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d2m2"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Princípios da Adm. Pública (LIMPE)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d2m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d2m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d2m2">0</span><button class="count-btn" onclick="update('s1d2m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d3m1"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-basica" onclick="copy(this)">Informática</span></div><div class="topic-title" onclick="copy(this)">Hardware e Windows<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d3m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d3m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d3m1">0</span><button class="count-btn" onclick="update('s1d3m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d3m2"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Proc. Legislativo</span></div><div class="topic-title" onclick="copy(this)">Conceitos e Espécies Normativas<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d3m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d3m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d3m2">0</span><button class="count-btn" onclick="update('s1d3m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d4m1"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Ortografia e Acentuação<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d4m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d4m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d4m1">0</span><button class="count-btn" onclick="update('s1d4m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d4m2"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Direitos Sociais e Nacionalidade<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d4m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d4m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d4m2">0</span><button class="count-btn" onclick="update('s1d4m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d5m1"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Regimento Interno</span></div><div class="topic-title" onclick="copy(this)">Disposições Preliminares e Sede<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d5m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d5m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d5m1">0</span><button class="count-btn" onclick="update('s1d5m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s1d5m2"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Organização Adm. (Direta/Indireta)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s1d5m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s1d5m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s1d5m2">0</span><button class="count-btn" onclick="update('s1d5m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-    </div>
-
-    <!-- SEMANA 2 -->
-    <h2 class="week-title">Semana 2: Agentes e Poderes</h2>
-    <div class="study-grid">
-        <div class="study-card" id="card-s2d1m1"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Morfologia (Classes de Palavras)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d1m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d1m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d1m1">0</span><button class="count-btn" onclick="update('s2d1m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d1m2"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Adm. Pública (Art. 37 a 41)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d1m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d1m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d1m2">0</span><button class="count-btn" onclick="update('s2d1m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d2m1"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-basica" onclick="copy(this)">RLM</span></div><div class="topic-title" onclick="copy(this)">Diagramas Lógicos (Todo/Algum/Nenhum)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d2m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d2m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d2m1">0</span><button class="count-btn" onclick="update('s2d2m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d2m2"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Poderes Administrativos<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d2m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d2m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d2m2">0</span><button class="count-btn" onclick="update('s2d2m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d3m1"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-basica" onclick="copy(this)">Informática</span></div><div class="topic-title" onclick="copy(this)">Word e Atalhos de Teclado<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d3m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d3m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d3m1">0</span><button class="count-btn" onclick="update('s2d3m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d3m2"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Proc. Legislativo</span></div><div class="topic-title" onclick="copy(this)">Iniciativa das Leis e Veto<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d3m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d3m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d3m2">0</span><button class="count-btn" onclick="update('s2d3m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d4m1"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Sintaxe da Oração<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d4m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d4m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d4m1">0</span><button class="count-btn" onclick="update('s2d4m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d4m2"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Organização dos Poderes<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d4m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d4m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d4m2">0</span><button class="count-btn" onclick="update('s2d4m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d5m1"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Regimento Interno</span></div><div class="topic-title" onclick="copy(this)">Dos Vereadores (Posse e Vagas)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d5m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d5m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d5m1">0</span><button class="count-btn" onclick="update('s2d5m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s2d5m2"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Lei de Improbidade (LIA)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s2d5m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s2d5m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s2d5m2">0</span><button class="count-btn" onclick="update('s2d5m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-    </div>
-
-    <!-- SEMANA 3 -->
-    <h2 class="week-title">Semana 3: O Coração do Legislativo</h2>
-    <div class="study-grid">
-        <div class="study-card" id="card-s3d1m1"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Concordância Verbal e Nominal<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d1m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d1m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d1m1">0</span><button class="count-btn" onclick="update('s3d1m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d1m2"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Poder Legislativo (Estrutura)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d1m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d1m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d1m2">0</span><button class="count-btn" onclick="update('s3d1m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d2m1"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-basica" onclick="copy(this)">RLM</span></div><div class="topic-title" onclick="copy(this)">Lógica de Argumentação<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d2m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d2m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d2m1">0</span><button class="count-btn" onclick="update('s3d2m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d2m2"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Atos Administrativos (Requisitos)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d2m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d2m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d2m2">0</span><button class="count-btn" onclick="update('s3d2m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d3m1"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-basica" onclick="copy(this)">Informática</span></div><div class="topic-title" onclick="copy(this)">Excel (Fórmulas e Funções)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d3m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d3m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d3m1">0</span><button class="count-btn" onclick="update('s3d3m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d3m2"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Proc. Legislativo</span></div><div class="topic-title" onclick="copy(this)">Fases do Processo Municipal<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d3m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d3m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d3m2">0</span><button class="count-btn" onclick="update('s3d3m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d4m1"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Regência e Uso da Crase<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d4m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d4m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d4m1">0</span><button class="count-btn" onclick="update('s3d4m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d4m2"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Fiscalização Contábil<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d4m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d4m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d4m2">0</span><button class="count-btn" onclick="update('s3d4m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d5m1"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Regimento Interno</span></div><div class="topic-title" onclick="copy(this)">Mesa Diretora e Comissões<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d5m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d5m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d5m1">0</span><button class="count-btn" onclick="update('s3d5m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s3d5m2"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Anulação e Revogação de Atos<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s3d5m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s3d5m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s3d5m2">0</span><button class="count-btn" onclick="update('s3d5m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-    </div>
-
-    <!-- SEMANA 4 -->
-    <h2 class="week-title">Semana 4: Leis Específicas e Gestão</h2>
-    <div class="study-grid">
-        <div class="study-card" id="card-s4d1m1"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Pontuação (Uso da Vírgula)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d1m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d1m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d1m1">0</span><button class="count-btn" onclick="update('s4d1m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d1m2"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-especifica" onclick="copy(this)">Lei Orgânica</span></div><div class="topic-title" onclick="copy(this)">Competências do Município<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d1m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d1m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d1m2">0</span><button class="count-btn" onclick="update('s4d1m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d2m1"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-basica" onclick="copy(this)">RLM</span></div><div class="topic-title" onclick="copy(this)">Probabilidade e Combinatória<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d2m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d2m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d2m1">0</span><button class="count-btn" onclick="update('s4d2m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d2m2"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Licitações (Lei 14.133)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d2m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d2m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d2m2">0</span><button class="count-btn" onclick="update('s4d2m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d3m1"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-basica" onclick="copy(this)">Informática</span></div><div class="topic-title" onclick="copy(this)">Redes e Internet<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d3m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d3m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d3m1">0</span><button class="count-btn" onclick="update('s4d3m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d3m2"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Proc. Legislativo</span></div><div class="topic-title" onclick="copy(this)">Quórum de Votação<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d3m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d3m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d3m2">0</span><button class="count-btn" onclick="update('s4d3m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d4m1"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Coesão (Conjunções)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d4m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d4m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d4m1">0</span><button class="count-btn" onclick="update('s4d4m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d4m2"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Lei Orgânica</span></div><div class="topic-title" onclick="copy(this)">Processo Legislativo Municipal<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d4m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d4m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d4m2">0</span><button class="count-btn" onclick="update('s4d4m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d5m1"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Regimento Interno</span></div><div class="topic-title" onclick="copy(this)">Sessões e Grande Expediente<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d5m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d5m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d5m1">0</span><button class="count-btn" onclick="update('s4d5m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s4d5m2"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Contratos Administrativos<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s4d5m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s4d5m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s4d5m2">0</span><button class="count-btn" onclick="update('s4d5m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-    </div>
-
-    <!-- SEMANA 5 -->
-    <h2 class="week-title">Semana 5: Reta Final e Refinamento</h2>
-    <div class="study-grid">
-        <div class="study-card" id="card-s5d1m1"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Redação Oficial (Manual Presidência)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d1m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d1m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d1m1">0</span><button class="count-btn" onclick="update('s5d1m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d1m2"><div class="card-header"><span class="day-badge">Segunda</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Constitucional</span></div><div class="topic-title" onclick="copy(this)">Municípios na CF/88<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d1m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d1m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d1m2">0</span><button class="count-btn" onclick="update('s5d1m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d2m1"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-basica" onclick="copy(this)">RLM</span></div><div class="topic-title" onclick="copy(this)">Sequências e Verdades/Mentiras<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d2m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d2m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d2m1">0</span><button class="count-btn" onclick="update('s5d2m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d2m2"><div class="card-header"><span class="day-badge">Terça</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Responsabilidade Civil do Estado<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d2m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d2m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d2m2">0</span><button class="count-btn" onclick="update('s5d2m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d3m1"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-basica" onclick="copy(this)">Informática</span></div><div class="topic-title" onclick="copy(this)">Segurança, Vírus e Backup<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d3m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d3m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d3m1">0</span><button class="count-btn" onclick="update('s5d3m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d3m2"><div class="card-header"><span class="day-badge">Quarta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Proc. Legislativo</span></div><div class="topic-title" onclick="copy(this)">Emendas à Lei Orgânica<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d3m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d3m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d3m2">0</span><button class="count-btn" onclick="update('s5d3m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d4m1"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-basica" onclick="copy(this)">Português</span></div><div class="topic-title" onclick="copy(this)">Semântica (Sinônimos/Antônimos)<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d4m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d4m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d4m1">0</span><button class="count-btn" onclick="update('s5d4m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d4m2"><div class="card-header"><span class="day-badge">Quinta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Lei Orgânica</span></div><div class="topic-title" onclick="copy(this)">Poder Executivo Municipal<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d4m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d4m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d4m2">0</span><button class="count-btn" onclick="update('s5d4m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d5m1"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Regimento Interno</span></div><div class="topic-title" onclick="copy(this)">Ética e Cassação<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d5m1')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d5m1',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d5m1">0</span><button class="count-btn" onclick="update('s5d5m1',1)"><i class="fas fa-plus"></i></button></div></div></div>
-        <div class="study-card" id="card-s5d5m2"><div class="card-header"><span class="day-badge">Sexta</span><span class="subject-tag tag-especifica" onclick="copy(this)">Dir. Administrativo</span></div><div class="topic-title" onclick="copy(this)">Serviços Públicos<i class="far fa-copy"></i></div><div class="card-actions"><button class="btn-check" onclick="toggle('s5d5m2')"><i class="fas fa-check"></i><span>Marcar</span></button><div class="counter-group"><button class="count-btn" onclick="update('s5d5m2',-1)"><i class="fas fa-minus"></i></button><span class="count-val" id="count-s5d5m2">0</span><button class="count-btn" onclick="update('s5d5m2',1)"><i class="fas fa-plus"></i></button></div></div></div>
-    </div>
-
-    <footer style="text-align: center; margin-top: 60px; padding: 40px; color: var(--text-dim); border-top: 1px solid var(--glass-border);">
-        <p>💡 <strong>Dica:</strong> Sábados para revisão e Domingos para simulados FUNDATEC.</p>
-    </footer>
+    <div class="timeline" id="timeline"></div>
 </div>
 
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Copiado!</span></div>
-
 <script>
-    let state = JSON.parse(localStorage.getItem('study_final_state')) || {};
+    const schedule = [
+        {
+            week: "W1", label: "Semana 1",
+            days: [
+                { name: "SEG", items: [
+                    { sub: "Português", title: "Interpretação de Texto", desc: "Tipologia e compreensão textual." },
+                    { sub: "Dir. Const.", title: "Artigo 5º da CF", desc: "Direitos e deveres individuais e coletivos." }
+                ]},
+                { name: "TER", items: [
+                    { sub: "RLM", title: "Lógica Proposicional", desc: "Conectivos e Tabela Verdade." },
+                    { sub: "Dir. Admin.", title: "Princípios da Adm.", desc: "LIMPE (Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência)." }
+                ]},
+                { name: "QUA", items: [
+                    { sub: "Informática", title: "Windows e Segurança", desc: "Windows 10/11 e Segurança da Informação." },
+                    { sub: "Legis. Mun.", title: "Lei Orgânica", desc: "Disposições Preliminares de Palhoça." }
+                ]},
+                { name: "QUI", items: [
+                    { sub: "Português", title: "Ortografia", desc: "Acentuação e regras ortográficas." },
+                    { sub: "Dir. Const.", title: "Organização do Estado", desc: "Administração Pública (Art. 37 a 41 da CF)." }
+                ]},
+                { name: "SEX", items: [
+                    { sub: "Atualidades", title: "Cenário Nacional", desc: "Fatos políticos e econômicos recentes no Brasil." },
+                    { sub: "Dir. Admin.", title: "Org. Administrativa", desc: "Administração Direta e Indireta." }
+                ]}
+            ]
+        },
+        {
+            week: "W2", label: "Semana 2",
+            days: [
+                { name: "SEG", items: [
+                    { sub: "Português", title: "Morfologia", desc: "Classes de palavras (Verbos e Substantivos)." },
+                    { sub: "Dir. Const.", title: "Poder Legislativo", desc: "Estrutura e funcionamento geral." }
+                ]},
+                { name: "TER", items: [
+                    { sub: "RLM", title: "Diagramas Lógicos", desc: "Quantificadores (Todo, Algum, Nenhum)." },
+                    { sub: "Dir. Admin.", title: "Agentes Públicos", desc: "Tipos de agentes e Improbidade Adm." }
+                ]},
+                { name: "QUA", items: [
+                    { sub: "Informática", title: "I.A. Generativa", desc: "Copilot, Gemini e Ética (Edital 2026)." },
+                    { sub: "Legis. Mun.", title: "Estatuto Servidores", desc: "Direitos, deveres e regime disciplinar." }
+                ]},
+                { name: "QUI", items: [
+                    { sub: "Português", title: "Sintaxe", desc: "Estrutura da oração e complementos." },
+                    { sub: "Rotinas Adm.", title: "Gestão Documental", desc: "Arquivamento e Protocolo." }
+                ]},
+                { name: "SEX", items: [
+                    { sub: "Proc. Legis.", title: "Espécies Normativas", desc: "Emendas, Leis e Resoluções." },
+                    { sub: "Dir. Admin.", title: "Poderes Administrat.", desc: "Poder Hierárquico e de Polícia." }
+                ]}
+            ]
+        },
+        {
+            week: "W3", label: "Semana 3",
+            days: [
+                { name: "SEG", items: [
+                    { sub: "Português", title: "Concordância", desc: "Concordância Verbal e Nominal." },
+                    { sub: "Redação Ofic.", title: "Padrão Ofício", desc: "Manual da Presidência e Atas." }
+                ]},
+                { name: "TER", items: [
+                    { sub: "Matemática", title: "Finanças", desc: "Porcentagem e Juros Simples." },
+                    { sub: "Dir. Admin.", title: "Atos Administrativos", desc: "Requisitos e Atributos do Ato." }
+                ]},
+                { name: "QUA", items: [
+                    { sub: "Informática", title: "MS Word 365", desc: "Abas, atalhos e tabelas." },
+                    { sub: "Legis. Mun.", title: "Regimento Interno", desc: "Mesa Diretora e Vereadores." }
+                ]},
+                { name: "QUI", items: [
+                    { sub: "Português", title: "Crase", desc: "Regência verbal e emprego da crase." },
+                    { sub: "Ouvidoria", title: "Lei 13.460/2017", desc: "Defesa do Usuário do Serviço Público." }
+                ]},
+                { name: "SEX", items: [
+                    { sub: "Dir. Admin.", title: "Licitações", desc: "Lei 14.133/21: Modalidades e Dispensa." },
+                    { sub: "Proc. Legis.", title: "Fases Processuais", desc: "Tramitação e votação na Câmara." }
+                ]}
+            ]
+        },
+        {
+            week: "W4", label: "Semana 4",
+            days: [
+                { name: "SEG", items: [
+                    { sub: "Português", title: "Pontuação", desc: "Uso da vírgula e ponto-e-vírgula." },
+                    { sub: "Redação Ofic.", title: "Comunicação", desc: "Pronomes de Tratamento." }
+                ]},
+                { name: "TER", items: [
+                    { sub: "Matemática", title: "Combinatória", desc: "Análise Combinatória e Probabilidade." },
+                    { sub: "Dir. Admin.", title: "Desfazimento Atos", desc: "Anulação e Revogação." }
+                ]},
+                { name: "QUA", items: [
+                    { sub: "Informática", title: "MS Excel 365", desc: "Fórmulas básicas (SOMA, SE)." },
+                    { sub: "Legis. Mun.", title: "Regimento Interno", desc: "Comissões e Sessões." }
+                ]},
+                { name: "QUI", items: [
+                    { sub: "Português", title: "Coesão", desc: "Conjunções e conectivos." },
+                    { sub: "Transparência", title: "L.A.I.", desc: "Lei de Acesso à Informação." }
+                ]},
+                { name: "SEX", items: [
+                    { sub: "Rotinas Adm.", title: "Atendimento", desc: "Ética e Relacionamento com Cidadão." },
+                    { sub: "Atualidades", title: "Tecnologia", desc: "Temas globais relevantes." }
+                ]}
+            ]
+        },
+        {
+            week: "W5", label: "Semana 5",
+            days: [
+                { name: "SEG", items: [
+                    { sub: "Português", title: "Semântica", desc: "Sinônimos e Ambiguidade." },
+                    { sub: "Dir. Const.", title: "Fiscalização", desc: "Controle Financeiro." }
+                ]},
+                { name: "TER", items: [
+                    { sub: "Dir. Admin.", title: "Serviços Públicos", desc: "Concessão e Responsabilidade Civil." },
+                    { sub: "RLM", title: "Sequências", desc: "Padrões numéricos e figuras." }
+                ]},
+                { name: "QUA", items: [
+                    { sub: "Informática", title: "Navegadores", desc: "Chrome, Edge e Nuvem." },
+                    { sub: "Legis. Mun.", title: "Revisão Geral", desc: "Lei Orgânica e Estatuto." }
+                ]},
+                { name: "QUI", items: [
+                    { sub: "Redação Ofic.", title: "Prática", desc: "Ofícios e Requerimentos." },
+                    { sub: "Rotinas Adm.", title: "Procedimentos", desc: "Processos Adm. e Protocolo." }
+                ]},
+                { name: "SEX", items: [
+                    { sub: "Simulado", title: "Simulado Final", desc: "70 Questões - Estilo FUNDATEC" }
+                ]}
+            ]
+        }
+    ];
+
+    let activeWeek = 0;
+    let progress = JSON.parse(localStorage.getItem('palhoca_ultra_v1')) || {};
+
+    function init() {
+        document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+        renderNav();
+        renderTimeline();
+        updateStats();
+    }
+
+    function renderNav() {
+        const nav = document.getElementById('weekNav');
+        nav.innerHTML = '';
+        schedule.forEach((w, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `week-btn ${idx === activeWeek ? 'active' : ''}`;
+            btn.textContent = w.label;
+            btn.onclick = () => {
+                activeWeek = idx;
+                renderNav();
+                renderTimeline();
+            };
+            nav.appendChild(btn);
+        });
+    }
+
+    function renderTimeline() {
+        const container = document.getElementById('timeline');
+        container.innerHTML = '';
+        const week = schedule[activeWeek];
+
+        week.days.forEach((day, dIdx) => {
+            const section = document.createElement('div');
+            section.className = 'day-section';
+            section.style.animationDelay = `${dIdx * 0.1}s`;
+
+            let topicsHtml = '';
+            day.items.forEach((item, iIdx) => {
+                const id = `w${activeWeek}d${dIdx}i${iIdx}`;
+                const state = progress[id] || { done: false, views: 0 };
+                
+                topicsHtml += `
+                    <div class="topic-card ${state.done ? 'completed' : ''}" onclick="toggleTopic('${id}', event)">
+                        <span class="subject-tag">${item.sub}</span>
+                        <span class="topic-name">${item.title}</span>
+                        <p class="topic-desc">${item.desc}</p>
+                        <div class="card-actions">
+                            <div class="view-pill" onclick="event.stopPropagation()">
+                                <button class="view-btn" onclick="updateView('${id}', -1)">-</button>
+                                <span>${state.views} revisões</span>
+                                <button class="view-btn" onclick="updateView('${id}', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            section.innerHTML = `
+                <div class="day-label">
+                    <span class="day-name">${day.name}</span>
+                    <div class="day-dot"></div>
+                </div>
+                <div class="topics-container">${topicsHtml}</div>
+            `;
+            container.appendChild(section);
+        });
+    }
+
+    function updateStats() {
+        let total = 0, done = 0, views = 0;
+        schedule.forEach((w, wIdx) => {
+            w.days.forEach((d, dIdx) => {
+                d.items.forEach((i, iIdx) => {
+                    total++;
+                    const id = `w${wIdx}d${dIdx}i${iIdx}`;
+                    if (progress[id]) {
+                        if (progress[id].done) done++;
+                        views += progress[id].views;
+                    }
+                });
+            });
+        });
+
+        const percent = Math.round((done / total) * 100);
+        document.getElementById('mainPercent').textContent = percent + '%';
+        document.getElementById('mainBar').style.width = percent + '%';
+        document.getElementById('doneCount').textContent = done;
+        document.getElementById('totalCount').textContent = total;
+        document.getElementById('totalViews').textContent = views * 10; // XP Factor
+
+        if (percent === 100) {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+    }
+
+    window.toggleTopic = (id, event) => {
+        if (!progress[id]) progress[id] = { done: false, views: 0 };
+        progress[id].done = !progress[id].done;
+        if (progress[id].done) {
+            confetti({ particleCount: 40, spread: 50, origin: { x: event.clientX / window.innerWidth, y: event.clientY / window.innerHeight } });
+        }
+        save();
+    };
+
+    window.updateView = (id, delta) => {
+        if (!progress[id]) progress[id] = { done: false, views: 0 };
+        progress[id].views = Math.max(0, progress[id].views + delta);
+        save();
+    };
 
     function save() {
-        localStorage.setItem('study_final_state', JSON.stringify(state));
-        refreshStats();
+        localStorage.setItem('palhoca_ultra_v1', JSON.stringify(progress));
+        renderTimeline();
+        updateStats();
     }
 
-    function copy(el) {
-        const text = el.innerText.trim();
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        const toast = document.getElementById('toast');
-        document.getElementById('toast-msg').innerText = "Copiado: " + text;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    function toggle(id) {
-        state[id] = state[id] || { watched: false, count: 0 };
-        state[id].watched = !state[id].watched;
-        if (state[id].watched && state[id].count === 0) state[id].count = 1;
-        updateUI(id);
-        save();
-    }
-
-    function update(id, delta) {
-        state[id] = state[id] || { watched: false, count: 0 };
-        state[id].count = Math.max(0, (state[id].count || 0) + delta);
-        state[id].watched = state[id].count > 0;
-        updateUI(id);
-        save();
-    }
-
-    function updateUI(id) {
-        const s = state[id] || { watched: false, count: 0 };
-        const card = document.getElementById('card-' + id);
-        const btn = card.querySelector('.btn-check');
-        const countVal = document.getElementById('count-' + id);
-        
-        if (s.watched) {
-            card.classList.add('completed');
-            btn.classList.add('active');
-            btn.querySelector('span').innerText = 'Concluído';
-        } else {
-            card.classList.remove('completed');
-            btn.classList.remove('active');
-            btn.querySelector('span').innerText = 'Marcar';
-        }
-        countVal.innerText = s.count;
-    }
-
-    function refreshStats() {
-        const cards = document.querySelectorAll('.study-card');
-        let watched = 0, revisions = 0;
-        cards.forEach(card => {
-            const id = card.id.replace('card-', '');
-            if (state[id]) {
-                if (state[id].watched) watched++;
-                revisions += state[id].count;
-                updateUI(id);
-            }
-        });
-        const percent = Math.round((watched / cards.length) * 100);
-        document.getElementById('stat-watched').innerText = watched;
-        document.getElementById('stat-revisions').innerText = revisions;
-        document.getElementById('stat-percent').innerText = percent + '%';
-        document.getElementById('progress-text').innerText = percent + '%';
-        document.getElementById('progress-bar').style.width = percent + '%';
-    }
-
-    refreshStats();
+    init();
 </script>
 
 </body>
